@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1758751513",
+        "python_version": "3.10.12 | packaged by Anaconda, Inc. | (main, Jul  5 2023, 19:01:18) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\cemka\\anaconda3\\envs\\ml_agents\\Scripts\\mlagents-learn config/platformer_ppo.yaml --run-id=test2",
+        "mlagents_version": "1.1.0",
+        "mlagents_envs_version": "1.1.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.2.2+cu121",
+        "numpy_version": "1.23.5",
+        "end_time_seconds": "1758751527"
+    },
+    "total": 13.824263300000894,
+    "count": 1,
+    "self": 0.006398499999704654,
+    "children": {
+        "run_training.setup": {
+            "total": 0.0718286999999691,
+            "count": 1,
+            "self": 0.0718286999999691
+        },
+        "TrainerController.start_learning": {
+            "total": 13.74603610000122,
+            "count": 1,
+            "self": 0.00017730000035953708,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 13.74583580000035,
+                    "count": 1,
+                    "self": 13.74583580000035
+                },
+                "TrainerController._save_models": {
+                    "total": 2.300000051036477e-05,
+                    "count": 1,
+                    "self": 2.300000051036477e-05
+                }
+            }
+        }
+    }
+}
