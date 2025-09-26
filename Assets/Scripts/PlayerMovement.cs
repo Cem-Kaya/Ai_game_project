@@ -1,8 +1,13 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Sprite")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+
     [Header("Move")]
     public float speed = 7f;
 
@@ -20,6 +25,15 @@ public class PlayerMovement : MonoBehaviour
     [Header("Dash")]
     public float dashSpeed = 20f;
     public float dashDuration = 0.2f;
+
+    [Header("Mapping (vy -> 0..1)")]
+    [Tooltip("Approx max upward speed at jump start")]
+    [SerializeField] private float maxUpwardSpeed = 12f;
+    [Tooltip("Approx max downward (terminal) speed")]
+    [SerializeField] private float maxDownwardSpeed = 20f;
+    [Tooltip("Time to smooth parameter changes")]
+    [SerializeField] private float smoothTime = 0.08f;
+    private float velRef; // for SmoothDamp
 
     // required components
     private Rigidbody2D rb;
@@ -65,6 +79,14 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         TuneGravityForFeel();
+        HandleJumpingAnimation();
+        HandleRunningAnimation();
+    }
+
+    private void HandleRunningAnimation()
+    {
+        animator.SetBool("Running", rb.linearVelocityX != 0f);
+        animator.SetBool("ReturnIdle", rb.linearVelocityX == 0f);
     }
 
     private void FixedUpdate()
@@ -79,6 +101,15 @@ public class PlayerMovement : MonoBehaviour
         if (dashing) return;
 
         rb.linearVelocity = new Vector2(moveInput.x * speed, rb.linearVelocity.y);
+        
+        UpdateFacing(moveInput.x);
+    }
+
+    private void UpdateFacing(float x)
+    {
+        if (x == 0f) return;
+        if (x > 0f) spriteRenderer.flipX = false;
+        else spriteRenderer.flipX = true;
     }
 
     void OnJumpPressed()
@@ -91,6 +122,8 @@ public class PlayerMovement : MonoBehaviour
             canHoldJump = true;
             holdTimer = maxHoldTime;
             holdJump = true;
+
+            animator.SetTrigger("Jump");
         }
     }
 
@@ -109,6 +142,29 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             canHoldJump = false;
+        }
+    }
+
+    void HandleJumpingAnimation()
+    {
+        if (!isGrounded)
+        {
+            float vy = rb.linearVelocity.y;
+            // Map vy to [0..1]: up (maxUp) -> 0, down (-maxDown) -> 1
+            float t = Mathf.InverseLerp(maxUpwardSpeed, -maxDownwardSpeed, vy);
+            animator.SetFloat("JumpBlend", t);
+
+            return;
+            /*
+            float vy = rb.linearVelocityY;
+
+            // InverseLerp: value==maxUp -> 0, value==-maxDown -> 1
+            float t = Mathf.InverseLerp(maxUpwardSpeed, -maxDownwardSpeed, vy);
+            t = Mathf.Clamp01(t);
+
+            float current = animator.GetFloat("JumpBlend");
+            float smoothed = Mathf.SmoothDamp(current, t, ref velRef, smoothTime);
+            animator.SetFloat("JumpBlend", smoothed);*/
         }
     }
 
@@ -133,6 +189,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (dashing) return;
 
+        animator.speed = 0.2f; //TODO: Smooth dashing anim, Change later
         dashing = true;
         dashTimer = dashDuration;
 
@@ -152,13 +209,17 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             dashing = false;
+            animator.speed = 1f; //TODO: Smooth dashing anim, Change later
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
+        {
             isGrounded = true;
+            animator.SetBool("Grounded", true);
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
