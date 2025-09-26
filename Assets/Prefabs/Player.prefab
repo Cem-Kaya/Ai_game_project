@@ -181,3 +181,5 @@ MonoBehaviour:
   baseGravityScale: 1
   fallScale: 3
   lowJumpScale: 6
+  dashSpeed: 20
+  dashDuration: 0.2

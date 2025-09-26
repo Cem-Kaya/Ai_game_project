@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -16,25 +17,53 @@ public class PlayerMovement : MonoBehaviour
     public float fallScale = 3.0f;
     public float lowJumpScale = 6.0f;
 
-    private Rigidbody2D rb;
-    private float moveInput;
+    [Header("Dash")]
+    public float dashSpeed = 20f;
+    public float dashDuration = 0.2f;
 
+    // required components
+    private Rigidbody2D rb;
+    private InputSystem_Actions inputs;
+
+    // movement / facing
+    private Vector2 moveInput;
+    private float lastFacingX = 1f;
+
+    // ground and jump state
     private bool isGrounded;
-    private bool pressJump;     // pressed this frame
-    private bool holdJump;      // currently held
-    private bool canHoldJump;   // we're in the "hold to rise more" window
+    private bool holdJump;
+    private bool canHoldJump;
     private float holdTimer;
 
-    void Start()
+    // dash state
+    private bool dashing;
+    private float dashTimer;
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = baseGravityScale;
+
+        inputs = new InputSystem_Actions();
+
+        inputs.Player.Move.performed += ctx =>
+        {
+            moveInput = ctx.ReadValue<Vector2>();
+            lastFacingX = (moveInput.x != 0) ? Mathf.Sign(moveInput.x) : lastFacingX;
+        };
+        inputs.Player.Move.canceled += ctx => moveInput.x = 0f;
+
+        inputs.Player.Jump.performed += _ => OnJumpPressed();
+        inputs.Player.Jump.canceled += _ => OnJumpReleased();
+
+        inputs.Player.Dash.performed += _ => OnDashPressed();
     }
 
-    void Update()
+    private void OnEnable() => inputs.Player.Enable();
+    private void OnDisable() => inputs.Player.Disable();
+
+    private void Update()
     {
-        GetInput();
-        HandleJumpPress();
         TuneGravityForFeel();
     }
 
@@ -42,44 +71,44 @@ public class PlayerMovement : MonoBehaviour
     {
         MovePlayer();
         HandleJumpHold();
-    }
-
-    void GetInput()
-    {
-        moveInput = Input.GetAxisRaw("Horizontal");
-        pressJump = Input.GetButtonDown("Jump");
-        holdJump = Input.GetButton("Jump");
+        HandleDash();
     }
 
     void MovePlayer()
     {
-        rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y);
+        if (dashing) return;
+
+        rb.linearVelocity = new Vector2(moveInput.x * speed, rb.linearVelocity.y);
     }
 
-    void HandleJumpPress()
+    void OnJumpPressed()
     {
-        if (pressJump && isGrounded)
+        if (isGrounded)
         {
-            // Initial launch
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             isGrounded = false;
 
-            // Enable the hold window
             canHoldJump = true;
-            holdTimer   = 0f;
+            holdTimer = maxHoldTime;
+            holdJump = true;
         }
+    }
+
+    void OnJumpReleased()
+    {
+        holdJump = false;
     }
 
     void HandleJumpHold()
     {
         // While rising, button held, and still within the hold window -> add gentle upward force
-        if (canHoldJump && holdJump && rb.linearVelocity.y > 0f && holdTimer < maxHoldTime)
+        if (canHoldJump && holdJump && rb.linearVelocity.y > 0f && holdTimer > 0f)
         {
-            holdTimer += Time.fixedDeltaTime;
+            holdTimer -= Time.fixedDeltaTime;
         }
         else
         {
-            canHoldJump = false; // stop extending once released or timer elapsed
+            canHoldJump = false;
         }
     }
 
@@ -100,9 +129,41 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void OnDashPressed()
+    {
+        if (dashing) return;
+
+        dashing = true;
+        dashTimer = dashDuration;
+
+        float dir = (moveInput.x != 0) ? Mathf.Sign(moveInput.x) : lastFacingX;
+        rb.linearVelocity = new Vector2(dir * dashSpeed, 0f);
+    }
+
+    void HandleDash()
+    {
+        if (!dashing) return;
+
+        if (dashTimer > 0f)
+        {
+            dashTimer -= Time.fixedDeltaTime;
+            rb.linearVelocity = new Vector2(Mathf.Sign(rb.linearVelocity.x) * dashSpeed, 0f);
+        }
+        else
+        {
+            dashing = false;
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
             isGrounded = true;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+            isGrounded = false;
     }
 }
