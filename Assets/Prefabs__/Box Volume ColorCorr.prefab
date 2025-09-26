@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3172490631653500397}
   - component: {fileID: 264031172736397044}
   m_Layer: 0
-  m_Name: Box Volume
+  m_Name: Box Volume ColorCorr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
