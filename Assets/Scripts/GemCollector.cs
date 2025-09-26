@@ -24,7 +24,7 @@ public class GemCollector : MonoBehaviour
         else if (collision.CompareTag("final"))
         {
             // Finish the level
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }

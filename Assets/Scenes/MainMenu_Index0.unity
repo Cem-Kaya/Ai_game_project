@@ -363,6 +363,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2399724931796388473, guid: 2ab7315bf85cd84479dcc42ba84d35a7, type: 3}
+      propertyPath: m_text
+      value: PHANTOM RUSH
+      objectReference: {fileID: 0}
+    - target: {fileID: 2399724931796388473, guid: 2ab7315bf85cd84479dcc42ba84d35a7, type: 3}
+      propertyPath: m_fontSize
+      value: 46.35
+      objectReference: {fileID: 0}
     - target: {fileID: 4824536120558644999, guid: 2ab7315bf85cd84479dcc42ba84d35a7, type: 3}
       propertyPath: m_IsActive
       value: 0
