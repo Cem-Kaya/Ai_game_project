@@ -168,19 +168,24 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             dashing = false;
+            if (isGrounded) canDash = true;
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
+        {
             isGrounded = true;
             canDash = true;
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
+        {
             isGrounded = false;
+        }
     }
 }
