@@ -28,14 +28,15 @@ public class PlayerMovement : MonoBehaviour
     // movement / facing
     private Vector2 moveInput;
     private float lastFacingX = 1f;
+    private bool movementLocked = false;
 
     // ground and jump state
     private bool isGrounded;
     private bool holdJump;
-    private bool canHoldJump;
     private float holdTimer;
 
     // dash state
+    private bool canDash = true;
     private bool dashing;
     private float dashTimer;
 
@@ -74,21 +75,27 @@ public class PlayerMovement : MonoBehaviour
         HandleDash();
     }
 
+    void UnlockMovement()
+    {
+        movementLocked = false;
+    }
+
     void MovePlayer()
     {
-        if (dashing) return;
+        if (movementLocked) return;
 
         rb.linearVelocity = new Vector2(moveInput.x * speed, rb.linearVelocity.y);
     }
 
     void OnJumpPressed()
     {
+        if (movementLocked) return;
+
         if (isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             isGrounded = false;
 
-            canHoldJump = true;
             holdTimer = maxHoldTime;
             holdJump = true;
         }
@@ -96,19 +103,24 @@ public class PlayerMovement : MonoBehaviour
 
     void OnJumpReleased()
     {
+        if (holdJump)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
+        }
+
         holdJump = false;
     }
 
     void HandleJumpHold()
     {
         // While rising, button held, and still within the hold window -> add gentle upward force
-        if (canHoldJump && holdJump && rb.linearVelocity.y > 0f && holdTimer > 0f)
+        if (holdJump && rb.linearVelocity.y > 0f && holdTimer > 0f)
         {
             holdTimer -= Time.fixedDeltaTime;
         }
         else
         {
-            canHoldJump = false;
+            holdJump = false;
         }
     }
 
@@ -119,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.gravityScale = fallScale;
         }
-        else if (rb.linearVelocity.y > 0f && (!holdJump || !canHoldJump))
+        else if (rb.linearVelocity.y > 0f && (!holdJump))
         {
             rb.gravityScale = lowJumpScale;
         }
@@ -131,10 +143,14 @@ public class PlayerMovement : MonoBehaviour
 
     void OnDashPressed()
     {
-        if (dashing) return;
+        if (movementLocked) return;
+        if (!canDash) return;
 
+        movementLocked = true;
+        Invoke(nameof(UnlockMovement), dashDuration);
         dashing = true;
         dashTimer = dashDuration;
+        canDash = false;
 
         float dir = (moveInput.x != 0) ? Mathf.Sign(moveInput.x) : lastFacingX;
         rb.linearVelocity = new Vector2(dir * dashSpeed, 0f);
@@ -159,6 +175,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
             isGrounded = true;
+            canDash = true;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
