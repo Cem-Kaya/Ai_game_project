@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,9 +22,15 @@ public class PlayerMovement : MonoBehaviour
     private float dashSpeed = 20f;
     private float dashDuration = 0.2f;
 
+    [Header("Attack")]
+    private float attackDuration = 0.3f;
+    private float pogoVelocity = 8f;
+    private float pogoTime = 0.2f;
+
     // required components
     private Rigidbody2D rb;
     private InputSystem_Actions inputs;
+    private GameObject attackArea;
 
     // movement / facing
     private Vector2 moveInput;
@@ -40,6 +47,15 @@ public class PlayerMovement : MonoBehaviour
     private bool canDash = true;
     private bool dashing;
     private float dashTimer;
+
+    // attack state
+    private bool attacking = false;
+    private float attackTimer;
+    private float attackDirectionYThreshold = 0.5f;
+    public bool attackDownward;
+    private float playerSizeX;
+    private float playerSizeY;
+    private float pogoTimer;
 
     private void Awake()
     {
@@ -59,6 +75,14 @@ public class PlayerMovement : MonoBehaviour
         inputs.Player.Jump.canceled += _ => OnJumpReleased();
 
         inputs.Player.Dash.performed += _ => OnDashPressed();
+
+        inputs.Player.Attack.performed += _ => OnAttackPressed();
+        attackArea = transform.Find("AttackArea").gameObject;
+        attackArea.SetActive(false);
+
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        playerSizeX = sr.bounds.size.x;
+        playerSizeY = sr.bounds.size.y;
     }
 
     private void OnEnable() => inputs.Player.Enable();
@@ -74,21 +98,22 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
         HandleJumpHold();
         HandleDash();
+        HandleAttack();
     }
 
-    void UnlockMovement()
+    private void UnlockMovement()
     {
         movementLocked = false;
     }
 
-    void MovePlayer()
+    private void MovePlayer()
     {
         if (movementLocked) return;
 
         rb.linearVelocity = new Vector2(moveInput.x * speed, rb.linearVelocity.y);
     }
 
-    void OnJumpPressed()
+    private void OnJumpPressed()
     {
         if (movementLocked) return;
 
@@ -102,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void OnJumpReleased()
+    private void OnJumpReleased()
     {
         if (holdJump)
         {
@@ -113,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
         jumpCut = false;
     }
 
-    void HandleJumpHold()
+    private void HandleJumpHold()
     {
         if (holdJump && rb.linearVelocity.y > 0f && holdTimer > 0f)
         {
@@ -129,7 +154,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void TuneGravityForFeel()
+    private void TuneGravityForFeel()
     {
         if (rb.linearVelocity.y < 0f)
         {
@@ -145,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void OnDashPressed()
+    private void OnDashPressed()
     {
         if (movementLocked) return;
         if (!canDash) return;
@@ -160,7 +185,7 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = new Vector2(dir * dashSpeed, 0f);
     }
 
-    void HandleDash()
+    private void HandleDash()
     {
         if (!dashing) return;
 
@@ -173,6 +198,67 @@ public class PlayerMovement : MonoBehaviour
         {
             dashing = false;
             if (isGrounded) canDash = true;
+        }
+    }
+
+    private void OnAttackPressed()
+    {
+        if (movementLocked) return;
+        if (attacking) return;
+
+        attacking = true;
+        attackTimer = attackDuration;
+
+        if (moveInput.y > attackDirectionYThreshold)
+        {
+            attackDownward = false;
+            attackArea.transform.localPosition = new Vector3(0f, playerSizeY * 0.5f, 0f);
+        }
+        else if (moveInput.y < -attackDirectionYThreshold && !isGrounded)
+        {
+            attackDownward = true;
+            attackArea.transform.localPosition = new Vector3(0f, -playerSizeY * 0.5f, 0f);
+        }
+        else
+        {
+            attackDownward = false;
+            attackArea.transform.localPosition = new Vector3(playerSizeX * 0.5f * lastFacingX, 0f, 0f);
+        }
+
+        attackArea.SetActive(true);
+    }
+
+    private void HandleAttack()
+    {
+        if (!attacking) return;
+
+        if (attackTimer > 0f)
+        {
+            attackTimer -= Time.fixedDeltaTime;
+        }
+        else
+        {
+            attacking = false;
+            attackArea.SetActive(false);
+        }
+    }
+
+    public void Pogo()
+    {
+        canDash = true;
+        pogoTimer = pogoTime;
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, pogoVelocity);
+    }
+
+    private void HandlePogoTimer()
+    {
+        if (pogoTimer > 0f)
+        {
+            pogoTimer -= Time.fixedDeltaTime;
+        }
+        else
+        {
+            pogoTimer = 0f;
         }
     }
 
