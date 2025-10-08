@@ -4,22 +4,22 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Move")]
-    public float speed = 7f;
+    private float speed = 7f;
 
     [Header("Jump (press)")]
-    public float jumpForce = 10f;
+    private float jumpForce = 11f;
 
     [Header("Jump (hold for higher)")]
-    public float maxHoldTime = 0.3f;
+    private float maxHoldTime = 0.3f;
 
     [Header("Gravity tuning (feel)")]
-    public float baseGravityScale = 1f;
-    public float fallScale = 3.0f;
-    public float lowJumpScale = 6.0f;
+    private float baseGravityScale = 1f;
+    private float fallGravityScale = 3f;
+    private float jumpCutGravityScale = 6f;
 
     [Header("Dash")]
-    public float dashSpeed = 20f;
-    public float dashDuration = 0.2f;
+    private float dashSpeed = 20f;
+    private float dashDuration = 0.2f;
 
     // required components
     private Rigidbody2D rb;
@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private bool holdJump;
     private float holdTimer;
+    private bool jumpCut;
 
     // dash state
     private bool canDash = true;
@@ -109,14 +110,18 @@ public class PlayerMovement : MonoBehaviour
         }
 
         holdJump = false;
+        jumpCut = false;
     }
 
     void HandleJumpHold()
     {
-        // While rising, button held, and still within the hold window -> add gentle upward force
         if (holdJump && rb.linearVelocity.y > 0f && holdTimer > 0f)
         {
             holdTimer -= Time.fixedDeltaTime;
+        }
+        else if (holdJump && rb.linearVelocity.y > 0f)
+        {
+            jumpCut = true;
         }
         else
         {
@@ -126,14 +131,13 @@ public class PlayerMovement : MonoBehaviour
 
     void TuneGravityForFeel()
     {
-        // Variable jump height + snappier fall
         if (rb.linearVelocity.y < 0f)
         {
-            rb.gravityScale = fallScale;
+            rb.gravityScale = fallGravityScale;
         }
-        else if (rb.linearVelocity.y > 0f && (!holdJump))
+        else if (jumpCut)
         {
-            rb.gravityScale = lowJumpScale;
+            rb.gravityScale = jumpCutGravityScale;
         }
         else
         {
