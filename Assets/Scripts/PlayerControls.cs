@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     // ground and jump state
     private bool isGrounded;
+    private float groundContactNormalThreshold = 0.7f;
     private bool holdJump;
     private float holdTimer;
     private bool jumpCut;
@@ -57,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
     public bool attackDownward;
     private float playerSizeX;
     private float playerSizeY;
+    private Vector3 attackAreaDefaultPos;
     private float pogoTimer;
 
     private void Awake()
@@ -81,11 +83,12 @@ public class PlayerMovement : MonoBehaviour
 
         inputs.Player.Attack.performed += _ => OnAttackPressed();
         attackArea = transform.Find("AttackArea").gameObject;
+        attackAreaDefaultPos = attackArea.transform.localPosition;
         attackArea.SetActive(false);
 
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        playerSizeX = sr.bounds.size.x;
-        playerSizeY = sr.bounds.size.y;
+        BoxCollider2D col = GetComponent<BoxCollider2D>();
+        playerSizeX = col.size.x;
+        playerSizeY = col.size.y;
     }
 
     private void OnEnable() => inputs.Player.Enable();
@@ -230,19 +233,19 @@ public class PlayerMovement : MonoBehaviour
         if (moveInput.y > attackDirectionYThreshold)
         {
             attackDownward = false;
-            position = new Vector3(0f, playerSizeY * 0.5f, 0f);
+            position = new Vector3(0f, playerSizeY * 0.5f, 0f) + attackAreaDefaultPos;
             angleZ = 90f;
         }
         else if (moveInput.y < -attackDirectionYThreshold && !isGrounded)
         {
             attackDownward = true;
-            position = new Vector3(0f, -playerSizeY * 0.5f, 0f);
+            position = new Vector3(0f, -playerSizeY * 0.5f, 0f) + attackAreaDefaultPos;
             angleZ = -90f;
         }
         else
         {
             attackDownward = false;
-            position = new Vector3(playerSizeX * 0.5f * lastFacingX, 0f, 0f);
+            position = new Vector3(playerSizeX * 0.5f * lastFacingX, 0f, 0f) + attackAreaDefaultPos;
             angleZ = (lastFacingX >= 0f) ? 0f : 180f;
         }
 
@@ -296,10 +299,31 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (!collision.gameObject.CompareTag("Ground")) return;
+
+        foreach (ContactPoint2D contact in collision.contacts)
         {
-            isGrounded = true;
-            canDash = true;
+            if (contact.normal.y >= groundContactNormalThreshold)
+            {
+                isGrounded = true;
+                canDash = true;
+                break;
+            }
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (!collision.gameObject.CompareTag("Ground")) return;
+
+        foreach (ContactPoint2D contact in collision.contacts)
+        {
+            if (contact.normal.y >= groundContactNormalThreshold)
+            {
+                isGrounded = true;
+                canDash = true;
+                break;
+            }
         }
     }
 
