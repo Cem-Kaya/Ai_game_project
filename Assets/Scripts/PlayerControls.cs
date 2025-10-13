@@ -23,7 +23,8 @@ public class PlayerMovement : MonoBehaviour
     private float dashDuration = 0.2f;
 
     [Header("Attack")]
-    private float attackDuration = 0.3f;
+    private float attackDuration = 0.2f;
+    private float attackCooldown = 0.4f;
     private float pogoVelocity = 8f;
     private float pogoTime = 0.2f;
 
@@ -51,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
     // attack state
     private bool attacking = false;
     private float attackTimer;
+    private float attackCDTimer;
     private float attackDirectionYThreshold = 0.5f;
     public bool attackDownward;
     private float playerSizeX;
@@ -67,9 +69,10 @@ public class PlayerMovement : MonoBehaviour
         inputs.Player.Move.performed += ctx =>
         {
             moveInput = ctx.ReadValue<Vector2>();
-            lastFacingX = (moveInput.x != 0) ? Mathf.Sign(moveInput.x) : lastFacingX;
+            moveInput.x = (moveInput.x != 0f) ? Mathf.Sign(moveInput.x) : 0f;
+            lastFacingX = (moveInput.x != 0f) ? Mathf.Sign(moveInput.x) : lastFacingX;
         };
-        inputs.Player.Move.canceled += ctx => moveInput.x = 0f;
+        inputs.Player.Move.canceled += ctx => moveInput = new Vector2(0f, 0f);
 
         inputs.Player.Jump.performed += _ => OnJumpPressed();
         inputs.Player.Jump.canceled += _ => OnJumpReleased();
@@ -96,7 +99,9 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
-        HandleJumpHold();
+        HandleHoldTimer();
+        HandlePogoTimer();
+        HandleAirTime();
         HandleDash();
         HandleAttack();
     }
@@ -138,18 +143,27 @@ public class PlayerMovement : MonoBehaviour
         jumpCut = false;
     }
 
-    private void HandleJumpHold()
+    private void HandleHoldTimer()
     {
-        if (holdJump && rb.linearVelocity.y > 0f && holdTimer > 0f)
+        if (holdJump && holdTimer > 0f)
         {
             holdTimer -= Time.fixedDeltaTime;
         }
-        else if (holdJump && rb.linearVelocity.y > 0f)
+        else
+        {
+            holdTimer = 0f;
+        }
+    }
+
+    private void HandleAirTime()
+    {
+        if (rb.linearVelocity.y > 0f && !((holdJump && holdTimer > 0f) || pogoTimer > 0f))
         {
             jumpCut = true;
         }
-        else
+        else if (rb.linearVelocity.y < 0f)
         {
+            jumpCut = false;
             holdJump = false;
         }
     }
@@ -205,31 +219,49 @@ public class PlayerMovement : MonoBehaviour
     {
         if (movementLocked) return;
         if (attacking) return;
+        if (attackCDTimer > 0f) return;
 
         attacking = true;
         attackTimer = attackDuration;
+        attackCDTimer = attackCooldown;
 
+        Vector3 position;
+        float angleZ;
         if (moveInput.y > attackDirectionYThreshold)
         {
             attackDownward = false;
-            attackArea.transform.localPosition = new Vector3(0f, playerSizeY * 0.5f, 0f);
+            position = new Vector3(0f, playerSizeY * 0.5f, 0f);
+            angleZ = 90f;
         }
         else if (moveInput.y < -attackDirectionYThreshold && !isGrounded)
         {
             attackDownward = true;
-            attackArea.transform.localPosition = new Vector3(0f, -playerSizeY * 0.5f, 0f);
+            position = new Vector3(0f, -playerSizeY * 0.5f, 0f);
+            angleZ = -90f;
         }
         else
         {
             attackDownward = false;
-            attackArea.transform.localPosition = new Vector3(playerSizeX * 0.5f * lastFacingX, 0f, 0f);
+            position = new Vector3(playerSizeX * 0.5f * lastFacingX, 0f, 0f);
+            angleZ = (lastFacingX >= 0f) ? 0f : 180f;
         }
 
+        attackArea.transform.localPosition = position;
+        attackArea.transform.localRotation = Quaternion.Euler(0f, 0f, angleZ);
         attackArea.SetActive(true);
     }
 
     private void HandleAttack()
     {
+        if (attackCDTimer > 0f)
+        {
+            attackCDTimer -= Time.fixedDeltaTime;
+        }
+        else
+        {
+            attackCDTimer = 0f;
+        }
+
         if (!attacking) return;
 
         if (attackTimer > 0f)
