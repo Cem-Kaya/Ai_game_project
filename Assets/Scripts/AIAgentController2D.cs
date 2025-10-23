@@ -163,6 +163,7 @@ public class AIAgentController2D : Agent
 
         enemyBuf = new Collider2D[Mathf.Max(1, maxEnemies * 2)];
         gemBuf = new Collider2D[Mathf.Max(1, maxGems * 2)];
+        ResolveFinalGoalByTagIfNeeded();
     }
 
     private void Update() => TuneGravityForFeel();
@@ -561,6 +562,8 @@ public class AIAgentController2D : Agent
 
     public override void OnEpisodeBegin()
     {
+        ResolveFinalGoalByTagIfNeeded();
+
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
         rb.gravityScale = baseGravityScale;
@@ -584,10 +587,7 @@ public class AIAgentController2D : Agent
         prevDash = 0;
         prevAttack = 0;
 
-        Vector2 spawn = new Vector2(
-            UnityEngine.Random.Range(spawnMinXY.x, spawnMaxXY.x),
-            UnityEngine.Random.Range(spawnMinXY.y, spawnMaxXY.y)
-        );
+        Vector2 spawn = new Vector2( 1.5f, 0.0f );
         rb.position = spawn;
 
         prevGoalDist = DistanceTo(finalGoal);
@@ -673,5 +673,27 @@ public class AIAgentController2D : Agent
     public void SetSpawnRegion(Vector2 min, Vector2 max)
     {
         spawnMinXY = min; spawnMaxXY = max;
+    }
+
+
+    // Add this field if not present
+
+    private void ResolveFinalGoalByTagIfNeeded()
+    {
+        if (finalGoal != null) return;
+        if (string.IsNullOrEmpty(goalTag)) return;
+
+        var all = GameObject.FindGameObjectsWithTag(goalTag);
+        if (all == null || all.Length == 0) return;
+
+        // pick the closest to the agent
+        Transform best = all[0].transform;
+        float bestD2 = ((Vector2)best.position - (Vector2)transform.position).sqrMagnitude;
+        for (int i = 1; i < all.Length; i++)
+        {
+            float d2 = ((Vector2)all[i].transform.position - (Vector2)transform.position).sqrMagnitude;
+            if (d2 < bestD2) { bestD2 = d2; best = all[i].transform; }
+        }
+        finalGoal = best;
     }
 }

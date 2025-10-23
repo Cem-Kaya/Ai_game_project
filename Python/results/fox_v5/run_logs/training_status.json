@@ -1,0 +1,29 @@
+{
+    "FoxAgent": {
+        "checkpoints": [
+            {
+                "steps": 131112,
+                "file_path": "results\\fox_v5\\FoxAgent\\FoxAgent-131112.onnx",
+                "reward": null,
+                "creation_time": 1761254788.2129138,
+                "auxillary_file_paths": [
+                    "results\\fox_v5\\FoxAgent\\FoxAgent-131112.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 131112,
+            "file_path": "results\\fox_v5\\FoxAgent.onnx",
+            "reward": null,
+            "creation_time": 1761254788.2129138,
+            "auxillary_file_paths": [
+                "results\\fox_v5\\FoxAgent\\FoxAgent-131112.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

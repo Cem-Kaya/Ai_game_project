@@ -7,6 +7,8 @@ TagManager:
   - Ground
   - Gem
   - final
+  - Enemy
+  - Hazard
   layers:
   - Default
   - TransparentFX
@@ -14,8 +16,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Gems
+  - Enemies
   - 
   - 
   - 

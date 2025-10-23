@@ -1,0 +1,89 @@
+behaviors:
+  FoxAgent:                                 # MUST match Behavior Name in Unity
+    trainer_type: ppo                       # {ppo, sac, poca} — algorithm
+
+    # -------------------- Hyperparameters --------------------
+    hyperparameters:
+      batch_size: 4096                      # SGD minibatch size per epoch (B)
+      buffer_size: 131072                   # Rollout size per update (≫ batch_size)
+      learning_rate: 3.0e-4                # α in Adam optimizer
+      beta: 5.0e-3                          # β in L_total = ... - β·H[π]  (entropy bonus)
+      epsilon: 0.2                          # ε in L_clip = E[min(rA, clip(r,1±ε)A)]  (PPO clip)
+      lambd: 0.95                            # λ in GAE: A_t = Σ_k (γλ)^k δ_{t+k}
+      num_epoch: 3                           # K — passes over buffer each update
+      learning_rate_schedule: linear       # {constant, linear} — LR schedule
+
+    # -------------------- Network --------------------
+    network_settings:
+      normalize: true                        # Normalize vector obs online
+      hidden_units: 512                      # MLP width for vector/ray features
+      num_layers: 4                          # MLP depth
+      vis_encode_type: resnet                # {simple, nature_cnn, resnet, match3} — camera encoder
+      # memory:                              # (optional) recurrent policy/value
+      #   sequence_length: 64                # BPTT unroll length
+      #   memory_size: 128                   # LSTM hidden size
+
+    # -------------------- Reward signals --------------------
+    reward_signals:
+      extrinsic:
+        gamma: 0.995                         # γ in G_t = Σ_k γ^k r_{t+k+1} and GAE
+        strength: 1.0                        # Scale multiplier on this reward
+
+    # -------------------- Training cadence / logging --------------------
+    max_steps: 5.0e6                         # Stop after this many env steps
+    time_horizon: 128                        # Truncation T for returns/GAE (affects bias/var)
+    summary_freq: 10000                      # Steps between TB logs
+    keep_checkpoints: 3                      # # of .onnx checkpoints to keep
+
+    # -------------------- Optional: Behavioral Cloning --------------------
+    # behavioral_cloning:
+    #   demo_path: Assets/Demos/fox_demo.demo   # .demo recorded in Unity
+    #   strength: 0.5                           # Add L_BC with this weight to total loss
+    #   steps: 500000                           # Apply BC for first N steps
+
+    # -------------------- Optional: Curiosity (ICM) --------------------
+    # reward_signals:
+    #   extrinsic:
+    #     gamma: 0.995
+    #     strength: 1.0
+    #   curiosity:
+    #     strength: 0.02                      # Scales intrinsic r_int
+    #     gamma: 0.99                         # Discount for intrinsic return
+
+# -------------------- Engine / device --------------------
+torch_settings:
+  device: cuda                               # {cpu, cuda} — pick GPU if available
+
+# -------------------- Optional: Curriculum --------------------
+# environment_parameters:
+#   difficulty:
+#     curriculum:
+#       - name: easy
+#         completion_criteria:
+#           measure: reward                   # Promote when smoothed reward ≥ threshold
+#           behavior: FoxAgent
+#           signal_smoothing: true
+#           min_lesson_length: 200
+#           threshold: 0.7
+#         value: 0                            # Read via Academy in C#
+#       - name: medium
+#         completion_criteria:
+#           measure: reward
+#           behavior: FoxAgent
+#           signal_smoothing: true
+#           min_lesson_length: 200
+#           threshold: 1.2
+#         value: 1
+#       - name: hard
+#         value: 2
+
+# -------------------- Reference (math) --------------------
+# Importance ratio: r_t(θ) = π_θ(a_t|s_t) / π_{θ_old}(a_t|s_t)
+# Clipped PPO objective: L_clip(θ) = E_t[ min( r_t A_t, clip(r_t, 1-ε, 1+ε) A_t ) ]
+# Policy loss:          L_policy = - L_clip(θ)
+# Value loss:           L_value  = c1 · (V_θ(s_t) - V_target_t)^2
+# Entropy bonus:        L_ent    = - β · H[π_θ(·|s_t)]
+# Total loss:           L_total  = L_policy + L_value + L_ent
+# TD error:             δ_t = r_t + γ V(s_{t+1}) - V(s_t)
+# GAE advantage:        A_t = Σ_k (γλ)^k · δ_{t+k}
+# Target value:         V_target_t = A_t + V(s_t)
