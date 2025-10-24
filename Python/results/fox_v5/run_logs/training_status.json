@@ -2,28 +2,46 @@
     "FoxAgent": {
         "checkpoints": [
             {
-                "steps": 131112,
-                "file_path": "results\\fox_v5\\FoxAgent\\FoxAgent-131112.onnx",
-                "reward": null,
-                "creation_time": 1761254788.2129138,
+                "steps": 999976,
+                "file_path": "results\\fox_v5\\FoxAgent\\FoxAgent-999976.onnx",
+                "reward": 61.19499325082562,
+                "creation_time": 1761278224.3600123,
                 "auxillary_file_paths": [
-                    "results\\fox_v5\\FoxAgent\\FoxAgent-131112.pt"
+                    "results\\fox_v5\\FoxAgent\\FoxAgent-999976.pt"
+                ]
+            },
+            {
+                "steps": 1499960,
+                "file_path": "results\\fox_v5\\FoxAgent\\FoxAgent-1499960.onnx",
+                "reward": 59.9167125316386,
+                "creation_time": 1761290854.0660405,
+                "auxillary_file_paths": [
+                    "results\\fox_v5\\FoxAgent\\FoxAgent-1499960.pt"
+                ]
+            },
+            {
+                "steps": 1936346,
+                "file_path": "results\\fox_v5\\FoxAgent\\FoxAgent-1936346.onnx",
+                "reward": 62.23948155567919,
+                "creation_time": 1761302505.4338539,
+                "auxillary_file_paths": [
+                    "results\\fox_v5\\FoxAgent\\FoxAgent-1936346.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 131112,
+            "steps": 1936346,
             "file_path": "results\\fox_v5\\FoxAgent.onnx",
-            "reward": null,
-            "creation_time": 1761254788.2129138,
+            "reward": 62.23948155567919,
+            "creation_time": 1761302505.4338539,
             "auxillary_file_paths": [
-                "results\\fox_v5\\FoxAgent\\FoxAgent-131112.pt"
+                "results\\fox_v5\\FoxAgent\\FoxAgent-1936346.pt"
             ]
         }
     },
     "metadata": {
         "stats_format_version": "0.3.0",
         "mlagents_version": "1.1.0",
-        "torch_version": "2.2.2+cu121"
+        "torch_version": "2.5.1+cu121"
     }
 }
