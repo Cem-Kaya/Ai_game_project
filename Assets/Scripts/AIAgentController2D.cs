@@ -587,7 +587,7 @@ public class AIAgentController2D : Agent
         prevDash = 0;
         prevAttack = 0;
 
-        Vector2 spawn = new Vector2( 1.5f, 0.0f );
+        Vector2 spawn = new Vector2(1.5f, 0.0f);
         rb.position = spawn;
 
         prevGoalDist = DistanceTo(finalGoal);
