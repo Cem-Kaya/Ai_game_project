@@ -86,6 +86,12 @@ public class AIAgentController2D : Agent
     [Header("Fail-safe")]
     public float autoRespawnY = -20f;
 
+    // ===== Episode / Timeout =====
+    [Header("Episode / Timeout")]
+    [SerializeField] private float episodeTimeLimit = 60f;  // seconds
+    [SerializeField] private float timeoutPenalty = 0f;     // optional penalty on timeout
+    private float episodeStartTime;
+
     // ===== internals =====
     private Rigidbody2D rb;
     private BoxCollider2D box;
@@ -179,10 +185,20 @@ public class AIAgentController2D : Agent
 
         ApplyStepRewards();
 
+        // Fail-safe: fell below map
         if (transform.position.y < autoRespawnY)
         {
             AddReward(R.deathPenalty);
             EndEpisode();
+            return;
+        }
+
+        // Timeout: end episode if time limit exceeded
+        if (Time.time - episodeStartTime >= episodeTimeLimit)
+        {
+            if (timeoutPenalty != 0f) AddReward(timeoutPenalty);
+            EndEpisode();
+            return;
         }
     }
 
@@ -354,7 +370,7 @@ public class AIAgentController2D : Agent
         else pogoTimer = 0f;
     }
 
-    // ===== Grounding (keep your existing tag/layer approach for ground if desired) =====
+    // ===== Grounding =====
     private void OnCollisionEnter2D(Collision2D collision)
     {
         foreach (var c in collision.contacts)
@@ -587,9 +603,14 @@ public class AIAgentController2D : Agent
         prevDash = 0;
         prevAttack = 0;
 
+        // Spawn
         Vector2 spawn = new Vector2(1.5f, 0.0f);
         rb.position = spawn;
 
+        // Start episode timer
+        episodeStartTime = Time.time;
+
+        // Init shaping caches
         prevGoalDist = DistanceTo(finalGoal);
         prevNearestGemDist = FindNearestDistance(gemMask);
         prevNearestEnemyDist = FindNearestDistance(enemyMask);
@@ -674,9 +695,6 @@ public class AIAgentController2D : Agent
     {
         spawnMinXY = min; spawnMaxXY = max;
     }
-
-
-    // Add this field if not present
 
     private void ResolveFinalGoalByTagIfNeeded()
     {
