@@ -234,9 +234,43 @@ public class AIAgentController2D : Agent
             }
         }
     }
+    private void CheckFallFailSafeSimple()
+    {
+        // Use rb.position for world Y (same as transform.position, but already cached)
+        if (rb.position.y < autoRespawnY)   // autoRespawnY is serialized; set it to -20 in Inspector
+        {
+            if (R.deathPenalty != 0f) AddReward(R.deathPenalty);
+            EndEpisode();
+        }
+    }
 
     private void FixedUpdate()
     {
+        // ---- FALL FAIL-SAFE FIRST (no other logic before this) ----
+        float y = rb.position.y;
+        // NaN/Inf guard
+        if (!float.IsFinite(y) || !float.IsFinite(autoRespawnY))
+        {
+            //Debug.LogWarning($"[FailSafe:{name}#{GetInstanceID()}] Non-finite values (y={y}, autoRespawnY={autoRespawnY}). Ending episode.");
+            if (R.deathPenalty != 0f) AddReward(R.deathPenalty);
+            EndEpisode();
+            return;
+        }
+
+        if (y < autoRespawnY)
+        {
+            //Debug.Log($"[FailSafe TRIP:{name}#{GetInstanceID()}] y={y:F2} < {autoRespawnY:F2}");
+            if (R.deathPenalty != 0f) AddReward(R.deathPenalty);
+            EndEpisode();
+            return;
+        }
+        else
+        {
+            // Only keep while debugging; comment out later
+            // Debug.Log($"[FailSafe NO-TRIP:{name}#{GetInstanceID()}] y={y:F2} >= {autoRespawnY:F2}");
+        }
+
+        // ---- NORMAL STEP LOGIC ----
         MovePlayer();
         HandleHoldTimer();
         HandlePogoTimer();
@@ -247,14 +281,6 @@ public class AIAgentController2D : Agent
         ApplyStepRewards();
         ApplyMilestoneRewards();
 
-        // Fail-safe: fell below map
-        if (transform.position.y < autoRespawnY)
-        {
-            AddReward(R.deathPenalty);
-            EndEpisode();
-            return;
-        }
-
         // Timeout: end episode if time limit exceeded
         if (Time.time - episodeStartTime >= episodeTimeLimit)
         {
@@ -263,6 +289,7 @@ public class AIAgentController2D : Agent
             return;
         }
     }
+
 
     private void ComputeBoundsFromCamera()
     {
@@ -670,14 +697,25 @@ public class AIAgentController2D : Agent
         if (R.stepPenalty != 0f) AddReward(R.stepPenalty);
     }
 
+    [Header("Spawn")]
+    [SerializeField] private Transform spawnPoint;                 // optional (assign in Inspector)
+    [SerializeField] private Vector2 defaultSpawn = new Vector2(1.5f, 0f); // fallback if no spawnPoint
+
     public override void OnEpisodeBegin()
     {
         ResolveFinalGoalByTagIfNeeded();
 
+        // ---- set position FIRST ----
+        Vector2 spawn = spawnPoint ? (Vector2)spawnPoint.position : defaultSpawn;
+        rb.position = spawn;
+        transform.position = spawn; // keep Transform & RB in sync (important if interpolation is on)
+
+        // ---- reset dynamics ----
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
         rb.gravityScale = baseGravityScale;
 
+        // ---- reset gameplay state ----
         movementLocked = false;
         holdJump = false;
         holdTimer = 0f;
@@ -705,15 +743,15 @@ public class AIAgentController2D : Agent
         prevNearestGemDist = FindNearestDistance(gemMask);
         prevNearestEnemyDist = FindNearestDistance(enemyMask);
 
-        // init milestone caches
+        // milestones
         startGoalDist = prevGoalDist;
         nextGoalMilestoneProgress = goalMilestoneMeters;
 
-        // reset damage state
+        // damage state
         enemyBodyTouches = 0;
         invulnerableUntil = 0f;
 
-        // reset heuristic scheduler
+        // heuristic scheduler
         heuristicFrameCountdown = 0;
     }
 
