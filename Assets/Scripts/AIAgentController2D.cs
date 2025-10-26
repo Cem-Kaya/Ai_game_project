@@ -834,6 +834,7 @@ public class AIAgentController2D : Agent
 
     public void OnReachGoal(Collider2D goal)
     {
+        Debug.Log("big reward");
         AddReward(R.reachGoal);
         EndEpisode();
     }
