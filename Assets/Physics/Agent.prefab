@@ -44,8 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f67c7e722ba14acd9153bb4488bff6e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SensorName: RayPerceptionSensor
-  m_DetectableTags: []
+  m_SensorName: RaysFront
+  m_DetectableTags:
+  - Gem
+  - Enemy
+  - Ground
   m_RaysPerDirection: 3
   m_MaxRayDegrees: 70
   m_SphereCastRadius: 0.5
@@ -58,143 +61,6 @@ MonoBehaviour:
   m_UseBatchedRaycasts: 0
   rayHitColor: {r: 1, g: 0, b: 0, a: 1}
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &2610764144472961050
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7787580513372694618}
-  - component: {fileID: 1256842482422182464}
-  - component: {fileID: 6042158514930563761}
-  - component: {fileID: 1115984887053734666}
-  m_Layer: 0
-  m_Name: Agent_cam
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7787580513372694618
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2610764144472961050}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1628432929071570436}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &1256842482422182464
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2610764144472961050}
-  m_Enabled: 0
-  serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_Iso: 200
-  m_ShutterSpeed: 0.005
-  m_Aperture: 16
-  m_FocusDistance: 10
-  m_FocalLength: 50
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
-  m_BarrelClipping: 0.25
-  m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 1
-  orthographic size: 6
-  m_Depth: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 7
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!81 &6042158514930563761
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2610764144472961050}
-  m_Enabled: 0
---- !u!114 &1115984887053734666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2610764144472961050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderShadows: 0
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_AllowHDROutput: 1
-  m_UseScreenCoordOverride: 0
-  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
-  m_TaaSettings:
-    m_Quality: 3
-    m_FrameInfluence: 0.1
-    m_JitterScale: 1
-    m_MipBias: 0
-    m_VarianceClampScale: 0.9
-    m_ContrastAdaptiveSharpening: 0
 --- !u!1 &3843505728891559406
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,8 +254,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f67c7e722ba14acd9153bb4488bff6e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SensorName: RayPerceptionSensor
-  m_DetectableTags: []
+  m_SensorName: RaysDown
+  m_DetectableTags:
+  - Gem
+  - Enemy
+  - Ground
   m_RaysPerDirection: 3
   m_MaxRayDegrees: 70
   m_SphereCastRadius: 0.5
@@ -419,7 +288,7 @@ GameObject:
   - component: {fileID: 6303542243047418653}
   - component: {fileID: 8032926039938305540}
   - component: {fileID: 7224727683992456142}
-  - component: {fileID: 1773130814643178436}
+  - component: {fileID: 1437650933920701476}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
@@ -441,7 +310,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6913212002292138774}
-  - {fileID: 7787580513372694618}
   - {fileID: 4579029863372979486}
   - {fileID: 3045958163484928015}
   m_Father: {fileID: 0}
@@ -570,7 +438,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -648,25 +516,27 @@ MonoBehaviour:
   maxGems: 5
   scanRadius: 25
   gemTag: Gem
-  goalTag: 
-  hazardTag: 
+  goalTag: final
+  hazardTag: Hazard
   autoBoundsFromCamera: 1
   cameraPadding: 0.5
   minXY: {x: 0, y: 0}
   maxXY: {x: 0, y: 0}
-  obsCamera: {fileID: 1256842482422182464}
+  obsCamera: {fileID: 0}
   includeCameraObs: 1
   R:
     stepPenalty: -0.001
-    progressToGoal: 0
-    progressToNearestGem: 0
-    progressToNearestEnemy: 0
-    collectGem: 0.2
-    hitEnemy: 0.1
-    pogoFromEnemy: 0.3
-    reachGoal: 1
-    deathPenalty: -1
+    progressToGoal: 0.001
+    progressToNearestGem: 0.0001
+    progressToNearestEnemy: 0.0001
+    collectGem: 5
+    hitEnemy: 3
+    pogoFromEnemy: 10
+    reachGoal: 100
+    deathPenalty: -200
   autoRespawnY: -20
+  episodeTimeLimit: 60
+  timeoutPenalty: 0
   groundContactNormalThreshold: 0.7
   attackDownward: 0
 --- !u!114 &8032926039938305540
@@ -715,7 +585,7 @@ MonoBehaviour:
   DecisionPeriod: 5
   DecisionStep: 0
   TakeActionsBetweenDecisions: 1
---- !u!114 &1773130814643178436
+--- !u!114 &1437650933920701476
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -724,15 +594,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7895982576584948619}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 282f342c2ab144bf38be65d4d0c4e07d, type: 3}
+  m_Script: {fileID: 11500000, guid: 132e1194facb64429b007ea1edf562d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Camera: {fileID: 1256842482422182464}
-  m_SensorName: CameraSensor
-  m_Width: 128
-  m_Height: 128
+  m_RenderTexture: {fileID: 8400000, guid: 77272280fc0a6f844ac17e133120c26c, type: 2}
+  m_SensorName: RenderTextureSensor
   m_Grayscale: 0
-  m_ObservationType: 0
-  m_RuntimeCameraEnable: 0
   m_ObservationStacks: 1
   m_Compression: 1
