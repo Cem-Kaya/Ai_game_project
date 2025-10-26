@@ -10465,6 +10465,14 @@ PrefabInstance:
       propertyPath: obsCamera
       value: 
       objectReference: {fileID: 1901695781}
+    - target: {fileID: 6303542243047418653, guid: c856991006db4ec46b69be3548830583, type: 3}
+      propertyPath: R.reachGoal
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6303542243047418653, guid: c856991006db4ec46b69be3548830583, type: 3}
+      propertyPath: timeoutPenalty
+      value: -100
+      objectReference: {fileID: 0}
     - target: {fileID: 7224727683992456142, guid: c856991006db4ec46b69be3548830583, type: 3}
       propertyPath: DecisionPeriod
       value: 3
