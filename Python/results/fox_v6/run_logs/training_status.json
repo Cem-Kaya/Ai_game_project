@@ -2,15 +2,6 @@
     "FoxAgent": {
         "checkpoints": [
             {
-                "steps": 1343363,
-                "file_path": "results\\fox_v6\\FoxAgent\\FoxAgent-1343363.onnx",
-                "reward": 61.69769799080654,
-                "creation_time": 1761398585.6436641,
-                "auxillary_file_paths": [
-                    "results\\fox_v6\\FoxAgent\\FoxAgent-1343363.pt"
-                ]
-            },
-            {
                 "steps": 1499934,
                 "file_path": "results\\fox_v6\\FoxAgent\\FoxAgent-1499934.onnx",
                 "reward": 92.40684181953138,
@@ -27,15 +18,24 @@
                 "auxillary_file_paths": [
                     "results\\fox_v6\\FoxAgent\\FoxAgent-1621837.pt"
                 ]
+            },
+            {
+                "steps": 1816744,
+                "file_path": "results\\fox_v6\\FoxAgent\\FoxAgent-1816744.onnx",
+                "reward": 60.80205734570915,
+                "creation_time": 1761409273.7891958,
+                "auxillary_file_paths": [
+                    "results\\fox_v6\\FoxAgent\\FoxAgent-1816744.pt"
+                ]
             }
         ],
         "final_checkpoint": {
-            "steps": 1621837,
+            "steps": 1816744,
             "file_path": "results\\fox_v6\\FoxAgent.onnx",
-            "reward": 93.92400024348554,
-            "creation_time": 1761404683.716816,
+            "reward": 60.80205734570915,
+            "creation_time": 1761409273.7891958,
             "auxillary_file_paths": [
-                "results\\fox_v6\\FoxAgent\\FoxAgent-1621837.pt"
+                "results\\fox_v6\\FoxAgent\\FoxAgent-1816744.pt"
             ]
         }
     },
