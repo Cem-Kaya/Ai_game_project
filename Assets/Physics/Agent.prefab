@@ -492,6 +492,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
+  enableKeyboardControl: 0
   speed: 7
   jumpForce: 11
   maxHoldTime: 0.3
@@ -518,6 +519,10 @@ MonoBehaviour:
   gemTag: Gem
   goalTag: final
   hazardTag: Hazard
+  enemyBodyTag: Enemy
+  maxEnemyBodyTouches: 3
+  touchInvulnerabilitySeconds: 0.5
+  perTouchPenalty: -0.05
   autoBoundsFromCamera: 1
   cameraPadding: 0.5
   minXY: {x: 0, y: 0}
@@ -526,17 +531,20 @@ MonoBehaviour:
   includeCameraObs: 1
   R:
     stepPenalty: -0.001
-    progressToGoal: 0.001
-    progressToNearestGem: 0.0001
-    progressToNearestEnemy: 0.0001
-    collectGem: 5
-    hitEnemy: 3
-    pogoFromEnemy: 10
-    reachGoal: 100
+    progressToGoal: 0.05
+    progressToNearestGem: 0.005
+    progressToNearestEnemy: 0
+    collectGem: 20
+    hitEnemy: 10
+    pogoFromEnemy: 50
+    reachGoal: 500
     deathPenalty: -200
+    goalMilestoneReward: 10
+  goalMilestoneMeters: 2
+  enableGoalMilestones: 1
   autoRespawnY: -20
   episodeTimeLimit: 60
-  timeoutPenalty: 0
+  timeoutPenalty: -100
   groundContactNormalThreshold: 0.7
   attackDownward: 0
 --- !u!114 &8032926039938305540
@@ -582,7 +590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DecisionPeriod: 5
+  DecisionPeriod: 10
   DecisionStep: 0
   TakeActionsBetweenDecisions: 1
 --- !u!114 &1437650933920701476
@@ -599,6 +607,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RenderTexture: {fileID: 8400000, guid: 77272280fc0a6f844ac17e133120c26c, type: 2}
   m_SensorName: RenderTextureSensor
-  m_Grayscale: 0
+  m_Grayscale: 1
   m_ObservationStacks: 1
   m_Compression: 1

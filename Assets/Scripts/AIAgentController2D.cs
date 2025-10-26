@@ -2,15 +2,34 @@
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using Unity.MLAgents.Policies;
 using UnityEngine;
 
 /// ML-Agents 2D platformer agent with dash + jump-hold cut + directional attack + pogo.
-/// Vector observations include camera, nearest enemies/gems, and final goal.
-/// Rewards are modular via RewardWeights. Uses safe tag string equality (no CompareTag).
+/// Adds per-episode goal-progress milestones and 3-hit death on enemy body contact.
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(BehaviorParameters))]
 public class AIAgentController2D : Agent
 {
+    // ===== Heuristic control gate =====
+    [Header("Heuristic Control")]
+    [Tooltip("When ON, keyboard controls are used in Heuristic() (only if behavior type uses heuristics). When OFF, Heuristic returns zero actions.")]
+    [SerializeField] private bool enableKeyboardControl = false;
+
+    [Tooltip("For Heuristic Only mode: request a decision every N frames to avoid missed inputs.")]
+    [SerializeField] private int heuristicDecisionInterval = 1; // 1 = every frame
+
+    // ===== Heuristic keybinds =====
+    [Header("Heuristic Keys")]
+    [SerializeField] private KeyCode leftKey = KeyCode.A;
+    [SerializeField] private KeyCode rightKey = KeyCode.D;
+    [SerializeField] private KeyCode upKey = KeyCode.W;
+    [SerializeField] private KeyCode downKey = KeyCode.S;
+    [SerializeField] private KeyCode jumpKey = KeyCode.Space;
+    [SerializeField] private KeyCode dashKey = KeyCode.LeftShift; // Shift to dash
+    [SerializeField] private KeyCode attackKey = KeyCode.Z;       // Z to attack
+
     // ===== Movement =====
     [Header("Move")]
     [SerializeField] private float speed = 7f;
@@ -46,11 +65,22 @@ public class AIAgentController2D : Agent
 
     // ===== Trigger handling with tags (configurable, no CompareTag used) =====
     [Header("Trigger Tags (leave empty to disable)")]
-    [SerializeField] private string gemTag = "Gem";   // collectable
-    [SerializeField] private string goalTag = "";      // e.g., "Goal" (was "Star"); empty = disabled
-    [SerializeField] private string hazardTag = "";     // e.g., "Hazard" (was "BAD"); empty = disabled
+    [SerializeField] private string gemTag = "Gem";
+    [SerializeField] private string goalTag = "";
+    [SerializeField] private string hazardTag = "";
 
-    // ===== Arena / camera =====
+    // ===== Damage rules =====
+    [Header("Damage Rules")]
+    [Tooltip("Tag on enemy BODY colliders that should damage the agent when touched.")]
+    [SerializeField] private string enemyBodyTag = "Enemy";
+    [Tooltip("How many enemy body touches before death.")]
+    [SerializeField] private int maxEnemyBodyTouches = 3;
+    [Tooltip("Seconds of invulnerability after a touch to prevent rapid re-hits from the same overlap.")]
+    [SerializeField] private float touchInvulnerabilitySeconds = 0.5f;
+    [Tooltip("Optional small penalty per enemy body touch.")]
+    [SerializeField] private float perTouchPenalty = -0.05f;
+
+    // ===== Observations / Arena =====
     [Header("Observations / Arena")]
     public bool autoBoundsFromCamera = true;
     public float cameraPadding = 0.5f;
@@ -79,9 +109,18 @@ public class AIAgentController2D : Agent
         public float pogoFromEnemy = 0.3f;
         public float reachGoal = 1.0f;
         public float deathPenalty = -1.0f;
+
+        [Header("Milestones")]
+        public float goalMilestoneReward = 10f;   // reward per milestone
     }
     [Header("Reward Weights")]
     public RewardWeights R = new RewardWeights();
+
+    [Header("Milestone Settings")]
+    [Tooltip("Meters toward the goal between milestone rewards.")]
+    [SerializeField] private float goalMilestoneMeters = 2f;
+    [Tooltip("Enable per-episode goal progress milestones.")]
+    [SerializeField] private bool enableGoalMilestones = true;
 
     [Header("Fail-safe")]
     public float autoRespawnY = -20f;
@@ -96,6 +135,7 @@ public class AIAgentController2D : Agent
     private Rigidbody2D rb;
     private BoxCollider2D box;
     private GameObject attackArea;
+    private BehaviorParameters behaviorParameters;
 
     private Vector2 moveInput;
     private float lastFacingX = 1f;
@@ -111,7 +151,7 @@ public class AIAgentController2D : Agent
     private bool dashing;
     private float dashTimer;
 
-    public bool attackDownward;  // read by AttackAreaAgent
+    public bool attackDownward;
     private bool attacking = false;
     private float attackTimer;
     private float attackCDTimer;
@@ -125,23 +165,27 @@ public class AIAgentController2D : Agent
     private int prevDash = 0;
     private int prevAttack = 0;
 
-    // cached arrays
-    private Collider2D[] enemyBuf;
-    private Collider2D[] gemBuf;
-
     // shaping caches
     private float prevGoalDist;
     private float prevNearestGemDist;
     private float prevNearestEnemyDist;
 
-    // episode spawn region
-    private Vector2 spawnMinXY;
-    private Vector2 spawnMaxXY;
+    // milestone caches
+    private float startGoalDist;
+    private float nextGoalMilestoneProgress;
+
+    // damage caches
+    private int enemyBodyTouches;
+    private float invulnerableUntil;
+
+    // heuristic decision scheduler
+    private int heuristicFrameCountdown;
 
     private new void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         box = GetComponent<BoxCollider2D>();
+        behaviorParameters = GetComponent<BehaviorParameters>();
         rb.gravityScale = baseGravityScale;
 
         if (obsCamera == null) obsCamera = Camera.main;
@@ -156,23 +200,40 @@ public class AIAgentController2D : Agent
         {
             attackAreaDefaultPos = attackArea.transform.localPosition;
             attackArea.SetActive(false);
-
             if (attackArea.GetComponent<AttackAreaAgent>() == null)
-                attackArea.AddComponent<AttackAreaAgent>(); // forwards hits, uses safe tag compare
+                attackArea.AddComponent<AttackAreaAgent>();
         }
 
         playerSizeX = box.size.x;
         playerSizeY = box.size.y;
 
-        spawnMinXY = minXY;
-        spawnMaxXY = maxXY;
-
-        enemyBuf = new Collider2D[Mathf.Max(1, maxEnemies * 2)];
-        gemBuf = new Collider2D[Mathf.Max(1, maxGems * 2)];
         ResolveFinalGoalByTagIfNeeded();
+
+        heuristicFrameCountdown = 0; // start requesting immediately if in heuristic mode
     }
 
-    private void Update() => TuneGravityForFeel();
+    private void Update()
+    {
+        // Gravity feel
+        TuneGravityForFeel();
+
+        // Ensure Heuristic requests decisions regularly to avoid missed key presses.
+        // Works when Behavior Type = Heuristic Only (or when Inference + Heuristic).
+        if (enableKeyboardControl && behaviorParameters != null &&
+            behaviorParameters.BehaviorType == BehaviorType.HeuristicOnly)
+        {
+            if (heuristicDecisionInterval < 1) heuristicDecisionInterval = 1;
+            if (heuristicFrameCountdown <= 0)
+            {
+                RequestDecision();                 // schedule an action update
+                heuristicFrameCountdown = heuristicDecisionInterval;
+            }
+            else
+            {
+                heuristicFrameCountdown--;
+            }
+        }
+    }
 
     private void FixedUpdate()
     {
@@ -184,6 +245,7 @@ public class AIAgentController2D : Agent
         HandleAttack();
 
         ApplyStepRewards();
+        ApplyMilestoneRewards();
 
         // Fail-safe: fell below map
         if (transform.position.y < autoRespawnY)
@@ -425,23 +487,56 @@ public class AIAgentController2D : Agent
             OnDeath(other);
             return;
         }
+        // Enemy body touch -> damage count
+        if (HasTag(go, enemyBodyTag))
+        {
+            RegisterEnemyBodyTouch(other);
+            return;
+        }
+    }
+
+    private void RegisterEnemyBodyTouch(Collider2D source)
+    {
+        if (Time.time < invulnerableUntil) return;
+        invulnerableUntil = Time.time + Mathf.Max(0f, touchInvulnerabilitySeconds);
+
+        enemyBodyTouches = Mathf.Max(0, enemyBodyTouches + 1);
+        if (perTouchPenalty != 0f) AddReward(perTouchPenalty);
+
+        if (enemyBodyTouches >= Mathf.Max(1, maxEnemyBodyTouches))
+        {
+            OnDeath(source);
+        }
     }
 
     // ===== Heuristic (keyboard) =====
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var da = actionsOut.DiscreteActions;
-        float h = Input.GetAxisRaw("Horizontal");
-        da[0] = h < 0 ? 1 : (h > 0 ? 2 : 0);
 
-        float v = Input.GetAxisRaw("Vertical");
-        da[4] = v > 0.2f ? 1 : (v < -0.2f ? 2 : 0);
+        // If keyboard control is disabled, output neutral actions.
+        if (!enableKeyboardControl)
+        {
+            for (int i = 0; i < da.Length; i++) da[i] = 0;
+            return;
+        }
 
-        bool jumpHeld = Input.GetKey(KeyCode.Space);
-        da[1] = jumpHeld ? 1 : 0;
+        // Horizontal (use GetKey, not GetKeyDown)
+        int h = 0;
+        if (Input.GetKey(leftKey)) h -= 1;
+        if (Input.GetKey(rightKey)) h += 1;
+        da[0] = h < 0 ? 1 : (h > 0 ? 2 : 0);   // 0 none, 1 left, 2 right
 
-        da[2] = Input.GetKeyDown(KeyCode.LeftShift) ? 1 : 0; // dash
-        da[3] = Input.GetKeyDown(KeyCode.J) ? 1 : 0;         // attack
+        // Vertical aim
+        int v = 0;
+        if (Input.GetKey(upKey)) v += 1;
+        if (Input.GetKey(downKey)) v -= 1;
+        da[4] = v > 0 ? 1 : (v < 0 ? 2 : 0);   // 0 neutral, 1 up, 2 down
+
+        // Hold/presses (edge detection is done in OnActionReceived via prev* vars)
+        da[1] = Input.GetKey(jumpKey) ? 1 : 0;    // jump held
+        da[2] = Input.GetKey(dashKey) ? 1 : 0;    // dash press/hold
+        da[3] = Input.GetKey(attackKey) ? 1 : 0;  // attack press/hold
     }
 
     // ===== Observations =====
@@ -455,15 +550,15 @@ public class AIAgentController2D : Agent
         sensor.AddObservation(new Vector2(
             (pos.x - minXY.x) / Mathf.Max(0.001f, arena.x),
             (pos.y - minXY.y) / Mathf.Max(0.001f, arena.y)
-        ));                                 // +2
+        ));
         sensor.AddObservation(new Vector2(
             Mathf.Clamp(vel.x / 20f, -1f, 1f),
             Mathf.Clamp(vel.y / 20f, -1f, 1f)
-        ));                                 // +2
-        sensor.AddObservation(isGrounded ? 1f : 0f); // +1
-        sensor.AddObservation(dashing ? 1f : 0f);    // +1
-        sensor.AddObservation(attacking ? 1f : 0f);  // +1
-        sensor.AddObservation(lastFacingX >= 0f ? 1f : -1f); // +1
+        ));
+        sensor.AddObservation(isGrounded ? 1f : 0f);
+        sensor.AddObservation(dashing ? 1f : 0f);
+        sensor.AddObservation(attacking ? 1f : 0f);
+        sensor.AddObservation(lastFacingX >= 0f ? 1f : -1f);
 
         // Camera (optional vector obs)
         if (includeCameraObs && obsCamera != null)
@@ -475,9 +570,9 @@ public class AIAgentController2D : Agent
             sensor.AddObservation(new Vector2(
                 (cpos.x - minXY.x) / Mathf.Max(0.001f, arena.x),
                 (cpos.y - minXY.y) / Mathf.Max(0.001f, arena.y)
-            )); // +2
-            sensor.AddObservation(halfW / Mathf.Max(0.001f, arena.x)); // +1
-            sensor.AddObservation(halfH / Mathf.Max(0.001f, arena.y)); // +1
+            ));
+            sensor.AddObservation(halfW / Mathf.Max(0.001f, arena.x));
+            sensor.AddObservation(halfH / Mathf.Max(0.001f, arena.y));
         }
 
         // Final goal (optional)
@@ -487,18 +582,17 @@ public class AIAgentController2D : Agent
             sensor.AddObservation(new Vector2(
                 Mathf.Clamp(toGoal.x / scanRadius, -1f, 1f),
                 Mathf.Clamp(toGoal.y / scanRadius, -1f, 1f)
-            )); // +2
-            sensor.AddObservation(Mathf.Clamp01(toGoal.magnitude / scanRadius)); // +1
+            ));
+            sensor.AddObservation(Mathf.Clamp01(toGoal.magnitude / scanRadius));
         }
         else
         {
-            sensor.AddObservation(Vector2.zero); // +2
-            sensor.AddObservation(1f);           // +1
+            sensor.AddObservation(Vector2.zero);
+            sensor.AddObservation(1f);
         }
 
         // Nearest enemies
         AddNearestObjectsObservations(sensor, enemyMask, maxEnemies);
-
         // Nearest gems
         AddNearestObjectsObservations(sensor, gemMask, maxGems);
     }
@@ -534,15 +628,15 @@ public class AIAgentController2D : Agent
                 sensor.AddObservation(new Vector2(
                     Mathf.Clamp(rel.x / scanRadius, -1f, 1f),
                     Mathf.Clamp(rel.y / scanRadius, -1f, 1f)
-                ));               // +2
-                sensor.AddObservation(d / scanRadius); // +1
-                sensor.AddObservation(1f);             // +1 exists
+                ));
+                sensor.AddObservation(d / scanRadius);
+                sensor.AddObservation(1f);
             }
             else
             {
-                sensor.AddObservation(Vector2.zero);   // +2
-                sensor.AddObservation(1f);             // +1
-                sensor.AddObservation(0f);             // +1 exists = 0
+                sensor.AddObservation(Vector2.zero);
+                sensor.AddObservation(1f);
+                sensor.AddObservation(0f);
             }
         }
     }
@@ -603,17 +697,24 @@ public class AIAgentController2D : Agent
         prevDash = 0;
         prevAttack = 0;
 
-        // Spawn
-        Vector2 spawn = new Vector2(1.5f, 0.0f);
-        rb.position = spawn;
-
-        // Start episode timer
+        // timers
         episodeStartTime = Time.time;
 
-        // Init shaping caches
+        // init shaping caches
         prevGoalDist = DistanceTo(finalGoal);
         prevNearestGemDist = FindNearestDistance(gemMask);
         prevNearestEnemyDist = FindNearestDistance(enemyMask);
+
+        // init milestone caches
+        startGoalDist = prevGoalDist;
+        nextGoalMilestoneProgress = goalMilestoneMeters;
+
+        // reset damage state
+        enemyBodyTouches = 0;
+        invulnerableUntil = 0f;
+
+        // reset heuristic scheduler
+        heuristicFrameCountdown = 0;
     }
 
     // ===== Reward helpers =====
@@ -644,6 +745,22 @@ public class AIAgentController2D : Agent
         }
     }
 
+    // per-episode record-based goal milestones
+    private void ApplyMilestoneRewards()
+    {
+        if (!enableGoalMilestones || finalGoal == null || goalMilestoneMeters <= 0f || R.goalMilestoneReward == 0f)
+            return;
+
+        float currentDist = DistanceTo(finalGoal);
+        float progress = Mathf.Max(0f, startGoalDist - currentDist); // meters improved vs episode start
+
+        while (progress + 1e-6f >= nextGoalMilestoneProgress)
+        {
+            AddReward(R.goalMilestoneReward);
+            nextGoalMilestoneProgress += goalMilestoneMeters;
+        }
+    }
+
     private float DistanceTo(Transform t)
     {
         if (t == null) return scanRadius;
@@ -655,7 +772,6 @@ public class AIAgentController2D : Agent
         var hits = Physics2D.OverlapCircleAll(transform.position, scanRadius, mask);
         float best = scanRadius;
         Vector2 me = transform.position;
-
         for (int i = 0; i < hits.Length; i++)
         {
             if (!hits[i]) continue;
@@ -675,7 +791,7 @@ public class AIAgentController2D : Agent
     public void OnCollectGem(Collider2D gem)
     {
         AddReward(R.collectGem);
-        // Destroy(gem.gameObject); // if you want to consume it here
+        // Destroy(gem.gameObject);
     }
 
     public void OnReachGoal(Collider2D goal)
@@ -690,12 +806,6 @@ public class AIAgentController2D : Agent
         EndEpisode();
     }
 
-    // convenience
-    public void SetSpawnRegion(Vector2 min, Vector2 max)
-    {
-        spawnMinXY = min; spawnMaxXY = max;
-    }
-
     private void ResolveFinalGoalByTagIfNeeded()
     {
         if (finalGoal != null) return;
@@ -704,7 +814,6 @@ public class AIAgentController2D : Agent
         var all = GameObject.FindGameObjectsWithTag(goalTag);
         if (all == null || all.Length == 0) return;
 
-        // pick the closest to the agent
         Transform best = all[0].transform;
         float bestD2 = ((Vector2)best.position - (Vector2)transform.position).sqrMagnitude;
         for (int i = 1; i < all.Length; i++)
