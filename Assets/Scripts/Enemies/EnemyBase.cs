@@ -21,10 +21,17 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected SpriteRenderer sr;
     [SerializeField] protected Animator anim;
 
-    protected int health;
+    protected int health = 1;
     protected bool facingRight = true;
     protected EnemyState state = EnemyState.Idle;
 
+    private void Update()
+    {
+        if (health <= 0)
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
     protected virtual void Awake()
     {
         rb = rb ? rb : GetComponent<Rigidbody2D>();
@@ -76,5 +83,14 @@ public abstract class EnemyBase : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Kinematic; // Unity 6 supported
         Destroy(gameObject, 2f); // or via animation event
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "Attack")
+        {
+            health -= 1;
+
+        }
     }
 }

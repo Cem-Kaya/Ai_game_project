@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: effc164bb25d9e744ae9d11a4e4f254d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 1
   moveSpeed: 2
   contactDamage: 1
   groundLayer:
@@ -203,6 +203,12 @@ MonoBehaviour:
   wallCheckDistance: 0.25
   groundCheckDistance: 0.35
   drawGizmos: 1
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  detectionRadius: 4
+  verticalTolerance: 1.5
+  chaseSpeed: 2
 --- !u!70 &1782053857540653588
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

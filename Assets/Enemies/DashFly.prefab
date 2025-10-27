@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37580acf1b741284b8792ce85a112cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 1
   moveSpeed: 2
   contactDamage: 1
   groundLayer:

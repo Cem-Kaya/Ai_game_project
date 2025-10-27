@@ -9,6 +9,7 @@ TagManager:
   - final
   - Enemy
   - Hazard
+  - Attack
   layers:
   - Default
   - TransparentFX
