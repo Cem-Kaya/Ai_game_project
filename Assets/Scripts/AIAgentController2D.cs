@@ -836,8 +836,15 @@ public class AIAgentController2D : Agent
     {
         Debug.Log("big reward");
         AddReward(R.reachGoal);
+
+        if (LevelRotationManager.Instance != null)
+            LevelRotationManager.Instance.RegisterWin();
+
         EndEpisode();
     }
+
+
+    
 
     public void OnDeath(Collider2D hazard)
     {
