@@ -1112,7 +1112,6 @@ MonoBehaviour:
   - {fileID: 102900000, guid: 1271851bb01e98a4798ed43e477d456c, type: 3}
   - {fileID: 102900000, guid: 17ac80c46ec4c864c9a295f2f5b9a979, type: 3}
   - {fileID: 102900000, guid: e9fe35e0dda5a96419ce75f3c7d7c15c, type: 3}
-  - {fileID: 102900000, guid: feb18d5532fae3044835dd984b937fc4, type: 3}
   - {fileID: 102900000, guid: 2ed953cc5138ea042a11250e03eb0ccd, type: 3}
   - {fileID: 102900000, guid: 7c24784aca1de7942a1e23f20cb5f1e4, type: 3}
   autoAddToBuildSettings: 1
@@ -1120,7 +1119,6 @@ MonoBehaviour:
   - Level 1
   - Level 2
   - Level 3
-  - Level 4
   - Level 5
   - Level 6
 --- !u!4 &538896411

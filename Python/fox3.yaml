@@ -1,0 +1,93 @@
+behaviors:
+  FoxAgent:                                 # MUST match Behavior Name in Unity
+    trainer_type: ppo                       # {ppo, sac, poca} — algorithm
+
+    # -------------------- Hyperparameters --------------------
+    hyperparameters:
+      batch_size: 4096                      # ↑ bigger SGD minibatch => more VRAM
+      buffer_size: 65536                   # ↑ larger rollout per update (≫ batch_size)
+      learning_rate: 3.0e-4                # α in Adam optimizer (stable w/ larger nets)
+      beta: 5.0e-3                          # β in L_total = ... - β·H[π]  (entropy bonus)
+      epsilon: 0.2                           # ε in PPO clip
+      lambd: 0.95                            # λ in GAE
+      num_epoch: 4                           # K — passes over buffer each update
+      learning_rate_schedule: linear         # {constant, linear}
+
+    # -------------------- Network --------------------
+    network_settings:
+      normalize: true                        # Normalize vector obs online
+      hidden_units: 512                      # ↑ wider MLP
+      num_layers: 4                          # MLP depth
+      vis_encode_type: resnet                # ↑ heavier visual encoder (uses more VRAM)
+      memory:                                # LSTM for temporal credit assignment (more VRAM)
+        sequence_length: 64                  # BPTT unroll length
+        memory_size: 128                     # LSTM hidden size
+      # NOTE: Make sure your Behavior has camera obs actually enabled; otherwise 'resnet' has no effect.
+
+    # -------------------- Reward signals --------------------
+    reward_signals:
+      extrinsic:
+        gamma: 0.995                         # γ in returns/GAE
+        strength: 1.0                        # Scale multiplier
+      curiosity:                             # Intrinsic motivation for exploration (uses GPU)
+        strength: 0.02                       # scales intrinsic reward r_int
+        gamma: 0.99                          # discount for intrinsic return
+        encoding_size: 256                   # ICM feature size (↑ uses more VRAM)
+        learning_rate: 1.0e-3                # ICM optimizer LR (separate from policy)
+        network_settings:
+          normalize: false
+          hidden_units: 256
+          num_layers: 2
+          vis_encode_type: simple
+
+    # -------------------- Optional: Behavioral Cloning (imitation) --------------------
+    behavioral_cloning:
+      demo_path: Demos/                      # folder or single .demo file
+      strength: 0.1                         # Add L_BC to total loss
+      steps: 50000                          # Apply BC for first N steps
+      # samples_per_update: 0                # (default: all)
+
+    # -------------------- Training cadence / logging --------------------
+    max_steps: 5.0e6                         # Stop after this many env steps
+    time_horizon: 128                        # Truncation T for returns/GAE
+    summary_freq: 5000                       # Steps between TB logs
+    keep_checkpoints: 3                      # # of .onnx checkpoints to keep
+
+    # -------------------- Init from checkpoint (optional pretrain -> finetune) --------------------
+    # init_path: results/<bc_pretrain_run>/FoxAgent/<checkpoint>.onnx
+
+# -------------------- Engine / device --------------------
+torch_settings:
+  device: cuda                               # {cpu, cuda} — ensure CUDA is available
+
+# -------------------- Optional: Curriculum --------------------
+# environment_parameters:
+#   difficulty:
+#     curriculum:
+#       - name: easy
+#         completion_criteria:
+#           measure: reward                   # Promote when smoothed reward ≥ threshold
+#           behavior: FoxAgent
+#           signal_smoothing: true
+#           min_lesson_length: 200
+#           threshold: 0.7
+#         value: 0                            # Read via Academy in C#
+#       - name: medium
+#         completion_criteria:
+#           measure: reward
+#           behavior: FoxAgent
+#           signal_smoothing: true
+#           min_lesson_length: 200
+#           threshold: 1.2
+#         value: 1
+#       - name: hard
+#         value: 2
+
+# -------------------- Reference (math) --------------------
+# Importance ratio: r_t(θ) = π_θ(a_t|s_t) / π_{θ_old}(a_t|s_t)
+# Clipped PPO objective: L_clip(θ) = E[min(rA, clip(r,1±ε)A)]
+# Policy loss:          L_policy = - L_policy_clip
+# Policy entropy:       H[π] = - Σ_a π(a|s) log π(a|s)
+# Value loss:           L_value = (V_θ - V_target)^2
+# Advantage (GAE):      A_t = Σ_k (γλ)^k δ_{t+k},   δ_t = r_{t+1} + γ V(s_{t+1}) - V(s_t)
+# Target value:         V_target_t = A_t + V(s_t)
