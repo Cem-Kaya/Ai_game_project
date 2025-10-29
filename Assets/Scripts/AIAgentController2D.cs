@@ -180,6 +180,8 @@ public class AIAgentController2D : Agent
 
     // heuristic decision scheduler
     private int heuristicFrameCountdown;
+    private bool lockDownUntilGrounded = false;
+
 
     private new void Awake()
     {
@@ -328,15 +330,28 @@ public class AIAgentController2D : Agent
             isGrounded = false;
             holdTimer = maxHoldTime;
             holdJump = true;
+            // Latch the block so "down" is disabled until grounded again.
+            lockDownUntilGrounded = true;
         }
     }
 
+
+    // OLD:
+    // private void OnJumpReleased()
+    // {
+    //     if (holdJump) rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
+    //     holdJump = false;
+    //     jumpCut = false;
+    // }
+
+    // NEW: release does not shorten the jump
     private void OnJumpReleased()
     {
-        if (holdJump) rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
         holdJump = false;
         jumpCut = false;
     }
+
+
 
     private void HandleHoldTimer()
     {
@@ -344,10 +359,25 @@ public class AIAgentController2D : Agent
         else holdTimer = 0f;
     }
 
+    // OLD:
+    // private void HandleAirTime()
+    // {
+    //     if (rb.linearVelocity.y > 0f && !((holdJump && holdTimer > 0f) || pogoTimer > 0f))
+    //         jumpCut = true;
+    //     else if (rb.linearVelocity.y < 0f)
+    //     {
+    //         jumpCut = false;
+    //         holdJump = false;
+    //     }
+    // }
+
+    // NEW: never enable jumpCut while rising; holding does nothing special
     private void HandleAirTime()
     {
-        if (rb.linearVelocity.y > 0f && !((holdJump && holdTimer > 0f) || pogoTimer > 0f))
-            jumpCut = true;
+        if (rb.linearVelocity.y > 0f)
+        {
+            jumpCut = false;
+        }
         else if (rb.linearVelocity.y < 0f)
         {
             jumpCut = false;
@@ -355,11 +385,18 @@ public class AIAgentController2D : Agent
         }
     }
 
+    // OLD:
+    // private void TuneGravityForFeel()
+    // {
+    //     if (rb.linearVelocity.y < 0f) rb.gravityScale = fallGravityScale;
+    //     else if (jumpCut) rb.gravityScale = jumpCutGravityScale;
+    //     else rb.gravityScale = baseGravityScale;
+    // }
+
+    // NEW: ascent uses base gravity; descent uses fall gravity (no jump-cut branch)
     private void TuneGravityForFeel()
     {
-        if (rb.linearVelocity.y < 0f) rb.gravityScale = fallGravityScale;
-        else if (jumpCut) rb.gravityScale = jumpCutGravityScale;
-        else rb.gravityScale = baseGravityScale;
+        rb.gravityScale = (rb.linearVelocity.y < 0f) ? fallGravityScale : baseGravityScale;
     }
 
     private void OnDashPressed()
@@ -468,6 +505,7 @@ public class AIAgentController2D : Agent
             {
                 isGrounded = true;
                 canDash = true;
+                lockDownUntilGrounded = false; // allow down again
                 break;
             }
         }
@@ -481,10 +519,12 @@ public class AIAgentController2D : Agent
             {
                 isGrounded = true;
                 canDash = true;
+                lockDownUntilGrounded = false; // allow down again
                 break;
             }
         }
     }
+
 
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -671,21 +711,31 @@ public class AIAgentController2D : Agent
     // ===== Actions =====
     public override void OnActionReceived(ActionBuffers actions)
     {
-        int aMove = actions.DiscreteActions[0];     // 0 none, 1 left, 2 right
-        int aJumpHold = actions.DiscreteActions[1]; // 0 up, 1 held
-        int aDash = actions.DiscreteActions[2];     // 0/1 press
-        int aAttack = actions.DiscreteActions[3];   // 0/1 press
-        int aAimY = actions.DiscreteActions[4];     // 0 neutral, 1 up, 2 down
+        int aMove = actions.DiscreteActions[0]; // 0 none, 1 left, 2 right
+        int aJumpHold = actions.DiscreteActions[1]; // 0/1 (hold flag)
+        int aDash = actions.DiscreteActions[2]; // 0/1
+        int aAttack = actions.DiscreteActions[3]; // 0/1
+        int aAimY = actions.DiscreteActions[4]; // 0 neutral, 1 up, 2 down
 
         moveInput.x = (aMove == 1) ? -1f : (aMove == 2 ? 1f : 0f);
         moveInput.y = (aAimY == 1) ? 1f : (aAimY == 2 ? -1f : 0f);
+
+        // If we’re airborne AND jump is/was held, block "down" until we touch ground.
+        if (!isGrounded && (aJumpHold == 1 || prevJumpHold == 1 || lockDownUntilGrounded))
+        {
+            if (moveInput.y < 0f) moveInput.y = 0f; // block down
+        }
 
         bool jumpPressedEdge = (prevJumpHold == 0 && aJumpHold == 1 && isGrounded);
         bool jumpReleasedEdge = (prevJumpHold == 1 && aJumpHold == 0);
         bool dashPress = (prevDash == 0 && aDash == 1);
         bool attackPress = (prevAttack == 0 && aAttack == 1);
 
-        if (jumpPressedEdge) OnJumpPressed();
+        if (jumpPressedEdge)
+        {
+            OnJumpPressed();
+            lockDownUntilGrounded = true; // latch the lock on first jump press
+        }
         if (jumpReleasedEdge) OnJumpReleased();
         if (dashPress) OnDashPressed();
         if (attackPress) OnAttackPressed();
@@ -696,6 +746,7 @@ public class AIAgentController2D : Agent
 
         if (R.stepPenalty != 0f) AddReward(R.stepPenalty);
     }
+
 
     [Header("Spawn")]
     [SerializeField] private Transform spawnPoint;                 // optional (assign in Inspector)
