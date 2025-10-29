@@ -410,7 +410,8 @@ public class AIAgentController2D : Agent
         canDash = false;
 
         float dir = (Mathf.Abs(moveInput.x) > 0.01f) ? Mathf.Sign(moveInput.x) : lastFacingX;
-        rb.linearVelocity = new Vector2(dir * dashSpeed, 0f);
+        // keep current Y instead of forcing 0
+        rb.linearVelocity = new Vector2(dir * dashSpeed, rb.linearVelocity.y);
     }
 
     private void HandleDash()
@@ -420,7 +421,8 @@ public class AIAgentController2D : Agent
         if (dashTimer > 0f)
         {
             dashTimer -= Time.fixedDeltaTime;
-            rb.linearVelocity = new Vector2(Mathf.Sign(rb.linearVelocity.x) * dashSpeed, 0f);
+            // keep current Y instead of forcing 0
+            rb.linearVelocity = new Vector2(Mathf.Sign(rb.linearVelocity.x) * dashSpeed, rb.linearVelocity.y);
         }
         else
         {
