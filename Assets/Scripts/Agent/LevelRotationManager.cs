@@ -91,7 +91,11 @@ public class LevelRotationManager : MonoBehaviour
             consecutiveLosses = 0;
             winsOnThisLevel = 0;
             currentLevelIdx = (currentLevelIdx + 1) % levelSceneNames.Count;
-            LoadCurrentLevel();
+            LoadCurrentLevel();                   // load next level
+        }
+        else
+        {
+            LoadCurrentLevel();                   // soft reset: reload current level to respawn gems
         }
     }
 

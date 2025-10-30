@@ -1106,8 +1106,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winsPerLevel: 5
+  lossesToSkipLevel: 10
   currentLevelIdx: 0
   winsOnThisLevel: 0
+  consecutiveLosses: 0
   levelSceneAssets:
   - {fileID: 102900000, guid: 1271851bb01e98a4798ed43e477d456c, type: 3}
   - {fileID: 102900000, guid: 17ac80c46ec4c864c9a295f2f5b9a979, type: 3}
@@ -10212,25 +10214,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2406036645644368864, guid: c856991006db4ec46b69be3548830583, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2406036645644368864, guid: c856991006db4ec46b69be3548830583, type: 3}
-      propertyPath: DemonstrationName
-      value: CK
-      objectReference: {fileID: 0}
-    - target: {fileID: 6303542243047418653, guid: c856991006db4ec46b69be3548830583, type: 3}
-      propertyPath: enableKeyboardControl
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7895982576584948619, guid: c856991006db4ec46b69be3548830583, type: 3}
       propertyPath: m_Name
       value: Agent
-      objectReference: {fileID: 0}
-    - target: {fileID: 8032926039938305540, guid: c856991006db4ec46b69be3548830583, type: 3}
-      propertyPath: m_BehaviorType
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

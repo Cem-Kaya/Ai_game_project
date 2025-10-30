@@ -127,7 +127,7 @@ public class AIAgentController2D : Agent
 
     // ===== Episode / Timeout =====
     [Header("Episode / Timeout")]
-    [SerializeField] private float episodeTimeLimit = 60f;  // seconds
+    [SerializeField] private float episodeTimeLimit = 360f;  // seconds
     [SerializeField] private float timeoutPenalty = 0f;     // optional penalty on timeout
     private float episodeStartTime;
 
@@ -894,9 +894,10 @@ public class AIAgentController2D : Agent
     private void LoseAndEndEpisode(string reason = null)
     {
         if (LevelRotationManager.Instance != null)
-            LevelRotationManager.Instance.RegisterLoss();
+            LevelRotationManager.Instance.RegisterLoss();  // reloads current level (or skips after streak)
         EndEpisode();
     }
+
 
     public void OnDeath(Collider2D hazard)
     {

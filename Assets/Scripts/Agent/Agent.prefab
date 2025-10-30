@@ -760,7 +760,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c8c97ef0e51727943a432d2b96d7e82e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -864,7 +864,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  enableKeyboardControl: 1
+  enableKeyboardControl: 0
   heuristicDecisionInterval: 1
   leftKey: 97
   rightKey: 100
@@ -923,7 +923,7 @@ MonoBehaviour:
   goalMilestoneMeters: 2
   enableGoalMilestones: 1
   autoRespawnY: -20
-  episodeTimeLimit: 60
+  episodeTimeLimit: 360
   timeoutPenalty: -100
   groundContactNormalThreshold: 0.7
   attackDownward: 0
@@ -953,7 +953,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 1
+  m_BehaviorType: 0
   m_BehaviorName: FoxAgent
   TeamId: 0
   m_UseChildSensors: 1
@@ -999,14 +999,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7895982576584948619}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Record: 1
   NumStepsToRecord: 0
-  DemonstrationName: FoxDemo1
+  DemonstrationName: CK
   DemonstrationDirectory: Python\Demos
 --- !u!1 &8214973153887678719
 GameObject:
