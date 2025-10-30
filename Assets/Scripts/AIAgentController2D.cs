@@ -242,9 +242,10 @@ public class AIAgentController2D : Agent
         if (rb.position.y < autoRespawnY)   // autoRespawnY is serialized; set it to -20 in Inspector
         {
             if (R.deathPenalty != 0f) AddReward(R.deathPenalty);
-            EndEpisode();
+            LoseAndEndEpisode("fell");
         }
     }
+
 
     private void FixedUpdate()
     {
@@ -253,23 +254,16 @@ public class AIAgentController2D : Agent
         // NaN/Inf guard
         if (!float.IsFinite(y) || !float.IsFinite(autoRespawnY))
         {
-            //Debug.LogWarning($"[FailSafe:{name}#{GetInstanceID()}] Non-finite values (y={y}, autoRespawnY={autoRespawnY}). Ending episode.");
             if (R.deathPenalty != 0f) AddReward(R.deathPenalty);
-            EndEpisode();
+            LoseAndEndEpisode("non-finite");
             return;
         }
 
         if (y < autoRespawnY)
         {
-            //Debug.Log($"[FailSafe TRIP:{name}#{GetInstanceID()}] y={y:F2} < {autoRespawnY:F2}");
             if (R.deathPenalty != 0f) AddReward(R.deathPenalty);
-            EndEpisode();
+            LoseAndEndEpisode("fell");
             return;
-        }
-        else
-        {
-            // Only keep while debugging; comment out later
-            // Debug.Log($"[FailSafe NO-TRIP:{name}#{GetInstanceID()}] y={y:F2} >= {autoRespawnY:F2}");
         }
 
         // ---- NORMAL STEP LOGIC ----
@@ -287,7 +281,7 @@ public class AIAgentController2D : Agent
         if (Time.time - episodeStartTime >= episodeTimeLimit)
         {
             if (timeoutPenalty != 0f) AddReward(timeoutPenalty);
-            EndEpisode();
+            LoseAndEndEpisode("timeout");
             return;
         }
     }
@@ -897,12 +891,17 @@ public class AIAgentController2D : Agent
     }
 
 
-    
+    private void LoseAndEndEpisode(string reason = null)
+    {
+        if (LevelRotationManager.Instance != null)
+            LevelRotationManager.Instance.RegisterLoss();
+        EndEpisode();
+    }
 
     public void OnDeath(Collider2D hazard)
     {
         AddReward(R.deathPenalty);
-        EndEpisode();
+        LoseAndEndEpisode("death");
     }
 
     private void ResolveFinalGoalByTagIfNeeded()

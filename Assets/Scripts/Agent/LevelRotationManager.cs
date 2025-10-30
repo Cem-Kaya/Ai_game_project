@@ -15,10 +15,15 @@ public class LevelRotationManager : MonoBehaviour
     [Min(1)]
     public int winsPerLevel = 5;
 
+    [Header("Lose Streak")]
+    [Min(1)]
+    [Tooltip("Advance to next level after this many consecutive losses.")]
+    public int lossesToSkipLevel = 10;
+
     [SerializeField] private int currentLevelIdx = 0;
     [SerializeField] private int winsOnThisLevel = 0;
+    [SerializeField] private int consecutiveLosses = 0;
 
-    // ---- Editor-friendly scene picking ----
 #if UNITY_EDITOR
     [Header("Editor Scene Picker (drag scenes here)")]
     [Tooltip("Drag your level scenes here in the desired order. In Play Mode, this list syncs to Level Scene Names.")]
@@ -53,7 +58,6 @@ public class LevelRotationManager : MonoBehaviour
             return;
         }
 
-        // If you pressed Play in any level, sync to that level; otherwise load the configured one.
         string active = SceneManager.GetActiveScene().name;
         int idx = levelSceneNames.IndexOf(active);
         if (idx >= 0) currentLevelIdx = idx;
@@ -65,10 +69,28 @@ public class LevelRotationManager : MonoBehaviour
         if (levelSceneNames.Count == 0) return;
 
         winsOnThisLevel++;
+        consecutiveLosses = 0; // reset loss streak on win
+
         if (winsOnThisLevel >= winsPerLevel)
         {
             winsOnThisLevel = 0;
-            currentLevelIdx = (currentLevelIdx + 1) % levelSceneNames.Count; // wrap to first
+            currentLevelIdx = (currentLevelIdx + 1) % levelSceneNames.Count;
+            LoadCurrentLevel();
+        }
+    }
+
+    public void RegisterLoss()
+    {
+        if (levelSceneNames.Count == 0) return;
+
+        consecutiveLosses++;
+
+        if (consecutiveLosses >= lossesToSkipLevel)
+        {
+            // skip to next level after too many losses in a row
+            consecutiveLosses = 0;
+            winsOnThisLevel = 0;
+            currentLevelIdx = (currentLevelIdx + 1) % levelSceneNames.Count;
             LoadCurrentLevel();
         }
     }
@@ -77,6 +99,7 @@ public class LevelRotationManager : MonoBehaviour
     {
         if (levelSceneNames.Count == 0) return;
         winsOnThisLevel = 0;
+        consecutiveLosses = 0;
         currentLevelIdx = (currentLevelIdx + 1) % levelSceneNames.Count;
         LoadCurrentLevel();
     }
@@ -84,12 +107,14 @@ public class LevelRotationManager : MonoBehaviour
     public void ResetAndReload()
     {
         winsOnThisLevel = 0;
+        consecutiveLosses = 0;
         LoadCurrentLevel();
     }
 
     public int WinsLeftOnThisLevel => Mathf.Max(0, winsPerLevel - winsOnThisLevel);
     public int CurrentLevelIndex => currentLevelIdx;
     public string CurrentLevelName => (levelSceneNames.Count > 0 && currentLevelIdx < levelSceneNames.Count) ? levelSceneNames[currentLevelIdx] : "";
+    public int CurrentLossStreak => consecutiveLosses;
 
     private void LoadCurrentLevel()
     {
@@ -113,7 +138,6 @@ public class LevelRotationManager : MonoBehaviour
 #if UNITY_EDITOR
     void OnValidate()
     {
-        // Keep runtime names in sync with the dragged SceneAssets.
         SyncSceneNamesFromAssets();
         if (autoAddToBuildSettings) EnsureInBuildSettings();
     }
@@ -139,7 +163,6 @@ public class LevelRotationManager : MonoBehaviour
     {
         if (levelSceneAssets == null || levelSceneAssets.Count == 0) return;
 
-        // Collect current build scenes
         var list = new List<EditorBuildSettingsScene>(EditorBuildSettings.scenes);
 
         bool changed = false;
