@@ -43,7 +43,7 @@ behaviors:
     # -------------------- Optional: Behavioral Cloning (imitation) --------------------
     behavioral_cloning:
       demo_path: Demos/                      # folder or single .demo file
-      strength: 0.75                         # Add L_BC to total loss
+      strength: 0.70                        # Add L_BC to total loss
       steps: 500000                          # Apply BC for first N steps
       # samples_per_update: 0                # (default: all)
 
