@@ -1,0 +1,38 @@
+{
+    "FoxAgent": {
+        "checkpoints": [
+            {
+                "steps": 499963,
+                "file_path": "results\\fox_bc_ppo13\\FoxAgent\\FoxAgent-499963.onnx",
+                "reward": 254.281281317635,
+                "creation_time": 1761849995.13545,
+                "auxillary_file_paths": [
+                    "results\\fox_bc_ppo13\\FoxAgent\\FoxAgent-499963.pt"
+                ]
+            },
+            {
+                "steps": 732198,
+                "file_path": "results\\fox_bc_ppo13\\FoxAgent\\FoxAgent-732198.onnx",
+                "reward": 70.1708490493543,
+                "creation_time": 1761855536.1647227,
+                "auxillary_file_paths": [
+                    "results\\fox_bc_ppo13\\FoxAgent\\FoxAgent-732198.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 732198,
+            "file_path": "results\\fox_bc_ppo13\\FoxAgent.onnx",
+            "reward": 70.1708490493543,
+            "creation_time": 1761855536.1647227,
+            "auxillary_file_paths": [
+                "results\\fox_bc_ppo13\\FoxAgent\\FoxAgent-732198.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.5.1+cu121"
+    }
+}
