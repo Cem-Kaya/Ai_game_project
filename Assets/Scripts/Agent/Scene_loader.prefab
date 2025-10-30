@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1769579715446412207}
   - component: {fileID: 5190215312365600845}
+  - component: {fileID: 710524955130984103}
   m_Layer: 0
   m_Name: Scene_loader
   m_TagString: Untagged
@@ -62,3 +63,15 @@ MonoBehaviour:
   - Level 3
   - Level 5
   - Level 6
+--- !u!114 &710524955130984103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7291668849877919480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c95dd72aa95f08344b8bb822d6bd44e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
