@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
         attackAreaDefaultPos = attackArea.transform.localPosition;
         attackArea.SetActive(false);
 
-        BoxCollider2D col = GetComponent<BoxCollider2D>();
+        CapsuleCollider2D col = GetComponent<CapsuleCollider2D>();
         playerSizeX = col.size.x;
         playerSizeY = col.size.y;
     }
