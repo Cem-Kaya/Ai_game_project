@@ -338,11 +338,10 @@ public class AIAgentController2D : Agent
     //     jumpCut = false;
     // }
 
-    // NEW: release does not shorten the jump
     private void OnJumpReleased()
     {
         holdJump = false;
-        jumpCut = false;
+        jumpCut = false;   
     }
 
 
@@ -365,15 +364,16 @@ public class AIAgentController2D : Agent
     //     }
     // }
 
-    // NEW: never enable jumpCut while rising; holding does nothing special
     private void HandleAirTime()
     {
         if (rb.linearVelocity.y > 0f)
         {
+            // Always treat ascent with normal gravity; holding doesn't increase height.
             jumpCut = false;
         }
         else if (rb.linearVelocity.y < 0f)
         {
+            // Falling: clear hold flags
             jumpCut = false;
             holdJump = false;
         }
@@ -387,10 +387,12 @@ public class AIAgentController2D : Agent
     //     else rb.gravityScale = baseGravityScale;
     // }
 
-    // NEW: ascent uses base gravity; descent uses fall gravity (no jump-cut branch)
     private void TuneGravityForFeel()
     {
-        rb.gravityScale = (rb.linearVelocity.y < 0f) ? fallGravityScale : baseGravityScale;
+        if (rb.linearVelocity.y < 0f)
+            rb.gravityScale = fallGravityScale;   // faster fall
+        else
+            rb.gravityScale = baseGravityScale;   // fixed-height ascent
     }
 
     private void OnDashPressed()
