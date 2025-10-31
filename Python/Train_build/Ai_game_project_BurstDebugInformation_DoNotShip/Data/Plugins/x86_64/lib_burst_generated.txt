@@ -1,4 +1,4 @@
-Library: W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
+Library: Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
 --platform=Windows
 --minimum-os-version=
 --backend=burst-llvm-19
@@ -10,10 +10,10 @@ Library: W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burs
 --target-framework=NetFramework
 --linker-options=PdbAltPath="Ai_game_project_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burst
+--temp-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\Burst
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
---decode-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Library\Burst
---output=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
+--decode-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Library\Burst
+--output=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Burst.BurstCompiler+BurstCompilerHelper, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::IsBurstEnabled()--8c2be93e18276203cbd918daa2748a10
@@ -127,10 +127,10 @@ Library: W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burs
 --target-framework=NetFramework
 --linker-options=PdbAltPath="Ai_game_project_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burst
+--temp-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\Burst
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
---decode-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Library\Burst
---output=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
+--decode-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Library\Burst
+--output=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Burst.BurstCompiler+BurstCompilerHelper, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::IsBurstEnabled()--8c2be93e18276203cbd918daa2748a10
@@ -244,10 +244,10 @@ Library: W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burs
 --target-framework=NetFramework
 --linker-options=PdbAltPath="Ai_game_project_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burst
+--temp-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\Burst
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
---decode-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Library\Burst
---output=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
+--decode-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Library\Burst
+--output=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.InferenceEngine.CPUBackend+ConvJob, Unity.InferenceEngine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=null::CanUseDepthwiseConvKernel(Unity.InferenceEngine.CPUBackend+ConvJob*, Unity.InferenceEngine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=null)--12e9e7857c4033ddc99b88faa5f360a1
@@ -262,10 +262,10 @@ Library: W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burs
 --target-framework=NetFramework
 --linker-options=PdbAltPath="Ai_game_project_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burst
+--temp-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\Burst
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
---decode-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Library\Burst
---output=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
+--decode-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Library\Burst
+--output=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.InferenceEngine.CPUBackend+ConvJob, Unity.InferenceEngine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=null::CanUseDepthwiseConvKernel(Unity.InferenceEngine.CPUBackend+ConvJob*, Unity.InferenceEngine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=null)--12e9e7857c4033ddc99b88faa5f360a1
@@ -281,10 +281,10 @@ Library: W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burs
 --float-mode=Fast
 --linker-options=PdbAltPath="Ai_game_project_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burst
+--temp-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\Burst
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
---decode-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Library\Burst
---output=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
+--decode-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Library\Burst
+--output=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.InferenceEngine.IParallelForBatchExtensions+ParallelForBatchJobStruct`1[[Unity.InferenceEngine.CPUBackend+ArgMinIntLastJob, Unity.InferenceEngine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=null]], Unity.InferenceEngine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=null::Execute(Unity.InferenceEngine.CPUBackend+ArgMinIntLastJob&, Unity.InferenceEngine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--1ffab6ec9fe4e60012c29f7d287a65a3
@@ -354,10 +354,10 @@ Library: W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burs
 --float-mode=Fast
 --linker-options=PdbAltPath="Ai_game_project_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burst
+--temp-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\Burst
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
---decode-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Library\Burst
---output=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
+--decode-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Library\Burst
+--output=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.InferenceEngine.IParallelForBatchExtensions+ParallelForBatchJobStruct`1[[Unity.InferenceEngine.CPUBackend+ArgMinIntLastJob, Unity.InferenceEngine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=null]], Unity.InferenceEngine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=null::Execute(Unity.InferenceEngine.CPUBackend+ArgMinIntLastJob&, Unity.InferenceEngine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--1ffab6ec9fe4e60012c29f7d287a65a3
@@ -426,10 +426,10 @@ Library: W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burs
 --target-framework=NetFramework
 --linker-options=PdbAltPath="Ai_game_project_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burst
+--temp-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\Burst
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
---decode-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Library\Burst
---output=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
+--decode-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Library\Burst
+--output=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=UnityEngine.Rendering.GPUResidentDrawerBurst, Unity.RenderPipelines.GPUDriven.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::ClassifyMaterials(Unity.Collections.NativeArray`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|Unity.Collections.NativeParallelHashMap`2+ReadOnly[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[UnityEngine.Rendering.BatchMaterialID, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]&, Unity.Collections, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|Unity.Collections.NativeList`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]&, Unity.Collections, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|Unity.Collections.NativeList`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]&, Unity.Collections, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|Unity.Collections.NativeList`1[[UnityEngine.Rendering.GPUDrivenPackedMaterialData, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]&, Unity.Collections, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null)--f259e9421b556600f769263137cdc7bc
@@ -543,10 +543,10 @@ Library: W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burs
 --target-framework=NetFramework
 --linker-options=PdbAltPath="Ai_game_project_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burst
+--temp-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\Burst
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
---decode-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Library\Burst
---output=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
+--decode-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Library\Burst
+--output=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=UnityEngine.Rendering.GPUResidentDrawerBurst, Unity.RenderPipelines.GPUDriven.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::ClassifyMaterials(Unity.Collections.NativeArray`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|Unity.Collections.NativeParallelHashMap`2+ReadOnly[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[UnityEngine.Rendering.BatchMaterialID, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]&, Unity.Collections, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|Unity.Collections.NativeList`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]&, Unity.Collections, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|Unity.Collections.NativeList`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]&, Unity.Collections, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|Unity.Collections.NativeList`1[[UnityEngine.Rendering.GPUDrivenPackedMaterialData, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]&, Unity.Collections, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null)--f259e9421b556600f769263137cdc7bc
@@ -661,10 +661,10 @@ Library: W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burs
 --float-mode=Fast
 --linker-options=PdbAltPath="Ai_game_project_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burst
+--temp-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\Burst
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
---decode-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Library\Burst
---output=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
+--decode-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Library\Burst
+--output=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Jobs.IJobParallelForExtensions+ParallelForJobStruct`1[[Unity.InferenceEngine.CPUBackend+GlobalAverageVariancePoolJob, Unity.InferenceEngine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(Unity.InferenceEngine.CPUBackend+GlobalAverageVariancePoolJob&, Unity.InferenceEngine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--9c8f7e49e5d6c73cd86cff8959384762
@@ -680,10 +680,10 @@ Library: W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burs
 --float-mode=Fast
 --linker-options=PdbAltPath="Ai_game_project_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burst
+--temp-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\Burst
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
---decode-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Library\Burst
---output=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
+--decode-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Library\Burst
+--output=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Jobs.IJobParallelForExtensions+ParallelForJobStruct`1[[Unity.InferenceEngine.CPUBackend+GlobalAverageVariancePoolJob, Unity.InferenceEngine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(Unity.InferenceEngine.CPUBackend+GlobalAverageVariancePoolJob&, Unity.InferenceEngine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--9c8f7e49e5d6c73cd86cff8959384762
@@ -698,10 +698,10 @@ Library: W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burs
 --target-framework=NetFramework
 --linker-options=PdbAltPath="Ai_game_project_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burst
+--temp-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\Burst
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
---decode-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Library\Burst
---output=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
+--decode-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Library\Burst
+--output=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Jobs.IJobParallelForExtensions+ParallelForJobStruct`1[[UnityEngine.Rendering.GPUInstanceDataBuffer+ConvertCPUInstancesToGPUInstancesJob, Unity.RenderPipelines.GPUDriven.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(UnityEngine.Rendering.GPUInstanceDataBuffer+ConvertCPUInstancesToGPUInstancesJob&, Unity.RenderPipelines.GPUDriven.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--a917331aad44b603aa293fb2ddd84845
@@ -763,10 +763,10 @@ Library: W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burs
 --target-framework=NetFramework
 --linker-options=PdbAltPath="Ai_game_project_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\Burst
+--temp-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\Burst
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
---decode-folder=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Library\Burst
---output=W:\Google_drive\sync\UU\2_1\Ai_for_games\proj\Ai_game_project\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
+--decode-folder=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Library\Burst
+--output=Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Jobs.IJobParallelForExtensions+ParallelForJobStruct`1[[UnityEngine.Rendering.GPUInstanceDataBuffer+ConvertCPUInstancesToGPUInstancesJob, Unity.RenderPipelines.GPUDriven.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(UnityEngine.Rendering.GPUInstanceDataBuffer+ConvertCPUInstancesToGPUInstancesJob&, Unity.RenderPipelines.GPUDriven.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--a917331aad44b603aa293fb2ddd84845

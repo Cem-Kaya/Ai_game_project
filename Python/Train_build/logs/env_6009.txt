@@ -1,0 +1,32 @@
+Mono path[0] = 'Y:/Drive/My_Drive/folder/UU/Ai_for_games_proj/Python/Train_build/Ai_game_project_Data/Managed'
+Mono config path = 'Y:/Drive/My_Drive/folder/UU/Ai_for_games_proj/Python/Train_build/MonoBleedingEdge/etc'
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+Initialize engine version: 6000.0.60f1 (61dfb374e36f)
+[Subsystems] Discovering subsystems at path Y:/Drive/My_Drive/folder/UU/Ai_for_games_proj/Python/Train_build/Ai_game_project_Data/UnitySubsystems
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 4090 (ID=0x2684)
+    Vendor:   NVIDIA
+    VRAM:     24142 MB
+    Driver:   32.0.15.8157
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.125 seconds
+- Finished resetting the current domain, in  0.002 seconds
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+The class named 'TrainingBootstrap' is abstract. The script class can't be abstract!
+UnloadTime: 0.312900 ms
+[Tracer] Awake on Agent_cam. enabled=True, active=True
+[Tracer] OnEnable Agent_cam
+  at System.Environment.get_StackTrace () [0x00000] in <73ac12a12f9a4ebca156b41ddce95fbe>:0 
+  at CameraDisableTracer.Stack () [0x00000] in <fd0a392366404ae386ccc1cf0f77390c>:0 
+  at CameraDisableTracer.OnEnable () [0x00000] in <fd0a392366404ae386ccc1cf0f77390c>:0 
+Registered Communicator in Academy.
+[Tracer] Start Agent_cam. enabled=True, active=True

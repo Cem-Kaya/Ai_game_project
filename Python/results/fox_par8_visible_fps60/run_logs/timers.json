@@ -1,0 +1,70 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1761865092",
+        "python_version": "3.10.12 | packaged by Anaconda, Inc. | (main, Jul  5 2023, 19:01:18) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\cemka\\anaconda3\\envs\\mlagents\\Scripts\\mlagents-learn fox2.yaml --run-id=fox_par8_visible_fps60 --env Y:\\Drive\\My_Drive\\folder\\UU\\Ai_for_games_proj\\Python\\Train_build\\Ai_game_project.exe --num-envs=8 --base-port=7005 --env-args --fps=60 --quality=VeryLow -screen-width 800 -screen-height 450 -screen-fullscreen 0",
+        "mlagents_version": "1.1.0",
+        "mlagents_envs_version": "1.1.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.5.1+cu121",
+        "numpy_version": "1.23.5",
+        "end_time_seconds": "1761865103"
+    },
+    "total": 10.817399699997623,
+    "count": 1,
+    "self": 0.6792064000037499,
+    "children": {
+        "run_training.setup": {
+            "total": 0.7011995000066236,
+            "count": 1,
+            "self": 0.7011995000066236
+        },
+        "TrainerController.start_learning": {
+            "total": 9.436993799987249,
+            "count": 1,
+            "self": 0.00015959999291226268,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 9.435658400005195,
+                    "count": 1,
+                    "self": 7.837178900022991,
+                    "children": {
+                        "demo_to_buffer": {
+                            "total": 1.5984794999822043,
+                            "count": 1,
+                            "self": 1.009996049106121e-05,
+                            "children": {
+                                "load_demonstration": {
+                                    "total": 1.5984694000217132,
+                                    "count": 1,
+                                    "self": 1.3587963002501056,
+                                    "children": {
+                                        "read_file": {
+                                            "total": 0.23967309977160767,
+                                            "count": 84,
+                                            "self": 0.23967309977160767
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "TrainerController._save_models": {
+                    "total": 0.0011757999891415238,
+                    "count": 1,
+                    "self": 0.00016300001880154014,
+                    "children": {
+                        "RLTrainer._checkpoint": {
+                            "total": 0.0010127999703399837,
+                            "count": 1,
+                            "self": 0.0010127999703399837
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
