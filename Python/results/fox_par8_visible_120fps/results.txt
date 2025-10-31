@@ -1,0 +1,413 @@
+(mlagents) PS Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Python> # from: Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Python
+(mlagents) PS Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Python> mlagents-learn fox4.yaml `
+>>   --run-id=fox_par8_visible_120fps `
+>>   --env "Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Python\Train_build\Ai_game_project.exe" `
+>>   --num-envs=8 `
+>>   --base-port=7005 `
+>>   --env-args "--fps=120" "--quality=VeryLow" "-screen-width" "1280" "-screen-height" "720" "-screen-fullscreen" "0"
+C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\torch_utils\torch.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[WARNING] 'encoding_size' was deprecated for RewardSignals. Please use network_settings.
+
+            ┐  ╖
+        ╓╖╬│╡  ││╬╖╖
+    ╓╖╬│││││┘  ╬│││││╬╖
+ ╖╬│││││╬╜        ╙╬│││││╖╖                               ╗╗╗
+ ╬╬╬╬╖││╦╖        ╖╬││╗╣╣╣╬      ╟╣╣╬    ╟╣╣╣             ╜╜╜  ╟╣╣
+ ╬╬╬╬╬╬╬╬╖│╬╖╖╓╬╪│╓╣╣╣╣╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╒╣╣╖╗╣╣╣╗   ╣╣╣ ╣╣╣╣╣╣ ╟╣╣╖   ╣╣╣
+ ╬╬╬╬┐  ╙╬╬╬╬│╓╣╣╣╝╜  ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╣╙ ╙╣╣╣  ╣╣╣ ╙╟╣╣╜╙  ╫╣╣  ╟╣╣
+ ╬╬╬╬┐     ╙╬╬╣╣      ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣     ╣╣╣┌╣╣╜
+ ╬╬╬╜       ╬╬╣╣      ╙╝╣╣╬      ╙╣╣╣╗╖╓╗╣╣╣╜ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣╦╓    ╣╣╣╣╣
+ ╙   ╓╦╖    ╬╬╣╣   ╓╗╗╖            ╙╝╣╣╣╣╝╜   ╘╝╝╜   ╝╝╝  ╝╝╝   ╙╣╣╣    ╟╣╣╣
+   ╩╬╬╬╬╬╬╦╦╬╬╣╣╗╣╣╣╣╣╣╣╝                                             ╫╣╣╣╣
+      ╙╬╬╬╬╬╬╬╣╣╣╣╣╣╝╜
+          ╙╬╬╬╣╣╣╜
+             ╙
+
+ Version information:
+  ml-agents: 1.1.0,
+  ml-agents-envs: 1.1.0,
+  Communicator API: 1.5.0,
+  PyTorch: 2.5.1+cu121
+C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\torch_utils\torch.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\torch_utils\torch.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\torch_utils\torch.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\torch_utils\torch.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\torch_utils\torch.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\torch_utils\torch.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\torch_utils\torch.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\torch_utils\torch.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[INFO] Connected to Unity environment with package version 4.0.0 and communication version 1.5.0
+[INFO] Connected to Unity environment with package version 4.0.0 and communication version 1.5.0
+[INFO] Connected to Unity environment with package version 4.0.0 and communication version 1.5.0
+[INFO] Connected to Unity environment with package version 4.0.0 and communication version 1.5.0
+[INFO] Connected to Unity environment with package version 4.0.0 and communication version 1.5.0
+[INFO] Connected to Unity environment with package version 4.0.0 and communication version 1.5.0
+[INFO] Connected to Unity environment with package version 4.0.0 and communication version 1.5.0
+[INFO] Connected new brain: FoxAgent?team=0
+[INFO] Connected to Unity environment with package version 4.0.0 and communication version 1.5.0
+[INFO] Connected new brain: FoxAgent?team=0
+[INFO] Connected new brain: FoxAgent?team=0
+[INFO] Connected new brain: FoxAgent?team=0
+[INFO] Connected new brain: FoxAgent?team=0
+[INFO] Connected new brain: FoxAgent?team=0
+[INFO] Connected new brain: FoxAgent?team=0
+[INFO] Connected new brain: FoxAgent?team=0
+[INFO] Hyperparameters for behavior name FoxAgent:
+        trainer_type:   ppo
+        hyperparameters:
+          batch_size:   4096
+          buffer_size:  65536
+          learning_rate:        0.0003
+          beta: 0.005
+          epsilon:      0.2
+          lambd:        0.95
+          num_epoch:    4
+          shared_critic:        False
+          learning_rate_schedule:       linear
+          beta_schedule:        linear
+          epsilon_schedule:     linear
+        checkpoint_interval:    500000
+        network_settings:
+          normalize:    True
+          hidden_units: 512
+          num_layers:   4
+          vis_encode_type:      resnet
+          memory:
+            sequence_length:    64
+            memory_size:        128
+          goal_conditioning_type:       hyper
+          deterministic:        False
+        reward_signals:
+          extrinsic:
+            gamma:      0.995
+            strength:   1.0
+            network_settings:
+              normalize:        False
+              hidden_units:     128
+              num_layers:       2
+              vis_encode_type:  simple
+              memory:   None
+              goal_conditioning_type:   hyper
+              deterministic:    False
+          curiosity:
+            gamma:      0.99
+            strength:   0.02
+            network_settings:
+              normalize:        False
+              hidden_units:     256
+              num_layers:       2
+              vis_encode_type:  simple
+              memory:   None
+              goal_conditioning_type:   hyper
+              deterministic:    False
+            learning_rate:      0.001
+            encoding_size:      256
+        init_path:      None
+        keep_checkpoints:       3
+        even_checkpoints:       False
+        max_steps:      5000000
+        time_horizon:   128
+        summary_freq:   5000
+        threaded:       False
+        self_play:      None
+        behavioral_cloning:
+          demo_path:    Y:/Drive/My_Drive/folder/UU/Ai_for_games_proj/Python/Demos
+          steps:        150000000
+          strength:     0.7
+          samples_per_update:   0
+          num_epoch:    None
+          batch_size:   None
+C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\torch\utils\_device.py:106: UserWarning: The use of `x.T` on tensors of dimension other than 2 to reverse their shape is deprecated and it will throw an error in a future release. Consider `x.mT` to transpose batches of matrices or `x.permute(*torch.arange(x.ndim - 1, -1, -1))` to reverse the dimensions of a tensor. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\builder\windows\pytorch\aten\src\ATen\native\TensorShape.cpp:3687.)
+  return func(*args, **kwargs)
+[INFO] FoxAgent. Step: 5000. Time Elapsed: 2302.056 s. Mean Reward: 29.227. Std of Reward: 29.228. Training.
+[INFO] FoxAgent. Step: 10000. Time Elapsed: 2356.394 s. Mean Reward: -18.413. Std of Reward: 18.431. Training.
+[INFO] FoxAgent. Step: 15000. Time Elapsed: 2412.098 s. Mean Reward: -14.600. Std of Reward: 98.589. Training.
+[INFO] FoxAgent. Step: 20000. Time Elapsed: 2465.471 s. Mean Reward: 68.883. Std of Reward: 284.224. Training.
+[INFO] FoxAgent. Step: 25000. Time Elapsed: 2520.542 s. Mean Reward: 12.264. Std of Reward: 238.800. Training.
+[INFO] FoxAgent. Step: 30000. Time Elapsed: 2572.741 s. Mean Reward: 101.207. Std of Reward: 291.350. Training.
+[INFO] FoxAgent. Step: 35000. Time Elapsed: 2625.292 s. Mean Reward: 40.520. Std of Reward: 291.315. Training.
+[INFO] FoxAgent. Step: 40000. Time Elapsed: 2677.029 s. Mean Reward: -25.866. Std of Reward: 25.865. Training.
+[INFO] FoxAgent. Step: 45000. Time Elapsed: 2731.567 s. Mean Reward: 205.471. Std of Reward: 339.228. Training.
+[INFO] FoxAgent. Step: 50000. Time Elapsed: 2784.291 s. Mean Reward: -75.188. Std of Reward: 81.801. Training.
+[INFO] FoxAgent. Step: 55000. Time Elapsed: 2836.949 s. Mean Reward: -38.412. Std of Reward: 70.892. Training.
+[INFO] FoxAgent. Step: 60000. Time Elapsed: 2891.398 s. Mean Reward: -11.825. Std of Reward: 129.273. Training.
+[INFO] FoxAgent. Step: 65000. Time Elapsed: 3077.084 s. Mean Reward: 139.258. Std of Reward: 332.482. Training.
+[INFO] FoxAgent. Step: 70000. Time Elapsed: 3134.218 s. Mean Reward: 271.669. Std of Reward: 383.989. Training.
+[INFO] FoxAgent. Step: 75000. Time Elapsed: 3192.442 s. Mean Reward: 468.754. Std of Reward: 325.750. Training.
+[INFO] FoxAgent. Step: 80000. Time Elapsed: 3249.144 s. Mean Reward: 255.047. Std of Reward: 378.966. Training.
+[INFO] FoxAgent. Step: 85000. Time Elapsed: 3307.373 s. Mean Reward: 30.606. Std of Reward: 277.101. Training.
+[INFO] FoxAgent. Step: 90000. Time Elapsed: 3363.223 s. Mean Reward: 79.806. Std of Reward: 349.258. Training.
+[INFO] FoxAgent. Step: 95000. Time Elapsed: 3417.860 s. Mean Reward: 332.080. Std of Reward: 384.824. Training.
+[INFO] FoxAgent. Step: 100000. Time Elapsed: 3473.119 s. Mean Reward: 729.482. Std of Reward: 16.492. Training.
+[INFO] FoxAgent. Step: 105000. Time Elapsed: 3527.988 s. Mean Reward: 395.651. Std of Reward: 392.377. Training.
+[INFO] FoxAgent. Step: 110000. Time Elapsed: 3585.091 s. Mean Reward: 156.840. Std of Reward: 385.069. Training.
+[INFO] FoxAgent. Step: 115000. Time Elapsed: 3640.644 s. Mean Reward: 71.082. Std of Reward: 293.416. Training.
+[INFO] FoxAgent. Step: 120000. Time Elapsed: 3697.172 s. Mean Reward: 163.159. Std of Reward: 366.039. Training.
+[INFO] FoxAgent. Step: 125000. Time Elapsed: 3882.810 s. Mean Reward: -30.467. Std of Reward: 30.465. Training.
+[INFO] FoxAgent. Step: 130000. Time Elapsed: 3940.203 s. Mean Reward: 282.477. Std of Reward: 424.307. Training.
+[INFO] FoxAgent. Step: 135000. Time Elapsed: 3999.734 s. Mean Reward: 57.522. Std of Reward: 296.847. Training.
+[INFO] FoxAgent. Step: 140000. Time Elapsed: 4057.265 s. Mean Reward: -65.316. Std of Reward: 74.174. Training.
+[INFO] FoxAgent. Step: 145000. Time Elapsed: 4114.363 s. Mean Reward: 280.329. Std of Reward: 411.768. Training.
+[INFO] FoxAgent. Step: 150000. Time Elapsed: 4170.931 s. Mean Reward: 49.629. Std of Reward: 309.573. Training.
+[INFO] FoxAgent. Step: 155000. Time Elapsed: 4226.855 s. Mean Reward: 122.105. Std of Reward: 370.103. Training.
+[INFO] FoxAgent. Step: 160000. Time Elapsed: 4280.954 s. Mean Reward: -11.927. Std of Reward: 220.025. Training.
+[INFO] FoxAgent. Step: 165000. Time Elapsed: 4339.423 s. Mean Reward: -14.943. Std of Reward: 202.464. Training.
+[INFO] FoxAgent. Step: 170000. Time Elapsed: 4394.647 s. Mean Reward: 85.082. Std of Reward: 335.937. Training.
+[INFO] FoxAgent. Step: 175000. Time Elapsed: 4451.395 s. Mean Reward: -76.263. Std of Reward: 77.602. Training.
+[INFO] FoxAgent. Step: 180000. Time Elapsed: 4507.484 s. Mean Reward: -65.952. Std of Reward: 71.014. Training.
+[INFO] FoxAgent. Step: 185000. Time Elapsed: 4692.666 s. Mean Reward: -2.961. Std of Reward: 257.076. Training.
+[INFO] FoxAgent. Step: 190000. Time Elapsed: 4748.703 s. Mean Reward: -70.250. Std of Reward: 77.015. Training.
+[INFO] FoxAgent. Step: 195000. Time Elapsed: 4808.431 s. Mean Reward: 252.186. Std of Reward: 379.882. Training.
+[INFO] FoxAgent. Step: 200000. Time Elapsed: 4865.706 s. Mean Reward: -16.467. Std of Reward: 198.834. Training.
+[INFO] FoxAgent. Step: 205000. Time Elapsed: 4925.788 s. Mean Reward: -72.972. Std of Reward: 75.756. Training.
+[INFO] FoxAgent. Step: 210000. Time Elapsed: 4979.656 s. Mean Reward: 71.731. Std of Reward: 312.417. Training.
+[INFO] FoxAgent. Step: 215000. Time Elapsed: 5035.767 s. Mean Reward: 55.076. Std of Reward: 297.946. Training.
+[INFO] FoxAgent. Step: 220000. Time Elapsed: 5091.216 s. Mean Reward: 40.371. Std of Reward: 263.676. Training.
+[INFO] FoxAgent. Step: 225000. Time Elapsed: 5147.600 s. Mean Reward: -73.740. Std of Reward: 88.100. Training.
+[INFO] FoxAgent. Step: 230000. Time Elapsed: 5201.876 s. Mean Reward: -2.668. Std of Reward: 244.411. Training.
+[INFO] FoxAgent. Step: 235000. Time Elapsed: 5259.002 s. Mean Reward: 6.374. Std of Reward: 226.104. Training.
+[INFO] FoxAgent. Step: 240000. Time Elapsed: 5316.012 s. Mean Reward: -63.004. Std of Reward: 76.526. Training.
+[INFO] FoxAgent. Step: 245000. Time Elapsed: 5502.034 s. Mean Reward: 216.013. Std of Reward: 334.704. Training.
+[INFO] FoxAgent. Step: 250000. Time Elapsed: 5559.073 s. Mean Reward: 67.938. Std of Reward: 306.710. Training.
+[INFO] FoxAgent. Step: 255000. Time Elapsed: 5617.171 s. Mean Reward: -48.220. Std of Reward: 82.170. Training.
+[INFO] FoxAgent. Step: 260000. Time Elapsed: 5676.277 s. Mean Reward: 50.725. Std of Reward: 285.968. Training.
+[INFO] FoxAgent. Step: 265000. Time Elapsed: 5732.247 s. Mean Reward: 99.422. Std of Reward: 325.893. Training.
+[INFO] FoxAgent. Step: 270000. Time Elapsed: 5788.853 s. Mean Reward: 441.229. Std of Reward: 422.289. Training.
+[INFO] FoxAgent. Step: 275000. Time Elapsed: 5843.995 s. Mean Reward: -10.846. Std of Reward: 98.744. Training.
+[INFO] FoxAgent. Step: 280000. Time Elapsed: 5900.764 s. Mean Reward: 7.780. Std of Reward: 196.230. Training.
+[INFO] FoxAgent. Step: 285000. Time Elapsed: 5955.995 s. Mean Reward: -30.794. Std of Reward: 63.734. Training.
+[INFO] FoxAgent. Step: 290000. Time Elapsed: 6011.776 s. Mean Reward: 75.035. Std of Reward: 317.370. Training.
+[INFO] FoxAgent. Step: 295000. Time Elapsed: 6069.171 s. Mean Reward: 75.656. Std of Reward: 330.725. Training.
+[INFO] FoxAgent. Step: 300000. Time Elapsed: 6126.068 s. Mean Reward: -17.287. Std of Reward: 50.754. Training.
+[INFO] FoxAgent. Step: 305000. Time Elapsed: 6314.946 s. Mean Reward: 68.312. Std of Reward: 255.424. Training.
+[INFO] FoxAgent. Step: 310000. Time Elapsed: 6372.836 s. Mean Reward: 27.454. Std of Reward: 277.542. Training.
+[INFO] FoxAgent. Step: 315000. Time Elapsed: 6430.084 s. Mean Reward: 255.604. Std of Reward: 355.451. Training.
+[INFO] FoxAgent. Step: 320000. Time Elapsed: 6489.867 s. Mean Reward: 78.685. Std of Reward: 326.630. Training.
+[INFO] FoxAgent. Step: 325000. Time Elapsed: 6548.277 s. Mean Reward: 28.357. Std of Reward: 245.493. Training.
+[INFO] FoxAgent. Step: 330000. Time Elapsed: 6602.512 s. Mean Reward: -63.679. Std of Reward: 64.009. Training.
+[INFO] FoxAgent. Step: 335000. Time Elapsed: 6656.327 s. Mean Reward: -30.761. Std of Reward: 84.495. Training.
+[INFO] FoxAgent. Step: 340000. Time Elapsed: 6710.727 s. Mean Reward: -90.215. Std of Reward: 90.213. Training.
+[INFO] FoxAgent. Step: 345000. Time Elapsed: 6769.397 s. Mean Reward: 141.847. Std of Reward: 345.627. Training.
+[INFO] FoxAgent. Step: 350000. Time Elapsed: 6826.188 s. Mean Reward: -83.615. Std of Reward: 84.662. Training.
+[INFO] FoxAgent. Step: 355000. Time Elapsed: 6882.231 s. Mean Reward: -52.440. Std of Reward: 90.688. Training.
+[INFO] FoxAgent. Step: 360000. Time Elapsed: 6939.126 s. Mean Reward: -35.513. Std of Reward: 78.236. Training.
+[INFO] FoxAgent. Step: 365000. Time Elapsed: 6995.297 s. Mean Reward: -63.956. Std of Reward: 71.802. Training.
+[INFO] FoxAgent. Step: 370000. Time Elapsed: 7184.375 s. Mean Reward: 55.079. Std of Reward: 295.838. Training.
+[INFO] FoxAgent. Step: 375000. Time Elapsed: 7241.074 s. Mean Reward: 93.179. Std of Reward: 270.130. Training.
+[INFO] FoxAgent. Step: 380000. Time Elapsed: 7298.139 s. Mean Reward: 87.596. Std of Reward: 333.200. Training.
+[INFO] FoxAgent. Step: 385000. Time Elapsed: 7359.625 s. Mean Reward: 215.292. Std of Reward: 360.214. Training.
+[INFO] FoxAgent. Step: 390000. Time Elapsed: 7413.915 s. Mean Reward: 189.451. Std of Reward: 402.568. Training.
+[INFO] FoxAgent. Step: 395000. Time Elapsed: 7471.184 s. Mean Reward: 437.385. Std of Reward: 350.764. Training.
+[INFO] FoxAgent. Step: 400000. Time Elapsed: 7525.939 s. Mean Reward: 389.144. Std of Reward: 345.766. Training.
+[INFO] FoxAgent. Step: 405000. Time Elapsed: 7581.234 s. Mean Reward: 761.867. Std of Reward: 98.939. Training.
+[INFO] FoxAgent. Step: 410000. Time Elapsed: 7639.512 s. Mean Reward: 239.236. Std of Reward: 325.996. Training.
+[INFO] FoxAgent. Step: 415000. Time Elapsed: 7693.611 s. Mean Reward: 289.021. Std of Reward: 337.544. Training.
+[INFO] FoxAgent. Step: 420000. Time Elapsed: 7749.820 s. Mean Reward: 189.458. Std of Reward: 402.527. Training.
+[INFO] FoxAgent. Step: 425000. Time Elapsed: 7808.118 s. Mean Reward: 137.012. Std of Reward: 267.127. Training.
+[INFO] FoxAgent. Step: 430000. Time Elapsed: 7997.281 s. Mean Reward: 769.284. Std of Reward: 39.658. Training.
+[INFO] FoxAgent. Step: 435000. Time Elapsed: 8056.831 s. Mean Reward: 112.807. Std of Reward: 286.602. Training.
+[INFO] FoxAgent. Step: 440000. Time Elapsed: 8113.763 s. Mean Reward: -29.735. Std of Reward: 77.589. Training.
+[INFO] FoxAgent. Step: 445000. Time Elapsed: 8171.759 s. Mean Reward: 394.524. Std of Reward: 411.169. Training.
+[INFO] FoxAgent. Step: 450000. Time Elapsed: 8232.489 s. Mean Reward: 282.286. Std of Reward: 345.972. Training.
+[INFO] FoxAgent. Step: 455000. Time Elapsed: 8287.690 s. Mean Reward: 333.652. Std of Reward: 353.481. Training.
+[INFO] FoxAgent. Step: 460000. Time Elapsed: 8347.614 s. Mean Reward: 169.117. Std of Reward: 354.335. Training.
+[INFO] FoxAgent. Step: 465000. Time Elapsed: 8403.415 s. Mean Reward: 339.625. Std of Reward: 365.156. Training.
+[INFO] FoxAgent. Step: 470000. Time Elapsed: 8463.503 s. Mean Reward: 60.327. Std of Reward: 244.421. Training.
+[INFO] FoxAgent. Step: 475000. Time Elapsed: 8517.956 s. Mean Reward: -65.411. Std of Reward: 65.793. Training.
+[INFO] FoxAgent. Step: 480000. Time Elapsed: 8574.860 s. Mean Reward: -37.356. Std of Reward: 75.004. Training.
+[INFO] FoxAgent. Step: 485000. Time Elapsed: 8632.749 s. Mean Reward: -25.987. Std of Reward: 43.230. Training.
+[INFO] FoxAgent. Step: 490000. Time Elapsed: 8688.349 s. Mean Reward: 215.578. Std of Reward: 335.405. Training.
+[INFO] FoxAgent. Step: 495000. Time Elapsed: 8882.592 s. Mean Reward: 698.881. Std of Reward: 57.403. Training.
+[INFO] FoxAgent. Step: 500000. Time Elapsed: 8941.401 s. Mean Reward: 61.020. Std of Reward: 337.052. Training.
+C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\torch\onnx\symbolic_opset9.py:4279: UserWarning: Exporting a model to ONNX with a batch_size other than 1, with a variable length with LSTM can cause an error when running the ONNX model with a different batch size. Make sure to save the model with a batch size of 1, or define the initial states (h0/c0) as inputs of the model.
+  warnings.warn(
+[INFO] Exported results\fox_par8_visible_120fps\FoxAgent\FoxAgent-499890.onnx
+[INFO] FoxAgent. Step: 505000. Time Elapsed: 9002.240 s. Mean Reward: 196.208. Std of Reward: 390.899. Training.
+[INFO] FoxAgent. Step: 510000. Time Elapsed: 9059.977 s. Mean Reward: 142.815. Std of Reward: 247.295. Training.
+[INFO] FoxAgent. Step: 515000. Time Elapsed: 9116.301 s. Mean Reward: 699.399. Std of Reward: 53.902. Training.
+[INFO] FoxAgent. Step: 520000. Time Elapsed: 9172.884 s. Mean Reward: 81.213. Std of Reward: 284.452. Training.
+[INFO] FoxAgent. Step: 525000. Time Elapsed: 9227.639 s. Mean Reward: 679.306. Std of Reward: 33.023. Training.
+[INFO] FoxAgent. Step: 530000. Time Elapsed: 9283.177 s. Mean Reward: 692.949. Std of Reward: 61.150. Training.
+[INFO] FoxAgent. Step: 535000. Time Elapsed: 9340.363 s. Mean Reward: 715.353. Std of Reward: 19.654. Training.
+[INFO] FoxAgent. Step: 540000. Time Elapsed: 9397.776 s. Mean Reward: 15.906. Std of Reward: 235.950. Training.
+[INFO] FoxAgent. Step: 545000. Time Elapsed: 9452.386 s. Mean Reward: 696.406. Std of Reward: 40.880. Training.
+[INFO] FoxAgent. Step: 550000. Time Elapsed: 9509.504 s. Mean Reward: 174.194. Std of Reward: 326.754. Training.
+[INFO] FoxAgent. Step: 555000. Time Elapsed: 9699.125 s. Mean Reward: 261.229. Std of Reward: 387.124. Training.
+[INFO] FoxAgent. Step: 560000. Time Elapsed: 9757.024 s. Mean Reward: 75.414. Std of Reward: 289.799. Training.
+[INFO] FoxAgent. Step: 565000. Time Elapsed: 9815.652 s. Mean Reward: 68.644. Std of Reward: 302.014. Training.
+[INFO] FoxAgent. Step: 570000. Time Elapsed: 9872.219 s. Mean Reward: -63.608. Std of Reward: 64.994. Training.
+[INFO] FoxAgent. Step: 575000. Time Elapsed: 9930.030 s. Mean Reward: 138.439. Std of Reward: 380.004. Training.
+[INFO] FoxAgent. Step: 580000. Time Elapsed: 9987.049 s. Mean Reward: -70.274. Std of Reward: 71.221. Training.
+[INFO] FoxAgent. Step: 585000. Time Elapsed: 10043.000 s. Mean Reward: 319.876. Std of Reward: 405.082. Training.
+[INFO] FoxAgent. Step: 590000. Time Elapsed: 10098.164 s. Mean Reward: 60.611. Std of Reward: 282.003. Training.
+[INFO] FoxAgent. Step: 595000. Time Elapsed: 10153.397 s. Mean Reward: 189.478. Std of Reward: 402.362. Training.
+[INFO] FoxAgent. Step: 600000. Time Elapsed: 10209.814 s. Mean Reward: 193.062. Std of Reward: 407.337. Training.
+[INFO] FoxAgent. Step: 605000. Time Elapsed: 10265.955 s. Mean Reward: 113.305. Std of Reward: 336.976. Training.
+[INFO] FoxAgent. Step: 610000. Time Elapsed: 10324.226 s. Mean Reward: 71.463. Std of Reward: 322.534. Training.
+[INFO] FoxAgent. Step: 615000. Time Elapsed: 10378.353 s. Mean Reward: -80.252. Std of Reward: 81.480. Training.
+[INFO] FoxAgent. Step: 620000. Time Elapsed: 10568.835 s. Mean Reward: 31.042. Std of Reward: 300.549. Training.
+[INFO] FoxAgent. Step: 625000. Time Elapsed: 10624.955 s. Mean Reward: -70.315. Std of Reward: 70.313. Training.
+[INFO] FoxAgent. Step: 630000. Time Elapsed: 10686.366 s. Mean Reward: 717.258. Std of Reward: 101.324. Training.
+[INFO] FoxAgent. Step: 635000. Time Elapsed: 10743.384 s. No episode was completed since last summary. Training.
+[INFO] FoxAgent. Step: 640000. Time Elapsed: 10797.917 s. Mean Reward: 202.462. Std of Reward: 310.220. Training.
+[INFO] FoxAgent. Step: 645000. Time Elapsed: 10853.045 s. Mean Reward: 364.605. Std of Reward: 387.582. Training.
+[INFO] FoxAgent. Step: 650000. Time Elapsed: 10911.100 s. Mean Reward: 152.930. Std of Reward: 306.502. Training.
+[INFO] FoxAgent. Step: 655000. Time Elapsed: 10968.896 s. Mean Reward: 287.068. Std of Reward: 394.009. Training.
+[INFO] FoxAgent. Step: 660000. Time Elapsed: 11031.866 s. Mean Reward: 224.254. Std of Reward: 384.659. Training.
+[INFO] FoxAgent. Step: 665000. Time Elapsed: 11090.525 s. Mean Reward: 317.076. Std of Reward: 413.636. Training.
+[INFO] FoxAgent. Step: 670000. Time Elapsed: 11149.251 s. Mean Reward: 28.645. Std of Reward: 28.647. Training.
+[INFO] FoxAgent. Step: 675000. Time Elapsed: 11205.472 s. Mean Reward: 294.671. Std of Reward: 401.430. Training.
+[INFO] FoxAgent. Step: 680000. Time Elapsed: 11403.132 s. Mean Reward: -72.153. Std of Reward: 81.434. Training.
+[INFO] FoxAgent. Step: 685000. Time Elapsed: 11460.238 s. Mean Reward: 86.341. Std of Reward: 349.760. Training.
+[INFO] FoxAgent. Step: 690000. Time Elapsed: 11519.897 s. Mean Reward: 199.415. Std of Reward: 401.273. Training.
+[INFO] FoxAgent. Step: 695000. Time Elapsed: 11579.291 s. Mean Reward: 38.720. Std of Reward: 279.098. Training.
+[INFO] FoxAgent. Step: 700000. Time Elapsed: 11638.032 s. Mean Reward: -1.291. Std of Reward: 1.289. Training.
+[INFO] FoxAgent. Step: 705000. Time Elapsed: 11697.066 s. Mean Reward: 176.206. Std of Reward: 399.673. Training.
+[INFO] FoxAgent. Step: 710000. Time Elapsed: 11750.181 s. Mean Reward: 319.381. Std of Reward: 416.696. Training.
+[INFO] FoxAgent. Step: 715000. Time Elapsed: 11805.155 s. Mean Reward: 182.848. Std of Reward: 372.251. Training.
+[INFO] FoxAgent. Step: 720000. Time Elapsed: 11862.878 s. Mean Reward: 69.357. Std of Reward: 263.154. Training.
+[INFO] FoxAgent. Step: 725000. Time Elapsed: 11919.628 s. Mean Reward: 31.841. Std of Reward: 243.177. Training.
+[INFO] FoxAgent. Step: 730000. Time Elapsed: 11975.188 s. Mean Reward: 191.486. Std of Reward: 349.687. Training.
+[INFO] FoxAgent. Step: 735000. Time Elapsed: 12031.137 s. Mean Reward: 67.721. Std of Reward: 283.525. Training.
+[INFO] FoxAgent. Step: 740000. Time Elapsed: 12088.561 s. Mean Reward: 16.374. Std of Reward: 276.466. Training.
+[INFO] FoxAgent. Step: 745000. Time Elapsed: 12279.716 s. Mean Reward: 91.729. Std of Reward: 340.725. Training.
+[INFO] FoxAgent. Step: 750000. Time Elapsed: 12336.729 s. Mean Reward: 100.704. Std of Reward: 371.476. Training.
+[INFO] FoxAgent. Step: 755000. Time Elapsed: 12396.508 s. Mean Reward: 34.298. Std of Reward: 307.641. Training.
+[INFO] FoxAgent. Step: 760000. Time Elapsed: 12453.511 s. Mean Reward: 229.820. Std of Reward: 385.306. Training.
+[INFO] FoxAgent. Step: 765000. Time Elapsed: 12511.703 s. Mean Reward: 124.737. Std of Reward: 343.232. Training.
+[INFO] FoxAgent. Step: 770000. Time Elapsed: 12566.409 s. Mean Reward: 235.521. Std of Reward: 382.342. Training.
+[INFO] FoxAgent. Step: 775000. Time Elapsed: 12623.340 s. Mean Reward: 10.447. Std of Reward: 214.395. Training.
+[INFO] FoxAgent. Step: 780000. Time Elapsed: 12675.352 s. Mean Reward: 123.380. Std of Reward: 334.693. Training.
+[INFO] FoxAgent. Step: 785000. Time Elapsed: 12735.529 s. Mean Reward: -80.263. Std of Reward: 80.261. Training.
+[INFO] FoxAgent. Step: 790000. Time Elapsed: 12789.130 s. Mean Reward: 325.248. Std of Reward: 399.570. Training.
+[INFO] FoxAgent. Step: 795000. Time Elapsed: 12849.042 s. Mean Reward: 204.004. Std of Reward: 387.249. Training.
+[INFO] FoxAgent. Step: 800000. Time Elapsed: 12902.589 s. Mean Reward: -59.315. Std of Reward: 72.724. Training.
+[INFO] FoxAgent. Step: 805000. Time Elapsed: 13091.365 s. Mean Reward: 27.319. Std of Reward: 280.748. Training.
+[INFO] FoxAgent. Step: 810000. Time Elapsed: 13149.989 s. Mean Reward: -48.070. Std of Reward: 55.012. Training.
+[INFO] FoxAgent. Step: 815000. Time Elapsed: 13207.553 s. Mean Reward: 319.554. Std of Reward: 426.109. Training.
+[INFO] FoxAgent. Step: 820000. Time Elapsed: 13266.694 s. Mean Reward: 381.701. Std of Reward: 399.093. Training.
+[INFO] FoxAgent. Step: 825000. Time Elapsed: 13323.723 s. Mean Reward: 91.753. Std of Reward: 351.570. Training.
+[INFO] FoxAgent. Step: 830000. Time Elapsed: 13378.761 s. Mean Reward: 38.185. Std of Reward: 218.877. Training.
+[INFO] FoxAgent. Step: 835000. Time Elapsed: 13434.073 s. Mean Reward: -83.571. Std of Reward: 84.627. Training.
+[INFO] FoxAgent. Step: 840000. Time Elapsed: 13491.342 s. Mean Reward: 42.736. Std of Reward: 286.237. Training.
+[INFO] FoxAgent. Step: 845000. Time Elapsed: 13547.011 s. Mean Reward: -86.861. Std of Reward: 87.878. Training.
+[INFO] FoxAgent. Step: 850000. Time Elapsed: 13603.049 s. Mean Reward: 190.993. Std of Reward: 389.322. Training.
+[INFO] FoxAgent. Step: 855000. Time Elapsed: 14006.548 s. Mean Reward: -60.485. Std of Reward: 88.730. Training.
+[INFO] FoxAgent. Step: 860000. Time Elapsed: 14440.045 s. Mean Reward: 232.300. Std of Reward: 323.443. Training.
+[INFO] FoxAgent. Step: 865000. Time Elapsed: 14985.660 s. Mean Reward: -35.062. Std of Reward: 71.576. Training.
+[INFO] FoxAgent. Step: 870000. Time Elapsed: 15418.763 s. Mean Reward: 229.434. Std of Reward: 427.725. Training.
+[INFO] FoxAgent. Step: 875000. Time Elapsed: 15836.287 s. Mean Reward: 79.462. Std of Reward: 297.445. Training.
+[INFO] FoxAgent. Step: 880000. Time Elapsed: 16272.335 s. Mean Reward: 179.985. Std of Reward: 343.212. Training.
+[INFO] FoxAgent. Step: 885000. Time Elapsed: 16706.555 s. Mean Reward: 103.255. Std of Reward: 316.197. Training.
+[INFO] FoxAgent. Step: 890000. Time Elapsed: 17154.656 s. Mean Reward: -75.290. Std of Reward: 75.607. Training.
+[INFO] FoxAgent. Step: 895000. Time Elapsed: 17540.688 s. Mean Reward: 210.394. Std of Reward: 372.808. Training.
+[INFO] FoxAgent. Step: 900000. Time Elapsed: 17975.666 s. Mean Reward: 196.367. Std of Reward: 366.454. Training.
+[INFO] FoxAgent. Step: 905000. Time Elapsed: 18391.811 s. Mean Reward: 228.693. Std of Reward: 368.454. Training.
+[INFO] FoxAgent. Step: 910000. Time Elapsed: 18810.757 s. Mean Reward: 109.234. Std of Reward: 281.606. Training.
+[INFO] FoxAgent. Step: 915000. Time Elapsed: 19226.195 s. Mean Reward: -21.254. Std of Reward: 21.272. Training.
+[INFO] FoxAgent. Step: 920000. Time Elapsed: 19662.004 s. Mean Reward: 776.426. Std of Reward: 43.105. Training.
+[INFO] FoxAgent. Step: 925000. Time Elapsed: 20079.512 s. Mean Reward: 192.726. Std of Reward: 348.588. Training.
+[INFO] FoxAgent. Step: 930000. Time Elapsed: 20625.631 s. Mean Reward: 80.855. Std of Reward: 300.780. Training.
+[INFO] FoxAgent. Step: 935000. Time Elapsed: 21060.961 s. Mean Reward: 710.263. Std of Reward: 42.130. Training.
+[INFO] FoxAgent. Step: 940000. Time Elapsed: 21492.968 s. Mean Reward: 367.741. Std of Reward: 379.651. Training.
+[INFO] FoxAgent. Step: 945000. Time Elapsed: 21942.164 s. Mean Reward: 418.186. Std of Reward: 423.944. Training.
+[INFO] FoxAgent. Step: 950000. Time Elapsed: 22362.212 s. Mean Reward: 63.645. Std of Reward: 318.893. Training.
+[INFO] FoxAgent. Step: 955000. Time Elapsed: 22779.870 s. Mean Reward: 750.736. Std of Reward: 69.566. Training.
+[INFO] FoxAgent. Step: 960000. Time Elapsed: 23214.030 s. Mean Reward: 182.949. Std of Reward: 347.604. Training.
+[INFO] FoxAgent. Step: 965000. Time Elapsed: 23616.002 s. Mean Reward: 258.932. Std of Reward: 367.890. Training.
+[INFO] FoxAgent. Step: 970000. Time Elapsed: 24033.961 s. Mean Reward: 92.316. Std of Reward: 322.175. Training.
+[INFO] FoxAgent. Step: 975000. Time Elapsed: 24467.567 s. Mean Reward: 150.542. Std of Reward: 328.983. Training.
+[INFO] FoxAgent. Step: 980000. Time Elapsed: 24901.283 s. Mean Reward: 84.304. Std of Reward: 305.653. Training.
+[INFO] FoxAgent. Step: 985000. Time Elapsed: 25335.191 s. Mean Reward: 196.195. Std of Reward: 408.041. Training.
+[INFO] FoxAgent. Step: 990000. Time Elapsed: 25754.202 s. Mean Reward: 469.613. Std of Reward: 358.554. Training.
+[INFO] FoxAgent. Step: 995000. Time Elapsed: 26300.269 s. Mean Reward: 139.706. Std of Reward: 340.970. Training.
+[INFO] FoxAgent. Step: 1000000. Time Elapsed: 26750.058 s. Mean Reward: 363.610. Std of Reward: 367.240. Training.
+[INFO] Exported results\fox_par8_visible_120fps\FoxAgent\FoxAgent-999962.onnx
+[INFO] FoxAgent. Step: 1005000. Time Elapsed: 27184.274 s. Mean Reward: 214.097. Std of Reward: 389.478. Training.
+[INFO] FoxAgent. Step: 1010000. Time Elapsed: 27616.878 s. Mean Reward: 197.215. Std of Reward: 347.359. Training.
+[INFO] FoxAgent. Step: 1015000. Time Elapsed: 28020.595 s. Mean Reward: -64.571. Std of Reward: 89.078. Training.
+[INFO] FoxAgent. Step: 1020000. Time Elapsed: 28438.728 s. Mean Reward: 280.600. Std of Reward: 399.140. Training.
+[INFO] FoxAgent. Step: 1025000. Time Elapsed: 28871.559 s. Mean Reward: 669.742. Std of Reward: 30.649. Training.
+[INFO] FoxAgent. Step: 1030000. Time Elapsed: 29305.669 s. Mean Reward: 235.238. Std of Reward: 375.981. Training.
+[INFO] FoxAgent. Step: 1035000. Time Elapsed: 29721.904 s. Mean Reward: 64.817. Std of Reward: 315.380. Training.
+[INFO] FoxAgent. Step: 1040000. Time Elapsed: 30140.280 s. Mean Reward: 189.694. Std of Reward: 387.272. Training.
+[INFO] FoxAgent. Step: 1045000. Time Elapsed: 30557.840 s. Mean Reward: 247.482. Std of Reward: 378.231. Training.
+[INFO] FoxAgent. Step: 1050000. Time Elapsed: 30992.202 s. Mean Reward: 152.318. Std of Reward: 361.381. Training.
+[INFO] FoxAgent. Step: 1055000. Time Elapsed: 31571.063 s. Mean Reward: 153.133. Std of Reward: 344.125. Training.
+[INFO] FoxAgent. Step: 1060000. Time Elapsed: 31973.049 s. Mean Reward: 134.784. Std of Reward: 359.023. Training.
+[INFO] FoxAgent. Step: 1065000. Time Elapsed: 32421.532 s. Mean Reward: 5.268. Std of Reward: 268.719. Training.
+[INFO] FoxAgent. Step: 1070000. Time Elapsed: 32871.344 s. Mean Reward: 90.763. Std of Reward: 325.157. Training.
+[INFO] FoxAgent. Step: 1075000. Time Elapsed: 33290.924 s. Mean Reward: 82.756. Std of Reward: 303.091. Training.
+[INFO] FoxAgent. Step: 1080000. Time Elapsed: 33693.108 s. Mean Reward: 10.371. Std of Reward: 218.258. Training.
+[INFO] FoxAgent. Step: 1085000. Time Elapsed: 34157.854 s. Mean Reward: 23.970. Std of Reward: 275.620. Training.
+[INFO] FoxAgent. Step: 1090000. Time Elapsed: 34559.204 s. Mean Reward: 140.719. Std of Reward: 341.578. Training.
+[INFO] FoxAgent. Step: 1095000. Time Elapsed: 34976.206 s. Mean Reward: 53.735. Std of Reward: 324.677. Training.
+[INFO] FoxAgent. Step: 1100000. Time Elapsed: 35393.600 s. Mean Reward: 57.673. Std of Reward: 307.137. Training.
+[INFO] FoxAgent. Step: 1105000. Time Elapsed: 35812.809 s. Mean Reward: 302.389. Std of Reward: 420.582. Training.
+[INFO] FoxAgent. Step: 1110000. Time Elapsed: 36245.532 s. Mean Reward: 21.171. Std of Reward: 259.485. Training.
+[INFO] FoxAgent. Step: 1115000. Time Elapsed: 36792.395 s. Mean Reward: 28.354. Std of Reward: 302.422. Training.
+[INFO] FoxAgent. Step: 1120000. Time Elapsed: 37224.182 s. Mean Reward: 123.448. Std of Reward: 353.772. Training.
+[INFO] FoxAgent. Step: 1125000. Time Elapsed: 37641.895 s. Mean Reward: 395.214. Std of Reward: 374.078. Training.
+[INFO] FoxAgent. Step: 1130000. Time Elapsed: 38109.384 s. Mean Reward: 151.841. Std of Reward: 353.172. Training.
+[INFO] FoxAgent. Step: 1135000. Time Elapsed: 38527.329 s. Mean Reward: 32.379. Std of Reward: 268.724. Training.
+[INFO] FoxAgent. Step: 1140000. Time Elapsed: 38944.020 s. Mean Reward: 65.877. Std of Reward: 262.914. Training.
+[INFO] FoxAgent. Step: 1145000. Time Elapsed: 39362.473 s. Mean Reward: -70.658. Std of Reward: 73.553. Training.
+[INFO] FoxAgent. Step: 1150000. Time Elapsed: 39798.097 s. Mean Reward: -6.651. Std of Reward: 220.205. Training.
+[INFO] FoxAgent. Step: 1155000. Time Elapsed: 40216.178 s. Mean Reward: 433.130. Std of Reward: 346.914. Training.
+[INFO] FoxAgent. Step: 1160000. Time Elapsed: 40649.685 s. Mean Reward: 92.276. Std of Reward: 290.700. Training.
+[INFO] FoxAgent. Step: 1165000. Time Elapsed: 41051.466 s. Mean Reward: 229.659. Std of Reward: 376.892. Training.
+[INFO] FoxAgent. Step: 1170000. Time Elapsed: 41484.934 s. Mean Reward: 215.922. Std of Reward: 372.758. Training.
+[INFO] FoxAgent. Step: 1175000. Time Elapsed: 42017.004 s. Mean Reward: 135.612. Std of Reward: 328.787. Training.
+[INFO] FoxAgent. Step: 1180000. Time Elapsed: 42466.048 s. Mean Reward: 148.070. Std of Reward: 313.378. Training.
+[INFO] FoxAgent. Step: 1185000. Time Elapsed: 42884.977 s. Mean Reward: 99.461. Std of Reward: 333.853. Training.
+[INFO] FoxAgent. Step: 1190000. Time Elapsed: 43302.520 s. Mean Reward: 88.500. Std of Reward: 311.102. Training.
+[INFO] FoxAgent. Step: 1195000. Time Elapsed: 43767.242 s. Mean Reward: -66.693. Std of Reward: 83.230. Training.
+[WARNING] Environment timed out shutting down. Killing...
+[WARNING] Environment timed out shutting down. Killing...
+[WARNING] Environment timed out shutting down. Killing...
+[WARNING] Environment timed out shutting down. Killing...
+[WARNING] Environment timed out shutting down. Killing...
+[WARNING] Environment timed out shutting down. Killing...
+[WARNING] Environment timed out shutting down. Killing...
+[WARNING] Environment timed out shutting down. Killing...
+[INFO] Exported results\fox_par8_visible_120fps\FoxAgent\FoxAgent-1199730.onnx
+[INFO] Copied results\fox_par8_visible_120fps\FoxAgent\FoxAgent-1199730.onnx to results\fox_par8_visible_120fps\FoxAgent.onnx.
+Traceback (most recent call last):
+  File "C:\Users\cemka\anaconda3\envs\mlagents\lib\runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "C:\Users\cemka\anaconda3\envs\mlagents\lib\runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "C:\Users\cemka\anaconda3\envs\mlagents\Scripts\mlagents-learn.exe\__main__.py", line 6, in <module>
+  File "C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\trainers\learn.py", line 270, in main
+    run_cli(parse_command_line())
+  File "C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\trainers\learn.py", line 266, in run_cli
+    run_training(run_seed, options, num_areas)
+  File "C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\trainers\learn.py", line 138, in run_training
+    tc.start_learning(env_manager)
+  File "C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents_envs\timers.py", line 305, in wrapped
+    return func(*args, **kwargs)
+  File "C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\trainers\trainer_controller.py", line 175, in start_learning
+    n_steps = self.advance(env_manager)
+  File "C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents_envs\timers.py", line 305, in wrapped
+    return func(*args, **kwargs)
+  File "C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\trainers\trainer_controller.py", line 233, in advance
+    new_step_infos = env_manager.get_steps()
+  File "C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\trainers\env_manager.py", line 124, in get_steps
+    new_step_infos = self._step()
+  File "C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\trainers\subprocess_env_manager.py", line 420, in _step
+    self._restart_failed_workers(step)
+  File "C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\trainers\subprocess_env_manager.py", line 312, in _restart_failed_workers
+    other_failures: Dict[int, Exception] = self._drain_step_queue()
+  File "C:\Users\cemka\anaconda3\envs\mlagents\lib\site-packages\mlagents\trainers\subprocess_env_manager.py", line 352, in _drain_step_queue
+    raise TimeoutError(f"Workers {still_waiting} stuck in waiting state")
+TimeoutError: Workers {0, 1, 2, 3, 4, 5, 6, 7} stuck in waiting state
+(mlagents) PS Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Python>
