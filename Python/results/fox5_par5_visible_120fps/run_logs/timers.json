@@ -1,0 +1,115 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1761955533",
+        "python_version": "3.10.12 | packaged by Anaconda, Inc. | (main, Jul  5 2023, 19:01:18) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\cemka\\anaconda3\\envs\\mlagents\\Scripts\\mlagents-learn Y:\\Drive\\My_Drive\\folder\\UU\\Ai_for_games_proj\\Python\\fox5.yaml --run-id=fox5_par5_visible_120fps --env Y:\\Drive\\My_Drive\\folder\\UU\\Ai_for_games_proj\\Python\\Train_build\\Ai_game_project.exe --num-envs=5 --base-port=7005 --env-args --fps=120 --quality=VeryLow -screen-fullscreen 0 -popupwindow -screen-width 640 -screen-height 360",
+        "mlagents_version": "1.1.0",
+        "mlagents_envs_version": "1.1.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.5.1+cu121",
+        "numpy_version": "1.23.5",
+        "end_time_seconds": "1761955657"
+    },
+    "total": 123.72852949996013,
+    "count": 1,
+    "self": 1.0258287999313325,
+    "children": {
+        "run_training.setup": {
+            "total": 0.44830230000661686,
+            "count": 1,
+            "self": 0.44830230000661686
+        },
+        "TrainerController.start_learning": {
+            "total": 122.25439840002218,
+            "count": 1,
+            "self": 0.00013550004223361611,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 121.71064429997932,
+                    "count": 1,
+                    "self": 13.574318900005892,
+                    "children": {
+                        "demo_to_buffer": {
+                            "total": 108.13632539997343,
+                            "count": 1,
+                            "self": 0.00029289996018633246,
+                            "children": {
+                                "load_demonstration": {
+                                    "total": 0.7011702000163496,
+                                    "count": 1,
+                                    "self": 0.5945854002493434,
+                                    "children": {
+                                        "read_file": {
+                                            "total": 0.10658479976700619,
+                                            "count": 28,
+                                            "self": 0.10658479976700619
+                                        }
+                                    }
+                                },
+                                "make_demo_buffer": {
+                                    "total": 107.4348622999969,
+                                    "count": 1,
+                                    "self": 2.2342834083829075,
+                                    "children": {
+                                        "steps_from_proto": {
+                                            "total": 105.20057889161399,
+                                            "count": 75050,
+                                            "self": 7.65610457159346,
+                                            "children": {
+                                                "_process_rank_one_or_two_observation": {
+                                                    "total": 6.263929013803136,
+                                                    "count": 450300,
+                                                    "self": 6.263929013803136
+                                                },
+                                                "_process_maybe_compressed_observation": {
+                                                    "total": 91.28054530621739,
+                                                    "count": 150100,
+                                                    "self": 1.6971250152564608,
+                                                    "children": {
+                                                        "_observation_to_np_array": {
+                                                            "total": 89.58342029096093,
+                                                            "count": 75050,
+                                                            "self": 1.0713907821336761,
+                                                            "children": {
+                                                                "process_pixels": {
+                                                                    "total": 88.51202950882725,
+                                                                    "count": 75050,
+                                                                    "self": 44.54558061057469,
+                                                                    "children": {
+                                                                        "image_decompress": {
+                                                                            "total": 43.966448898252565,
+                                                                            "count": 450300,
+                                                                            "self": 43.966448898252565
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "TrainerController._save_models": {
+                    "total": 0.5436186000006273,
+                    "count": 1,
+                    "self": 0.010908399999607354,
+                    "children": {
+                        "RLTrainer._checkpoint": {
+                            "total": 0.53271020000102,
+                            "count": 1,
+                            "self": 0.53271020000102
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

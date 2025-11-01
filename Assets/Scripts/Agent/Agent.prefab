@@ -911,12 +911,12 @@ MonoBehaviour:
   includeCameraObs: 1
   R:
     stepPenalty: -0.001
-    progressToGoal: 0.5
-    progressToNearestGem: 0.05
-    progressToNearestEnemy: 0
-    collectGem: 20
-    hitEnemy: 10
-    pogoFromEnemy: 50
+    progressToGoal: 1
+    progressToNearestGem: 1
+    progressToNearestEnemy: -0.05
+    collectGem: 75
+    hitEnemy: 30
+    pogoFromEnemy: 100
     reachGoal: 500
     deathPenalty: -200
     goalMilestoneReward: 10
