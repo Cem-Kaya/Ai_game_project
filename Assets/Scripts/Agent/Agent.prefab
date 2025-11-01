@@ -951,9 +951,9 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_Model: {fileID: 5022602860645237092, guid: d9fe7d4f5adc80446a996e3753841f73, type: 3}
+  m_InferenceDevice: 2
+  m_BehaviorType: 2
   m_BehaviorName: FoxAgent
   TeamId: 0
   m_UseChildSensors: 1
