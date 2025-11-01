@@ -178,10 +178,14 @@ public class AIAgentController2D : Agent
     private int enemyBodyTouches;
     private float invulnerableUntil;
 
+
     // heuristic decision scheduler
     private int heuristicFrameCountdown;
     private bool lockDownUntilGrounded = false;
 
+
+
+    private float _jumpAscentTimer; // Tracks time since jump start
 
     private new void Awake()
     {
@@ -216,8 +220,7 @@ public class AIAgentController2D : Agent
 
     private void Update()
     {
-        // Gravity feel
-        TuneGravityForFeel();
+        
 
         // Ensure Heuristic requests decisions regularly to avoid missed key presses.
         // Works when Behavior Type = Heuristic Only (or when Inference + Heuristic).
@@ -249,16 +252,14 @@ public class AIAgentController2D : Agent
 
     private void FixedUpdate()
     {
-        // ---- FALL FAIL-SAFE FIRST (no other logic before this) ----
+        // ---- FALL FAIL-SAFE FIRST (unchanged) ----
         float y = rb.position.y;
-        // NaN/Inf guard
         if (!float.IsFinite(y) || !float.IsFinite(autoRespawnY))
         {
             if (R.deathPenalty != 0f) AddReward(R.deathPenalty);
             LoseAndEndEpisode("non-finite");
             return;
         }
-
         if (y < autoRespawnY)
         {
             if (R.deathPenalty != 0f) AddReward(R.deathPenalty);
@@ -270,14 +271,16 @@ public class AIAgentController2D : Agent
         MovePlayer();
         HandleHoldTimer();
         HandlePogoTimer();
-        HandleAirTime();
+
+        HandleAirTime();          // decides jumpCut
+        TuneGravityForFeel();     // apply gravity choice in the same physics step
+
         HandleDash();
         HandleAttack();
 
         ApplyStepRewards();
         ApplyMilestoneRewards();
 
-        // Timeout: end episode if time limit exceeded
         if (Time.time - episodeStartTime >= episodeTimeLimit)
         {
             if (timeoutPenalty != 0f) AddReward(timeoutPenalty);
@@ -322,14 +325,18 @@ public class AIAgentController2D : Agent
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             isGrounded = false;
+
+            // START THE ASCENT TIMER (to copy the player's 0.3s maxHoldTime)
+            _jumpAscentTimer = 0f;
+            jumpCut = false; // Start with base gravity
+
+            lockDownUntilGrounded = true;
+
+            // These are for action-parsing, but won't affect height
             holdTimer = maxHoldTime;
             holdJump = true;
-            // Latch the block so "down" is disabled until grounded again.
-            lockDownUntilGrounded = true;
         }
     }
-
-
     // OLD:
     // private void OnJumpReleased()
     // {
@@ -338,11 +345,13 @@ public class AIAgentController2D : Agent
     //     jumpCut = false;
     // }
 
+    // Release never shortens the jump (no tap apex)
     private void OnJumpReleased()
     {
         holdJump = false;
-        jumpCut = false;   
+        jumpCut = false; // HandleAirTime will manage this
     }
+
 
 
 
@@ -364,19 +373,35 @@ public class AIAgentController2D : Agent
     //     }
     // }
 
+    // Handle ascent timing & apply the apex cap
     private void HandleAirTime()
     {
-        if (rb.linearVelocity.y > 0f)
+        float vy = rb.linearVelocity.y;
+        bool inPogo = (pogoTimer > 0f);
+
+        if (vy > 0f && !inPogo) // If rising AND not pogo-ing
         {
-            // Always treat ascent with normal gravity; holding doesn't increase height.
-            jumpCut = false;
+            _jumpAscentTimer += Time.fixedDeltaTime;
+
+            // If ascent time exceeds the Player's maxHoldTime,
+            // engage jumpCut gravity to cap the apex.
+            if (_jumpAscentTimer > maxHoldTime)
+            {
+                jumpCut = true;
+            }
+            else
+            {
+                jumpCut = false; // We are in the "full power" window
+            }
         }
-        else if (rb.linearVelocity.y < 0f)
+        else if (vy < 0f)
         {
-            // Falling: clear hold flags
+            // Falling: clear all flags
             jumpCut = false;
             holdJump = false;
+            _jumpAscentTimer = 0f;
         }
+        // else: pogo-ing or vy==0, leave flags as-is
     }
 
     // OLD:
@@ -387,12 +412,22 @@ public class AIAgentController2D : Agent
     //     else rb.gravityScale = baseGravityScale;
     // }
 
+    // Base on ascent, snappy on descent; no jump-cut branch
+
     private void TuneGravityForFeel()
     {
         if (rb.linearVelocity.y < 0f)
-            rb.gravityScale = fallGravityScale;   // faster fall
+        {
+            rb.gravityScale = fallGravityScale;
+        }
+        else if (jumpCut) // This is now true after 0.3s of rising
+        {
+            rb.gravityScale = jumpCutGravityScale;
+        }
         else
-            rb.gravityScale = baseGravityScale;   // fixed-height ascent
+        {
+            rb.gravityScale = baseGravityScale; // Used for the first 0.3s
+        }
     }
 
     private void OnDashPressed()
@@ -480,14 +515,18 @@ public class AIAgentController2D : Agent
         }
     }
 
+    // Pogo should not be capped by the normal jump window
     public void Pogo()
     {
         canDash = true;
         pogoTimer = pogoTime;
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, pogoVelocity);
+
+        jumpCut = false; // Pogo is not a jump cut
+        _jumpAscentTimer = 0f; // Pogo is not a normal jump
+
         AddReward(R.pogoFromEnemy);
     }
-
     private void HandlePogoTimer()
     {
         if (pogoTimer > 0f) pogoTimer -= Time.fixedDeltaTime;
@@ -495,6 +534,8 @@ public class AIAgentController2D : Agent
     }
 
     // ===== Grounding =====
+    // Grounding resets the jump window
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         foreach (var c in collision.contacts)
@@ -503,7 +544,11 @@ public class AIAgentController2D : Agent
             {
                 isGrounded = true;
                 canDash = true;
-                lockDownUntilGrounded = false; // allow down again
+                lockDownUntilGrounded = false;
+
+                // FIX: Reset the new timer, not the old deleted variables
+                _jumpAscentTimer = 0f;
+
                 break;
             }
         }
@@ -517,17 +562,24 @@ public class AIAgentController2D : Agent
             {
                 isGrounded = true;
                 canDash = true;
-                lockDownUntilGrounded = false; // allow down again
+                lockDownUntilGrounded = false;
+
+                // FIX: Reset the new timer, not the old deleted variables
+                _jumpAscentTimer = 0f;
+
                 break;
             }
         }
     }
 
-
     private void OnCollisionExit2D(Collision2D collision)
     {
         isGrounded = false;
     }
+
+   
+
+    
 
     // ===== Trigger events via SAFE tag equality (no CompareTag) =====
     private static bool HasTag(GameObject go, string tagName)
