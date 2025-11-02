@@ -80,8 +80,13 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode toggleKey = KeyCode.O;
 
     //win loose message
-    public GameObject winMessage; 
-    public GameObject looseMessage; 
+    public GameObject winMessage;
+    public GameObject looseMessage;
+
+    //coyote jump
+    [Header("Coyote Time")]
+    private float coyoteTime = 0.2f;
+    private float coyoteTimer;
 
     [Header("Fail-safe")]
     [SerializeField] private float autoRespawnY = -20f;
@@ -166,6 +171,7 @@ public class PlayerMovement : MonoBehaviour
         HandleAirTime();
         HandleDash();
         HandleAttack();
+        HandleCoyoteTime();
     }
 
     private void UnlockMovement()
@@ -202,10 +208,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (movementLocked) return;
 
-        if (isGrounded)
+        if (isGrounded || coyoteTimer > 0f)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             isGrounded = false;
+            coyoteTimer = 0f;
 
             holdTimer = maxHoldTime;
             holdJump = true;
@@ -457,6 +464,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 isGrounded = true;
                 canDash = true;
+                coyoteTimer = coyoteTime;
                 break;
             }
         }
@@ -467,6 +475,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
+            coyoteTimer = coyoteTime;
         }
     }
 
@@ -536,5 +545,12 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-        
+    private void HandleCoyoteTime()
+    {
+        if (!isGrounded && coyoteTimer > 0f)
+        {
+            coyoteTimer -= Time.fixedDeltaTime;
+        }
+    }
+
 }
