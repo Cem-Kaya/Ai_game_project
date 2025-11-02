@@ -1,0 +1,108 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1761865437",
+        "python_version": "3.10.12 | packaged by Anaconda, Inc. | (main, Jul  5 2023, 19:01:18) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\cemka\\anaconda3\\envs\\mlagents\\Scripts\\mlagents-learn fox2.yaml --run-id=fox_bc_ppo14 --time-scale=1",
+        "mlagents_version": "1.1.0",
+        "mlagents_envs_version": "1.1.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.5.1+cu121",
+        "numpy_version": "1.23.5",
+        "end_time_seconds": "1761865696"
+    },
+    "total": 258.80370450002374,
+    "count": 1,
+    "self": 0.005931799998506904,
+    "children": {
+        "run_training.setup": {
+            "total": 0.09567489998880774,
+            "count": 1,
+            "self": 0.09567489998880774
+        },
+        "TrainerController.start_learning": {
+            "total": 258.7020978000364,
+            "count": 1,
+            "self": 4.805902799998876,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 253.89619420003146,
+                    "count": 1,
+                    "self": 17.771689300017897,
+                    "children": {
+                        "demo_to_buffer": {
+                            "total": 236.12450490001356,
+                            "count": 1,
+                            "self": 2.659996971487999e-05,
+                            "children": {
+                                "load_demonstration": {
+                                    "total": 4.950458800012711,
+                                    "count": 1,
+                                    "self": 4.095101699815132,
+                                    "children": {
+                                        "read_file": {
+                                            "total": 0.8553571001975797,
+                                            "count": 221,
+                                            "self": 0.8553571001975797
+                                        }
+                                    }
+                                },
+                                "make_demo_buffer": {
+                                    "total": 231.17401950003114,
+                                    "count": 1,
+                                    "self": 4.621392590808682,
+                                    "children": {
+                                        "steps_from_proto": {
+                                            "total": 226.55262690922245,
+                                            "count": 144325,
+                                            "self": 14.670081885473337,
+                                            "children": {
+                                                "_process_rank_one_or_two_observation": {
+                                                    "total": 12.05933111923514,
+                                                    "count": 865948,
+                                                    "self": 12.05933111923514
+                                                },
+                                                "_process_maybe_compressed_observation": {
+                                                    "total": 199.82321390451398,
+                                                    "count": 288649,
+                                                    "self": 3.9477727050543763,
+                                                    "children": {
+                                                        "_observation_to_np_array": {
+                                                            "total": 195.8754411994596,
+                                                            "count": 144325,
+                                                            "self": 2.0776399189489894,
+                                                            "children": {
+                                                                "process_pixels": {
+                                                                    "total": 193.7978012805106,
+                                                                    "count": 144325,
+                                                                    "self": 103.53651035076473,
+                                                                    "children": {
+                                                                        "image_decompress": {
+                                                                            "total": 90.26129092974588,
+                                                                            "count": 865950,
+                                                                            "self": 90.26129092974588
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "trainer_threads": {
+                    "total": 8.00006091594696e-07,
+                    "count": 1,
+                    "self": 8.00006091594696e-07
+                }
+            }
+        }
+    }
+}

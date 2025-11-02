@@ -1,0 +1,115 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1761517446",
+        "python_version": "3.10.12 | packaged by Anaconda, Inc. | (main, Jul  5 2023, 19:01:18) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\cemka\\anaconda3\\envs\\mlagents\\Scripts\\mlagents-learn fox2.yaml --run-id=fox_bc_ppo3 --time-scale=20",
+        "mlagents_version": "1.1.0",
+        "mlagents_envs_version": "1.1.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.5.1+cu121",
+        "numpy_version": "1.23.5",
+        "end_time_seconds": "1761517470"
+    },
+    "total": 23.463645100004214,
+    "count": 1,
+    "self": 0.00706390001141699,
+    "children": {
+        "run_training.setup": {
+            "total": 0.09381159999611555,
+            "count": 1,
+            "self": 0.09381159999611555
+        },
+        "TrainerController.start_learning": {
+            "total": 23.362769599996682,
+            "count": 1,
+            "self": 0.00010589999874355271,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 23.361370200000238,
+                    "count": 1,
+                    "self": 17.74711390000448,
+                    "children": {
+                        "demo_to_buffer": {
+                            "total": 5.614256299995759,
+                            "count": 1,
+                            "self": 1.8899991118814796e-05,
+                            "children": {
+                                "load_demonstration": {
+                                    "total": 0.2306289000043762,
+                                    "count": 1,
+                                    "self": 0.20479790003446396,
+                                    "children": {
+                                        "read_file": {
+                                            "total": 0.025830999969912227,
+                                            "count": 33,
+                                            "self": 0.025830999969912227
+                                        }
+                                    }
+                                },
+                                "make_demo_buffer": {
+                                    "total": 5.383608500000264,
+                                    "count": 1,
+                                    "self": 0.3192610996920848,
+                                    "children": {
+                                        "steps_from_proto": {
+                                            "total": 5.064347400308179,
+                                            "count": 12568,
+                                            "self": 1.1874660020403098,
+                                            "children": {
+                                                "_process_rank_one_or_two_observation": {
+                                                    "total": 0.9759450985438889,
+                                                    "count": 75406,
+                                                    "self": 0.9759450985438889
+                                                },
+                                                "_process_maybe_compressed_observation": {
+                                                    "total": 2.9009362997239805,
+                                                    "count": 25135,
+                                                    "self": 0.16466729996318463,
+                                                    "children": {
+                                                        "_observation_to_np_array": {
+                                                            "total": 2.736268999760796,
+                                                            "count": 12568,
+                                                            "self": 0.14628170015203068,
+                                                            "children": {
+                                                                "process_pixels": {
+                                                                    "total": 2.589987299608765,
+                                                                    "count": 12567,
+                                                                    "self": 1.3007521991385147,
+                                                                    "children": {
+                                                                        "image_decompress": {
+                                                                            "total": 1.2892351004702505,
+                                                                            "count": 12567,
+                                                                            "self": 1.2892351004702505
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "TrainerController._save_models": {
+                    "total": 0.0012934999977005646,
+                    "count": 1,
+                    "self": 0.00014850000297883525,
+                    "children": {
+                        "RLTrainer._checkpoint": {
+                            "total": 0.0011449999947217293,
+                            "count": 1,
+                            "self": 0.0011449999947217293
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

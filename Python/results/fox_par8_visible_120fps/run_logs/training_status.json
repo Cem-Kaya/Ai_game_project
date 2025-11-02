@@ -1,0 +1,47 @@
+{
+    "FoxAgent": {
+        "checkpoints": [
+            {
+                "steps": 499890,
+                "file_path": "results\\fox_par8_visible_120fps\\FoxAgent\\FoxAgent-499890.onnx",
+                "reward": 212.868490848548,
+                "creation_time": 1761877578.6952553,
+                "auxillary_file_paths": [
+                    "results\\fox_par8_visible_120fps\\FoxAgent\\FoxAgent-499890.pt"
+                ]
+            },
+            {
+                "steps": 999962,
+                "file_path": "results\\fox_par8_visible_120fps\\FoxAgent\\FoxAgent-999962.onnx",
+                "reward": 251.13285318374568,
+                "creation_time": 1761895387.3068218,
+                "auxillary_file_paths": [
+                    "results\\fox_par8_visible_120fps\\FoxAgent\\FoxAgent-999962.pt"
+                ]
+            },
+            {
+                "steps": 1199730,
+                "file_path": "results\\fox_par8_visible_120fps\\FoxAgent\\FoxAgent-1199730.onnx",
+                "reward": 72.63896144460615,
+                "creation_time": 1761912945.1957939,
+                "auxillary_file_paths": [
+                    "results\\fox_par8_visible_120fps\\FoxAgent\\FoxAgent-1199730.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1199730,
+            "file_path": "results\\fox_par8_visible_120fps\\FoxAgent.onnx",
+            "reward": 72.63896144460615,
+            "creation_time": 1761912945.1957939,
+            "auxillary_file_paths": [
+                "results\\fox_par8_visible_120fps\\FoxAgent\\FoxAgent-1199730.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.5.1+cu121"
+    }
+}
