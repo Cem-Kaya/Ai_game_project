@@ -20,6 +20,7 @@ public class LevelRotationManager : MonoBehaviour
     {
         public int gems;
         public int finishes;
+        public int enemyHits;
         public float bestLapTime;
         public float lastLapTime;
         public int deaths;
@@ -158,6 +159,18 @@ public class LevelRotationManager : MonoBehaviour
         int add = Mathf.Max(0, amount);
         level.gems += add;
         total.gems += add;
+
+        FireScoreEvents();
+    }
+
+    public void RegisterEnemyHit(Competitor who, int amount = 1)
+    {
+        ref ScoreState level = ref GetLevelRef(who);
+        ref ScoreState total = ref GetTotalRef(who);
+
+        int add = Mathf.Max(0, amount);
+        level.enemyHits += add;
+        total.enemyHits += add;
 
         FireScoreEvents();
     }

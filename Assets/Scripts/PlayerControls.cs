@@ -451,7 +451,6 @@ public class PlayerMovement : MonoBehaviour
             // 2. Destroy the gem
             Destroy(collision.gameObject);
             SfxSimple.Instance.Play("gem", LevelRotationManager.Competitor.Human, transform.position);
-            playerStats.getPoints(500);
         }
         // Check for Goal
         else if (collision.CompareTag(goalTag))

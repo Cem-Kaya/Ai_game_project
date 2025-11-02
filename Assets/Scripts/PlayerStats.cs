@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using TarodevController;
+using System;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class PlayerStats : MonoBehaviour
     private AudioSource audioSource;
     private SpriteRenderer sr;
     private Coroutine blinkRoutine;
+    private LevelRotationManager levelRotationManager;
     
 
     void Awake()
@@ -31,8 +33,13 @@ public class PlayerStats : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
 
         audioSource.playOnAwake = false;
-        getPoints(0);
+        //getPoints(0);
         RefreshHeartsVisuals();
+    }
+
+    private void Start()
+    {
+        levelRotationManager = LevelRotationManager.Instance;
     }
 
     void Update()
@@ -49,6 +56,8 @@ public class PlayerStats : MonoBehaviour
 
         if (invisFrame > 0f)
             invisFrame -= Time.deltaTime;
+
+        UpdatePoints();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -69,7 +78,7 @@ public class PlayerStats : MonoBehaviour
         {
             if (collision.transform.tag == "Enemy")
             {
-                getPoints(200);
+                //getPoints(200);
             }
             return;
         }
@@ -81,6 +90,7 @@ public class PlayerStats : MonoBehaviour
 
     private void TakeHit()
     {
+        levelRotationManager.RegisterEnemyHit(LevelRotationManager.Competitor.Human, 1);
         health = Mathf.Max(health - 1, 0);
 
         // Disable one heart
@@ -90,7 +100,7 @@ public class PlayerStats : MonoBehaviour
         // Play hit sound once
         if (hitSound != null)
             audioSource.PlayOneShot(hitSound);
-        removePoints(100);
+        //removePoints(100);
         StartInvincibilityBlink();
     }
 
@@ -154,5 +164,19 @@ public class PlayerStats : MonoBehaviour
         {
             Points = 0;
         }
+    }
+
+    private void UpdatePoints()
+    {
+        int finalPoints = 0;
+        LevelRotationManager.ScoreState humanScoreSate = levelRotationManager.GetTotalScore(LevelRotationManager.Competitor.Human);
+        LevelRotationManager.ScoreState agentScoreSate = levelRotationManager.GetTotalScore(LevelRotationManager.Competitor.Human);
+        finalPoints += (humanScoreSate.gems * 500) +
+            (humanScoreSate.finishes * 5000) - 
+            (humanScoreSate.enemyHits * 200) - 
+            (humanScoreSate.deaths * 500) - 
+            (agentScoreSate.finishes * 5000);
+
+        PointsText.text = "Points: " + finalPoints;
     }
 }
