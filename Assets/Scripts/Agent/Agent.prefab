@@ -692,7 +692,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_Sprite: {fileID: 21300000, guid: 72de0c64f2c6a498096698322c976a67, type: 3}
   m_Color: {r: 0.12367356, g: 1, b: 0, a: 0.9137255}
   m_FlipX: 0
@@ -799,7 +799,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.50657487
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
@@ -911,12 +911,12 @@ MonoBehaviour:
   includeCameraObs: 1
   R:
     stepPenalty: -0.001
-    progressToGoal: 0.5
-    progressToNearestGem: 0.05
-    progressToNearestEnemy: 0
-    collectGem: 20
-    hitEnemy: 10
-    pogoFromEnemy: 50
+    progressToGoal: 1
+    progressToNearestGem: 1
+    progressToNearestEnemy: -0.05
+    collectGem: 75
+    hitEnemy: 30
+    pogoFromEnemy: 100
     reachGoal: 500
     deathPenalty: -200
     goalMilestoneReward: 10
@@ -1007,7 +1007,7 @@ MonoBehaviour:
   Record: 1
   NumStepsToRecord: 0
   DemonstrationName: CK
-  DemonstrationDirectory: Python\Demos
+  DemonstrationDirectory: Python\Demos_high_g
 --- !u!1 &8214973153887678719
 GameObject:
   m_ObjectHideFlags: 0
