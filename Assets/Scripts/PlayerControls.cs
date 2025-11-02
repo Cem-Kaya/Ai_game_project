@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     private float pogoTime = 0.2f;
 
     [SerializeField] private PlayerStats playerStats;
+    [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     // required components
     private Rigidbody2D rb;
@@ -171,11 +173,28 @@ public class PlayerMovement : MonoBehaviour
         movementLocked = false;
     }
 
+    private void UpdateFacing(float x)
+    {
+        if (x == 0f) return;
+        if (x > 0f) spriteRenderer.flipX = false;
+        else spriteRenderer.flipX = true;
+    }
+
     private void MovePlayer()
     {
         if (movementLocked) return;
 
         rb.linearVelocity = new Vector2(moveInput.x * speed, rb.linearVelocity.y);
+        UpdateFacing(moveInput.x);
+        if (Math.Abs(rb.linearVelocity.y) > 0.1f || dashing)
+        {
+            animator.speed = 0.1f;
+        }
+        else
+        {
+            animator.speed = 1f;
+            animator.SetBool("Running", Math.Abs(rb.linearVelocity.x) > 0);
+        }
     }
 
     private void OnJumpPressed()

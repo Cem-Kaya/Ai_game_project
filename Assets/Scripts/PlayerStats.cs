@@ -22,7 +22,7 @@ public class PlayerStats : MonoBehaviour
     private SpriteRenderer sr;
     private Coroutine blinkRoutine;
     private LevelRotationManager levelRotationManager;
-    
+
 
     void Awake()
     {
@@ -48,7 +48,7 @@ public class PlayerStats : MonoBehaviour
         {
             if (spawnPoint.position != null)
                 transform.position = spawnPoint.position;
-            else 
+            else
                 transform.position = Vector3.zero;
             health = 3;
             RefreshHeartsVisuals();
@@ -150,7 +150,7 @@ public class PlayerStats : MonoBehaviour
     public void getPoints(int amountOfPoints)
     {
         Points += amountOfPoints;
-        PointsText.text = "Points: " + Points; 
+        PointsText.text = "Points: " + Points;
     }
 
     public void removePoints(int amountOfPoints)
@@ -168,15 +168,26 @@ public class PlayerStats : MonoBehaviour
 
     private void UpdatePoints()
     {
-        int finalPoints = 0;
+        int finalPlayerPoints = 0;
+        int finalAgentPoints = 0;
         LevelRotationManager.ScoreState humanScoreSate = levelRotationManager.GetTotalScore(LevelRotationManager.Competitor.Human);
-        LevelRotationManager.ScoreState agentScoreSate = levelRotationManager.GetTotalScore(LevelRotationManager.Competitor.Human);
-        finalPoints += (humanScoreSate.gems * 500) +
-            (humanScoreSate.finishes * 5000) - 
-            (humanScoreSate.enemyHits * 200) - 
-            (humanScoreSate.deaths * 500) - 
-            (agentScoreSate.finishes * 5000);
+        LevelRotationManager.ScoreState agentScoreSate = levelRotationManager.GetTotalScore(LevelRotationManager.Competitor.Agent);
+        finalPlayerPoints += (humanScoreSate.gems * 500) +
+            (humanScoreSate.finishes * 5000) -
+            (humanScoreSate.enemyHits * 200) -
+            (humanScoreSate.deaths * 500);
+        finalAgentPoints += (agentScoreSate.gems * 500) +
+            (agentScoreSate.finishes * 5000) -
+            (agentScoreSate.enemyHits * 200) -
+            (agentScoreSate.deaths * 500);
 
-        PointsText.text = "Points: " + finalPoints;
+        if (finalPlayerPoints >= finalAgentPoints)
+        {
+            PointsText.text = "Player: " + finalPlayerPoints + "\nAI Rival: " + finalAgentPoints;
+        } 
+        else
+        {
+            PointsText.text = "AI Rival: " + finalAgentPoints + "\nPlayer: " + finalPlayerPoints;
+        }
     }
 }
