@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3692393299854290962}
   - component: {fileID: 3172490631653500397}
   - component: {fileID: 264031172736397044}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Box Volume ColorCorr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,9 +26,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8304635133074773849}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.21876001, y: -0.21793675, z: 10}
-  m_LocalScale: {x: 6.2298, y: 1, z: 24.224}
+  m_LocalScale: {x: 572.4788, y: 196.73553, z: 397.54102}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

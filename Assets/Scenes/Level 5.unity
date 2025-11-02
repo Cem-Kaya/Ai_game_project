@@ -1045,6 +1045,10 @@ PrefabInstance:
       propertyPath: spawnPoint
       value: 
       objectReference: {fileID: 105151118}
+    - target: {fileID: 654130691054042657, guid: de6c1b8c9821b8447a38c384cc6b14e4, type: 3}
+      propertyPath: colorToToggle
+      value: 
+      objectReference: {fileID: 2118499590}
     - target: {fileID: 3321840138935155637, guid: de6c1b8c9821b8447a38c384cc6b14e4, type: 3}
       propertyPath: m_Name
       value: Player
@@ -3118,11 +3122,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3692393299854290962, guid: 705defbcc8e1fd94e99f2a3d90cc5645, type: 3}
       propertyPath: m_LocalScale.x
-      value: 102.23749
+      value: 686.1873
       objectReference: {fileID: 0}
     - target: {fileID: 3692393299854290962, guid: 705defbcc8e1fd94e99f2a3d90cc5645, type: 3}
       propertyPath: m_LocalScale.y
-      value: 16.41104
+      value: 162.4578
       objectReference: {fileID: 0}
     - target: {fileID: 3692393299854290962, guid: 705defbcc8e1fd94e99f2a3d90cc5645, type: 3}
       propertyPath: m_LocalScale.z
@@ -3173,8 +3177,12 @@ PrefabInstance:
       value: Box Volume ColorCorr
       objectReference: {fileID: 0}
     - target: {fileID: 8304635133074773849, guid: 705defbcc8e1fd94e99f2a3d90cc5645, type: 3}
-      propertyPath: m_IsActive
+      propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304635133074773849, guid: 705defbcc8e1fd94e99f2a3d90cc5645, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -28093,6 +28101,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6501938918250858251, guid: c2645b8bc965a8341be0f493a4c2b354, type: 3}
   m_PrefabInstance: {fileID: 2074092407}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2118499590 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8304635133074773849, guid: 705defbcc8e1fd94e99f2a3d90cc5645, type: 3}
+  m_PrefabInstance: {fileID: 1742428423}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6391246983820881788
 PrefabInstance:

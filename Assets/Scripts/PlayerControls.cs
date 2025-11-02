@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -71,6 +72,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 attackAreaDefaultPos;
     private float pogoTimer;
 
+    //colorgrade toggle
+    public GameObject colorToToggle; 
+    public KeyCode toggleKey = KeyCode.P;
+
 
     [Header("Fail-safe")]
     [SerializeField] private float autoRespawnY = -20f;
@@ -123,6 +128,12 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         TuneGravityForFeel();
+
+        //colorgrade
+        if (Input.GetKeyDown(toggleKey))
+        {
+            colorToToggle.SetActive(!colorToToggle.activeSelf);
+        }
     }
 
     private void FixedUpdate()

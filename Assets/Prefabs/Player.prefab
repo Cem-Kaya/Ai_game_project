@@ -335,6 +335,8 @@ MonoBehaviour:
   hazardTag: Hazard
   playerStats: {fileID: 6957700039970427984}
   attackDownward: 0
+  colorToToggle: {fileID: 0}
+  toggleKey: 112
   autoRespawnY: -20
   spawnPoint: {fileID: 0}
   defaultSpawn: {x: 1.5, y: 0}
@@ -816,7 +818,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
