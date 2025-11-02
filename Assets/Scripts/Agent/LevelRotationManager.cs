@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
-using UnityEditor;          // for SceneAsset, Build Settings sync
+using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
 
@@ -12,32 +13,55 @@ public class LevelRotationManager : MonoBehaviour
 {
     public static LevelRotationManager Instance { get; private set; }
 
-    [Min(1)]
-    public int winsPerLevel = 5;
+    public enum Competitor { Agent, Human }
+
+    [Serializable]
+    public struct ScoreState
+    {
+        public int gems;
+        public int finishes;
+        public float bestLapTime;
+        public float lastLapTime;
+        public int deaths;
+    }
+
+    [Min(1)] public int winsPerLevel = 5;
 
     [Header("Lose Streak")]
     [Min(1)]
     [Tooltip("Advance to next level after this many consecutive losses.")]
     public int lossesToSkipLevel = 10;
 
+    [Header("Runtime (auto filled)")]
+    [Tooltip("Populated automatically from Editor list.")]
+    public List<string> levelSceneNames = new List<string>();
+
+#if UNITY_EDITOR
+    [Header("Editor Scene Picker")]
+    [Tooltip("Drag level scenes here in order.")]
+    public List<SceneAsset> levelSceneAssets = new List<SceneAsset>();
+
+    [Tooltip("If ON missing scenes are auto added to Build Settings in Editor.")]
+    public bool autoAddToBuildSettings = true;
+#endif
+
     [SerializeField] private int currentLevelIdx = 0;
     [SerializeField] private int winsOnThisLevel = 0;
     [SerializeField] private int consecutiveLosses = 0;
 
-#if UNITY_EDITOR
-    [Header("Editor Scene Picker (drag scenes here)")]
-    [Tooltip("Drag your level scenes here in the desired order. In Play Mode, this list syncs to Level Scene Names.")]
-    public List<SceneAsset> levelSceneAssets = new List<SceneAsset>();
+    [SerializeField] private ScoreState agentLevelScore;
+    [SerializeField] private ScoreState humanLevelScore;
 
-    [Tooltip("If ON (Editor only), missing scenes are auto-added to Build Settings when you change this component or press Play.")]
-    public bool autoAddToBuildSettings = true;
-#endif
+    [SerializeField] private ScoreState agentTotalScore;
+    [SerializeField] private ScoreState humanTotalScore;
 
-    [Header("Runtime (auto-filled) - Do not edit")]
-    [Tooltip("Populated automatically from Editor list (or you can type names if not using the Editor).")]
-    public List<string> levelSceneNames = new List<string>();   // used at runtime
+    public Action<ScoreState, ScoreState> OnLevelScoresChanged;
+    public Action<ScoreState, ScoreState> OnTotalScoresChanged;
 
-    void Awake()
+    [SerializeField] private bool isTransitioning = false;
+    [SerializeField] private bool winRegisteredThisLevel = false;
+
+    private void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
@@ -48,13 +72,18 @@ public class LevelRotationManager : MonoBehaviour
         SyncSceneNamesFromAssets();
         if (autoAddToBuildSettings) EnsureInBuildSettings();
 #endif
+
+        agentTotalScore.bestLapTime = float.PositiveInfinity;
+        humanTotalScore.bestLapTime = float.PositiveInfinity;
+
+        ResetLevelScores();
     }
 
-    void Start()
+    private void Start()
     {
         if (levelSceneNames.Count == 0)
         {
-            Debug.LogError("[LevelRotationManager] Configure levels (drag scenes into the Editor list).");
+            Debug.LogError("[LevelRotationManager] No levels configured.");
             return;
         }
 
@@ -67,9 +96,12 @@ public class LevelRotationManager : MonoBehaviour
     public void RegisterWin()
     {
         if (levelSceneNames.Count == 0) return;
+        if (isTransitioning) return;
+        if (winRegisteredThisLevel) return;
 
+        winRegisteredThisLevel = true;
+        consecutiveLosses = 0;
         winsOnThisLevel++;
-        consecutiveLosses = 0; // reset loss streak on win
 
         if (winsOnThisLevel >= winsPerLevel)
         {
@@ -82,26 +114,28 @@ public class LevelRotationManager : MonoBehaviour
     public void RegisterLoss()
     {
         if (levelSceneNames.Count == 0) return;
+        if (isTransitioning) return;
 
         consecutiveLosses++;
 
         if (consecutiveLosses >= lossesToSkipLevel)
         {
-            // skip to next level after too many losses in a row
             consecutiveLosses = 0;
             winsOnThisLevel = 0;
             currentLevelIdx = (currentLevelIdx + 1) % levelSceneNames.Count;
-            LoadCurrentLevel();                   // load next level
+            LoadCurrentLevel();
         }
         else
         {
-            LoadCurrentLevel();                   // soft reset: reload current level to respawn gems
+            LoadCurrentLevel();
         }
     }
 
     public void ForceNextLevel()
     {
         if (levelSceneNames.Count == 0) return;
+        if (isTransitioning) return;
+
         winsOnThisLevel = 0;
         consecutiveLosses = 0;
         currentLevelIdx = (currentLevelIdx + 1) % levelSceneNames.Count;
@@ -110,19 +144,67 @@ public class LevelRotationManager : MonoBehaviour
 
     public void ResetAndReload()
     {
+        if (isTransitioning) return;
         winsOnThisLevel = 0;
         consecutiveLosses = 0;
         LoadCurrentLevel();
     }
 
+    public void RegisterGemCollected(Competitor who, int amount = 1)
+    {
+        ref ScoreState level = ref GetLevelRef(who);
+        ref ScoreState total = ref GetTotalRef(who);
+
+        int add = Mathf.Max(0, amount);
+        level.gems += add;
+        total.gems += add;
+
+        FireScoreEvents();
+    }
+
+    public void RegisterFinish(Competitor who, float lapSeconds)
+    {
+        ref ScoreState level = ref GetLevelRef(who);
+        ref ScoreState total = ref GetTotalRef(who);
+
+        level.finishes += 1;
+        total.finishes += 1;
+
+        level.lastLapTime = lapSeconds;
+        total.lastLapTime = lapSeconds;
+
+        if (level.bestLapTime <= 0f || lapSeconds < level.bestLapTime) level.bestLapTime = lapSeconds;
+        if (total.bestLapTime <= 0f || lapSeconds < total.bestLapTime) total.bestLapTime = lapSeconds;
+
+        FireScoreEvents();
+    }
+
+    public void RegisterDeath(Competitor who)
+    {
+        ref ScoreState level = ref GetLevelRef(who);
+        ref ScoreState total = ref GetTotalRef(who);
+
+        level.deaths += 1;
+        total.deaths += 1;
+
+        FireScoreEvents();
+    }
+
+    public ScoreState GetLevelScore(Competitor who) => who == Competitor.Agent ? agentLevelScore : humanLevelScore;
+    public ScoreState GetTotalScore(Competitor who) => who == Competitor.Agent ? agentTotalScore : humanTotalScore;
+
     public int WinsLeftOnThisLevel => Mathf.Max(0, winsPerLevel - winsOnThisLevel);
-    public int CurrentLevelIndex => currentLevelIdx;
-    public string CurrentLevelName => (levelSceneNames.Count > 0 && currentLevelIdx < levelSceneNames.Count) ? levelSceneNames[currentLevelIdx] : "";
     public int CurrentLossStreak => consecutiveLosses;
+    public int CurrentLevelIndex => currentLevelIdx;
+    public string CurrentLevelName => (levelSceneNames.Count > 0 && currentLevelIdx < levelSceneNames.Count)
+        ? levelSceneNames[currentLevelIdx] : "";
 
     private void LoadCurrentLevel()
     {
         if (levelSceneNames.Count == 0) return;
+        if (isTransitioning) return;
+
+        isTransitioning = true;
         string sceneName = levelSceneNames[currentLevelIdx];
         StartCoroutine(LoadSceneAsync(sceneName));
     }
@@ -131,16 +213,47 @@ public class LevelRotationManager : MonoBehaviour
     {
         var op = SceneManager.LoadSceneAsync(sceneName);
         while (!op.isDone) yield return null;
+        // OnSceneLoaded will finalize
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         int idx = levelSceneNames.IndexOf(scene.name);
         if (idx >= 0) currentLevelIdx = idx;
+
+        ResetLevelScores();
+
+        winRegisteredThisLevel = false;
+        isTransitioning = false;
+    }
+
+    private void ResetLevelScores()
+    {
+        agentLevelScore = new ScoreState { bestLapTime = float.PositiveInfinity };
+        humanLevelScore = new ScoreState { bestLapTime = float.PositiveInfinity };
+        FireScoreEvents();
+    }
+
+    private void FireScoreEvents()
+    {
+        OnLevelScoresChanged?.Invoke(agentLevelScore, humanLevelScore);
+        OnTotalScoresChanged?.Invoke(agentTotalScore, humanTotalScore);
+    }
+
+    private ref ScoreState GetLevelRef(Competitor who)
+    {
+        if (who == Competitor.Agent) return ref agentLevelScore;
+        return ref humanLevelScore;
+    }
+
+    private ref ScoreState GetTotalRef(Competitor who)
+    {
+        if (who == Competitor.Agent) return ref agentTotalScore;
+        return ref humanTotalScore;
     }
 
 #if UNITY_EDITOR
-    void OnValidate()
+    private void OnValidate()
     {
         SyncSceneNamesFromAssets();
         if (autoAddToBuildSettings) EnsureInBuildSettings();
@@ -168,8 +281,8 @@ public class LevelRotationManager : MonoBehaviour
         if (levelSceneAssets == null || levelSceneAssets.Count == 0) return;
 
         var list = new List<EditorBuildSettingsScene>(EditorBuildSettings.scenes);
-
         bool changed = false;
+
         foreach (var sa in levelSceneAssets)
         {
             if (sa == null) continue;
@@ -188,8 +301,7 @@ public class LevelRotationManager : MonoBehaviour
             }
         }
 
-        if (changed)
-            EditorBuildSettings.scenes = list.ToArray();
+        if (changed) EditorBuildSettings.scenes = list.ToArray();
     }
 #endif
 }

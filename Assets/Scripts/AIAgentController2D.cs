@@ -183,9 +183,59 @@ public class AIAgentController2D : Agent
     private int heuristicFrameCountdown;
     private bool lockDownUntilGrounded = false;
 
+    private float lapStartTime; // for finish time scoring
 
 
     private float _jumpAscentTimer; // Tracks time since jump start
+
+    private void StartLapTimer()
+    {
+        lapStartTime = Time.time;
+    }
+
+    private void RespawnToSpawn(string reason = null)
+    {
+        Vector2 spawn = spawnPoint ? (Vector2)spawnPoint.position : defaultSpawn;
+
+        // Position sync
+        rb.position = spawn;
+        transform.position = spawn;
+
+        // Dynamics reset
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.gravityScale = baseGravityScale;
+
+        // Gameplay state reset
+        movementLocked = false;
+        holdJump = false;
+        holdTimer = 0f;
+        jumpCut = false;
+        canDash = true;
+        dashing = false;
+        dashTimer = 0f;
+        attackDownward = false;
+        attacking = false;
+        attackTimer = 0f;
+        attackCDTimer = 0f;
+        if (attackArea) attackArea.SetActive(false);
+        isGrounded = false;
+        pogoTimer = 0f;
+
+        // Edge detectors
+        prevJumpHold = 0;
+        prevDash = 0;
+        prevAttack = 0;
+
+        lockDownUntilGrounded = false;
+        _jumpAscentTimer = 0f;
+
+        // start a new lap for timing
+        StartLapTimer();
+    }
+
+
+
 
     private new void Awake()
     {
@@ -241,31 +291,30 @@ public class AIAgentController2D : Agent
     }
     private void CheckFallFailSafeSimple()
     {
-        // Use rb.position for world Y (same as transform.position, but already cached)
-        if (rb.position.y < autoRespawnY)   // autoRespawnY is serialized; set it to -20 in Inspector
+        if (rb.position.y < autoRespawnY)
         {
-            if (R.deathPenalty != 0f) AddReward(R.deathPenalty);
-            LoseAndEndEpisode("fell");
+            // optional: count as a death in the scoreboard
+            if (LevelRotationManager.Instance != null)
+                LevelRotationManager.Instance.RegisterDeath(LevelRotationManager.Competitor.Agent);
+
+            RespawnToSpawn("fell");
         }
     }
+
 
 
     private void FixedUpdate()
     {
         // ---- FALL FAIL-SAFE FIRST (unchanged) ----
-        float y = rb.position.y;
-        if (!float.IsFinite(y) || !float.IsFinite(autoRespawnY))
+        if (!float.IsFinite(rb.position.y) || !float.IsFinite(autoRespawnY))
         {
-            if (R.deathPenalty != 0f) AddReward(R.deathPenalty);
-            LoseAndEndEpisode("non-finite");
+            if (LevelRotationManager.Instance != null)
+                LevelRotationManager.Instance.RegisterDeath(LevelRotationManager.Competitor.Agent);
+
+            RespawnToSpawn("non-finite");
             return;
         }
-        if (y < autoRespawnY)
-        {
-            if (R.deathPenalty != 0f) AddReward(R.deathPenalty);
-            LoseAndEndEpisode("fell");
-            return;
-        }
+        CheckFallFailSafeSimple();
 
         // ---- NORMAL STEP LOGIC ----
         MovePlayer();
@@ -284,7 +333,7 @@ public class AIAgentController2D : Agent
         if (Time.time - episodeStartTime >= episodeTimeLimit)
         {
             if (timeoutPenalty != 0f) AddReward(timeoutPenalty);
-            LoseAndEndEpisode("timeout");
+            //LoseAndEndEpisode("timeout");
             return;
         }
     }
@@ -930,7 +979,7 @@ public class AIAgentController2D : Agent
     public void OnCollectGem(Collider2D gem)
     {
         AddReward(R.collectGem);
-        // Destroy(gem.gameObject);
+        Destroy(gem.gameObject);
     }
 
     public void OnReachGoal(Collider2D goal)
@@ -955,8 +1004,13 @@ public class AIAgentController2D : Agent
 
     public void OnDeath(Collider2D hazard)
     {
-        AddReward(R.deathPenalty);
-        LoseAndEndEpisode("death");
+        // optional training signal
+        if (R.deathPenalty != 0f) AddReward(R.deathPenalty);
+
+        if (LevelRotationManager.Instance != null)
+            LevelRotationManager.Instance.RegisterDeath(LevelRotationManager.Competitor.Agent);
+
+        RespawnToSpawn("death");
     }
 
     private void ResolveFinalGoalByTagIfNeeded()

@@ -18,13 +18,13 @@ EditorBuildSettings:
     path: Assets/Scenes/Level 3.unity
     guid: e9fe35e0dda5a96419ce75f3c7d7c15c
   - enabled: 0
-    path: Assets/Scenes/Level 4.unity
+    path: Assets/Scenes/Level_DELETED.unity
     guid: feb18d5532fae3044835dd984b937fc4
   - enabled: 1
-    path: Assets/Scenes/Level 5.unity
+    path: Assets/Scenes/Level 4.unity
     guid: 2ed953cc5138ea042a11250e03eb0ccd
   - enabled: 1
-    path: Assets/Scenes/Level 6.unity
+    path: Assets/Scenes/Level 5.unity
     guid: 7c24784aca1de7942a1e23f20cb5f1e4
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

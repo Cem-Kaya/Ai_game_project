@@ -4,6 +4,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    [Header("Trigger Tags")]
+    [SerializeField] private string gemTag = "Gem";
+    [SerializeField] private string goalTag = "final";
+    [SerializeField] private string hazardTag = "Hazard"; // Add a tag for hazards
+
+    private float lapStartTime;
+
     [Header("Move")]
     private float speed = 7f;
 
@@ -61,6 +69,20 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 attackAreaDefaultPos;
     private float pogoTimer;
 
+
+    [Header("Fail-safe")]
+    [SerializeField] private float autoRespawnY = -20f;
+
+    [Header("Spawn")]
+    [SerializeField] private Transform spawnPoint;                 // optional
+    [SerializeField] private Vector2 defaultSpawn = new Vector2(1.5f, 0f); // fallback
+
+    private void StartLapTimer()
+    {
+        lapStartTime = Time.time;
+    }
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -89,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
         CapsuleCollider2D col = GetComponent<CapsuleCollider2D>();
         playerSizeX = col.size.x;
         playerSizeY = col.size.y;
+        StartLapTimer();
     }
 
     private void OnEnable() => inputs.Player.Enable();
@@ -101,6 +124,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // NULL guard 
+        if (!float.IsFinite(rb.position.y) || !float.IsFinite(autoRespawnY))
+        {
+            RespawnToSpawn("non-finite");
+            return;
+        }
+
+        // Fall fail-safe
+        if (CheckFallFailSafeSimple())
+            return;
+
+        // Normal step
         MovePlayer();
         HandleHoldTimer();
         HandlePogoTimer();
@@ -312,6 +347,52 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void RespawnToSpawn(string reason = null)
+    {
+        Vector2 spawn = spawnPoint ? (Vector2)spawnPoint.position : defaultSpawn;
+
+        // Position sync
+        rb.position = spawn;
+        transform.position = spawn;
+
+        // Dynamics reset
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.gravityScale = baseGravityScale;
+
+        // Gameplay state reset
+        movementLocked = false;
+        isGrounded = false;
+
+        canDash = true;
+        dashing = false;
+        dashTimer = 0f;
+
+        attacking = false;
+        attackTimer = 0f;
+        attackCDTimer = 0f;
+        if (attackArea) attackArea.SetActive(false);
+
+        holdJump = false;
+        holdTimer = 0f;
+        jumpCut = false;
+
+        pogoTimer = 0f;
+        moveInput = Vector2.zero;
+
+        StartLapTimer();
+    }
+
+    private bool CheckFallFailSafeSimple()
+    {
+        if (rb.position.y < autoRespawnY)
+        {
+            RespawnToSpawn("fell");
+            return true;
+        }
+        return false;
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Ground")) return;
@@ -332,6 +413,54 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Check for Gem
+        if (collision.CompareTag(gemTag))
+        {
+            // 1. Register score with the manager
+            if (LevelRotationManager.Instance != null)
+            {
+                LevelRotationManager.Instance.RegisterGemCollected(
+                    LevelRotationManager.Competitor.Human, 1);
+            }
+
+            // 2. Destroy the gem
+            Destroy(collision.gameObject);
+        }
+        // Check for Goal
+        else if (collision.CompareTag(goalTag))
+        {
+            if (LevelRotationManager.Instance != null)
+            {
+                // 1. Calculate and register this lap's time
+                float lapTime = Time.time - lapStartTime;
+                LevelRotationManager.Instance.RegisterFinish(
+                    LevelRotationManager.Competitor.Human, lapTime);
+
+                // 2. THIS IS THE FIX: Register the Win to advance the level
+                LevelRotationManager.Instance.RegisterWin();
+            }
+
+            // 3. Respawn player locally (so they don't sit on the goal)
+            // The manager will handle the scene change.
+            RespawnToSpawn("goal");
+        }
+        // Check for Hazard
+        else if (collision.CompareTag(hazardTag))
+        {
+            // 1. Register death
+            if (LevelRotationManager.Instance != null)
+            {
+                LevelRotationManager.Instance.RegisterDeath(
+                    LevelRotationManager.Competitor.Human);
+            }
+
+            // 2. Respawn at start (without reloading scene)
+            RespawnToSpawn("hazard");
         }
     }
 }
