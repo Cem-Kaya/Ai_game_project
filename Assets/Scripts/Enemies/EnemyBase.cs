@@ -13,6 +13,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     [Header("Physics")]
     [SerializeField] protected LayerMask groundLayer;
+    [SerializeField] protected LayerMask enemyLayer;
     [SerializeField] protected float gravityScale = 3f;
 
     [Header("Components (auto if null)")]
@@ -85,7 +86,7 @@ public abstract class EnemyBase : MonoBehaviour
         Destroy(gameObject, 2f); // or via animation event
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.tag == "Attack")
         {

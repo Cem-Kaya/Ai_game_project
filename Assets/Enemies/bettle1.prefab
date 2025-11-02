@@ -191,6 +191,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
   gravityScale: 3
   rb: {fileID: 8960315539678860469}
   hitbox: {fileID: 1782053857540653588}

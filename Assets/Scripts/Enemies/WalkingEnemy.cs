@@ -25,6 +25,7 @@ public class WalkingEnemy : EnemyBase
     [SerializeField] private float verticalTolerance = 1.5f;
     [Tooltip("Speed used when chasing the player.")]
     [SerializeField] private float chaseSpeed = 2f;
+    bool wallAhead = false;
 
     protected override void OnEnable()
     {
@@ -71,12 +72,39 @@ public class WalkingEnemy : EnemyBase
     private void Patrol()
     {
         Vector2 facing = facingRight ? Vector2.right : Vector2.left;
+        RaycastHit2D hit = Physics2D.Raycast(frontCheck.position, facing, wallCheckDistance, groundLayer);
+        RaycastHit2D hit2 = Physics2D.Raycast(frontCheck.position, facing, wallCheckDistance, enemyLayer);
 
-        bool wallAhead = Physics2D.Raycast(frontCheck.position, facing, wallCheckDistance, groundLayer);
+        if (hit != false)
+        {
+            
+            wallAhead = hit;
+            if (hit.transform.tag == "Enemey")
+            {
+                wallAhead = true;
+            }
+
+            if (hit.transform.tag == "Player")
+            {
+                wallAhead = false;
+            }
+        }
+        else
+        {
+            wallAhead = hit;
+        }
+        if (hit2 != false)
+        {
+            Debug.Log("AHHHHHHHHHHHH GET OUT OF THE WAY!");
+            wallAhead = true;
+        }
+
+
         bool groundAhead = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, groundLayer);
 
         if (wallAhead || !groundAhead)
         {
+            
             direction *= -1;
             Flip();
             // Mirror sensor positions when turning around so raycasts still originate from the front

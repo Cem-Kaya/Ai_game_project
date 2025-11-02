@@ -36,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
     private float pogoVelocity = 8f;
     private float pogoTime = 0.2f;
 
+    [SerializeField] private PlayerStats playerStats;
+
     // required components
     private Rigidbody2D rb;
     private InputSystem_Actions inputs;
@@ -112,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
         playerSizeX = col.size.x;
         playerSizeY = col.size.y;
         StartLapTimer();
+        playerStats.spawnPoint = spawnPoint;
     }
 
     private void OnEnable() => inputs.Player.Enable();
@@ -448,7 +451,7 @@ public class PlayerMovement : MonoBehaviour
             // 2. Destroy the gem
             Destroy(collision.gameObject);
             SfxSimple.Instance.Play("gem", LevelRotationManager.Competitor.Human, transform.position);
-
+            playerStats.getPoints(500);
         }
         // Check for Goal
         else if (collision.CompareTag(goalTag))

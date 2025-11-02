@@ -197,6 +197,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
   gravityScale: 3
   rb: {fileID: 6787372903824463872}
   hitbox: {fileID: 2368040490671759740}
@@ -226,6 +229,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   drawGizmos: 1
+  ShootSound: {fileID: 8300000, guid: b254f77a9bc23c64fa5c44da29a2288a, type: 3}
 --- !u!1 &6272385684456359568
 GameObject:
   m_ObjectHideFlags: 0

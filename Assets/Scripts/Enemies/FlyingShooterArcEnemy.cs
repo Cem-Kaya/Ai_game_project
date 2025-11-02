@@ -48,6 +48,10 @@ public class FlyingShooterArcEnemy : EnemyBase
     [Header("Debug")]
     [SerializeField] private bool drawGizmos = true;
 
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip ShootSound; // assign the .wav file here
+
     // internals
     private Vector2 idleCenter;
     private Vector2 wanderTarget;
@@ -56,7 +60,17 @@ public class FlyingShooterArcEnemy : EnemyBase
     private Transform currentTarget; // sticky while inside detection window
     private static readonly Collider2D[] buf = new Collider2D[2];
     private int strafeDir = 1;
+    private AudioSource audioSource;
 
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        audioSource.playOnAwake = false;
+    }
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -174,6 +188,7 @@ public class FlyingShooterArcEnemy : EnemyBase
         if (dist <= shootRangeMax && fireTimer <= 0f && HasLineOfSight(target))
         {
             ShootArcProjectile(target);
+            audioSource.PlayOneShot(ShootSound);
             fireTimer = fireInterval; // fixed 0.8s cadence
         }
     }
