@@ -8,11 +8,11 @@ using Unity.MLAgents;
 
 public static class TrainingBootstrap
 {
-    static int desiredW = 1280;
-    static int desiredH = 720;
-    static bool desiredFullscreen = false;
-    static bool usePopupWindow = false; // treat as windowed
-    static int desiredFps = 80;
+    static int desiredW = 2560;
+    static int desiredH = 1440;
+    static bool desiredFullscreen = true;
+    static bool usePopupWindow = true; // treat as windowed
+    static int desiredFps = 240;
     static string desiredQuality = null;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
