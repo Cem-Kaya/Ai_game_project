@@ -523,9 +523,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 3
   hearts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 738709330755222076}
+  - {fileID: 2418529449354455944}
+  - {fileID: 680653177802023507}
   spawnPoint: {fileID: 0}
   invisFrame: 0.8
 --- !u!1 &5652238788241516466
