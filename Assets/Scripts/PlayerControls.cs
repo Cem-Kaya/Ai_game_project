@@ -127,6 +127,10 @@ public class PlayerMovement : MonoBehaviour
         // NULL guard 
         if (!float.IsFinite(rb.position.y) || !float.IsFinite(autoRespawnY))
         {
+            // count as a death
+            if (LevelRotationManager.Instance != null)
+                LevelRotationManager.Instance.RegisterDeath(LevelRotationManager.Competitor.Human);
+
             RespawnToSpawn("non-finite");
             return;
         }
@@ -158,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJumpPressed()
     {
+
         if (movementLocked) return;
 
         if (isGrounded)
@@ -167,6 +172,8 @@ public class PlayerMovement : MonoBehaviour
 
             holdTimer = maxHoldTime;
             holdJump = true;
+            SfxSimple.Instance.Play("jump", LevelRotationManager.Competitor.Human, transform.position);
+
         }
     }
 
@@ -235,6 +242,8 @@ public class PlayerMovement : MonoBehaviour
 
         float dir = (moveInput.x != 0) ? Mathf.Sign(moveInput.x) : lastFacingX;
         rb.linearVelocity = new Vector2(dir * dashSpeed, 0f);
+        SfxSimple.Instance.Play("dash", LevelRotationManager.Competitor.Human, transform.position);
+
     }
 
     private void HandleDash()
@@ -262,6 +271,7 @@ public class PlayerMovement : MonoBehaviour
         attacking = true;
         attackTimer = attackDuration;
         attackCDTimer = attackCooldown;
+        SfxSimple.Instance.Play("attack", LevelRotationManager.Competitor.Human, transform.position);
 
         Vector3 position;
         float angleZ;
@@ -349,6 +359,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void RespawnToSpawn(string reason = null)
     {
+
         Vector2 spawn = spawnPoint ? (Vector2)spawnPoint.position : defaultSpawn;
 
         // Position sync
@@ -381,12 +392,18 @@ public class PlayerMovement : MonoBehaviour
         moveInput = Vector2.zero;
 
         StartLapTimer();
+        SfxSimple.Instance.Play("death", LevelRotationManager.Competitor.Human, transform.position);
+
     }
 
     private bool CheckFallFailSafeSimple()
     {
         if (rb.position.y < autoRespawnY)
         {
+            // count as a death
+            if (LevelRotationManager.Instance != null)
+                LevelRotationManager.Instance.RegisterDeath(LevelRotationManager.Competitor.Human);
+
             RespawnToSpawn("fell");
             return true;
         }
@@ -430,6 +447,8 @@ public class PlayerMovement : MonoBehaviour
 
             // 2. Destroy the gem
             Destroy(collision.gameObject);
+            SfxSimple.Instance.Play("gem", LevelRotationManager.Competitor.Human, transform.position);
+
         }
         // Check for Goal
         else if (collision.CompareTag(goalTag))
@@ -442,6 +461,7 @@ public class PlayerMovement : MonoBehaviour
                     LevelRotationManager.Competitor.Human, lapTime);
 
                 // 2. THIS IS THE FIX: Register the Win to advance the level
+                SfxSimple.Instance.Play("final", LevelRotationManager.Competitor.Human, transform.position);
                 LevelRotationManager.Instance.RegisterWin();
             }
 

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1769579715446412207}
   - component: {fileID: 5190215312365600845}
+  - component: {fileID: 6504109764143532244}
   m_Layer: 0
   m_Name: Scene_loader
   m_TagString: Untagged
@@ -46,9 +47,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   winsPerLevel: 1
   lossesToSkipLevel: 10
-  currentLevelIdx: 0
-  winsOnThisLevel: 0
-  consecutiveLosses: 0
+  levelSceneNames:
+  - Level 1
+  - Level 2
+  - Level 3
+  - Level 4
+  - Level 5
   levelSceneAssets:
   - {fileID: 102900000, guid: 1271851bb01e98a4798ed43e477d456c, type: 3}
   - {fileID: 102900000, guid: 17ac80c46ec4c864c9a295f2f5b9a979, type: 3}
@@ -56,9 +60,47 @@ MonoBehaviour:
   - {fileID: 102900000, guid: 2ed953cc5138ea042a11250e03eb0ccd, type: 3}
   - {fileID: 102900000, guid: 7c24784aca1de7942a1e23f20cb5f1e4, type: 3}
   autoAddToBuildSettings: 1
-  levelSceneNames:
-  - Level 1
-  - Level 2
-  - Level 3
-  - Level 5
-  - Level 6
+  currentLevelIdx: 0
+  winsOnThisLevel: 0
+  consecutiveLosses: 0
+  agentLevelScore:
+    gems: 0
+    finishes: 0
+    bestLapTime: 0
+    lastLapTime: 0
+    deaths: 0
+  humanLevelScore:
+    gems: 0
+    finishes: 0
+    bestLapTime: 0
+    lastLapTime: 0
+    deaths: 0
+  agentTotalScore:
+    gems: 0
+    finishes: 0
+    bestLapTime: 0
+    lastLapTime: 0
+    deaths: 0
+  humanTotalScore:
+    gems: 0
+    finishes: 0
+    bestLapTime: 0
+    lastLapTime: 0
+    deaths: 0
+  isTransitioning: 0
+  winRegisteredThisLevel: 0
+--- !u!114 &6504109764143532244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7291668849877919480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 011087956f1df7d4696f2832bebe45c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entries: []
+  defaultBgm: {fileID: 0}
+  defaultBgmVolume: 0.6

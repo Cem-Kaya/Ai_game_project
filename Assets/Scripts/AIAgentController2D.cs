@@ -232,6 +232,8 @@ public class AIAgentController2D : Agent
 
         // start a new lap for timing
         StartLapTimer();
+        SfxSimple.Instance.Play("death", LevelRotationManager.Competitor.Agent, transform.position);
+
     }
 
 
@@ -384,6 +386,8 @@ public class AIAgentController2D : Agent
             // These are for action-parsing, but won't affect height
             holdTimer = maxHoldTime;
             holdJump = true;
+            SfxSimple.Instance.Play("jump", LevelRotationManager.Competitor.Agent, transform.position);
+
         }
     }
     // OLD:
@@ -492,6 +496,8 @@ public class AIAgentController2D : Agent
         float dir = (Mathf.Abs(moveInput.x) > 0.01f) ? Mathf.Sign(moveInput.x) : lastFacingX;
         // keep current Y instead of forcing 0
         rb.linearVelocity = new Vector2(dir * dashSpeed, rb.linearVelocity.y);
+        SfxSimple.Instance.Play("dash", LevelRotationManager.Competitor.Agent, transform.position);
+
     }
 
     private void HandleDash()
@@ -518,6 +524,8 @@ public class AIAgentController2D : Agent
         attacking = true;
         attackTimer = attackDuration;
         attackCDTimer = attackCooldown;
+
+        SfxSimple.Instance.Play("attack", LevelRotationManager.Competitor.Agent, transform.position);
 
         Vector3 pos;
         float angleZ;
@@ -741,7 +749,7 @@ public class AIAgentController2D : Agent
             sensor.AddObservation(halfH / Mathf.Max(0.001f, arena.y));
         }
 
-        // Final goal (optional)
+        // Final goal 
         if (finalGoal != null)
         {
             Vector2 toGoal = (Vector2)finalGoal.position - pos;
@@ -858,7 +866,7 @@ public class AIAgentController2D : Agent
         // ---- set position FIRST ----
         Vector2 spawn = spawnPoint ? (Vector2)spawnPoint.position : defaultSpawn;
         rb.position = spawn;
-        transform.position = spawn; // keep Transform & RB in sync (important if interpolation is on)
+        transform.position = spawn;
 
         // ---- reset dynamics ----
         rb.linearVelocity = Vector2.zero;
@@ -887,6 +895,7 @@ public class AIAgentController2D : Agent
 
         // timers
         episodeStartTime = Time.time;
+        StartLapTimer();                      // <<< start lap timer here
 
         // init shaping caches
         prevGoalDist = DistanceTo(finalGoal);
@@ -979,20 +988,30 @@ public class AIAgentController2D : Agent
     public void OnCollectGem(Collider2D gem)
     {
         AddReward(R.collectGem);
+
+        // forward to manager
+        if (LevelRotationManager.Instance != null)
+            LevelRotationManager.Instance.RegisterGemCollected(LevelRotationManager.Competitor.Agent, 1);
+
         Destroy(gem.gameObject);
+        SfxSimple.Instance.Play("gem", LevelRotationManager.Competitor.Agent, transform.position);
     }
 
     public void OnReachGoal(Collider2D goal)
     {
-        Debug.Log("big reward");
         AddReward(R.reachGoal);
 
+        // record lap time for the agent
         if (LevelRotationManager.Instance != null)
+        {
+            float lapTime = Time.time - lapStartTime;
+            LevelRotationManager.Instance.RegisterFinish(LevelRotationManager.Competitor.Agent, lapTime);
             LevelRotationManager.Instance.RegisterWin();
+        }
 
+        SfxSimple.Instance.Play("final", LevelRotationManager.Competitor.Agent, transform.position);
         EndEpisode();
     }
-
 
     private void LoseAndEndEpisode(string reason = null)
     {
@@ -1011,6 +1030,7 @@ public class AIAgentController2D : Agent
             LevelRotationManager.Instance.RegisterDeath(LevelRotationManager.Competitor.Agent);
 
         RespawnToSpawn("death");
+
     }
 
     private void ResolveFinalGoalByTagIfNeeded()
