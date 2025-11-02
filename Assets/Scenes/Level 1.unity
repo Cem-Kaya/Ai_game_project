@@ -10133,6 +10133,50 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6303542243047418653, guid: c856991006db4ec46b69be3548830583, type: 3}
+      propertyPath: R.hitEnemy
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6303542243047418653, guid: c856991006db4ec46b69be3548830583, type: 3}
+      propertyPath: R.collectGem
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6303542243047418653, guid: c856991006db4ec46b69be3548830583, type: 3}
+      propertyPath: R.stepPenalty
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6303542243047418653, guid: c856991006db4ec46b69be3548830583, type: 3}
+      propertyPath: R.deathPenalty
+      value: -500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6303542243047418653, guid: c856991006db4ec46b69be3548830583, type: 3}
+      propertyPath: timeoutPenalty
+      value: -1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6303542243047418653, guid: c856991006db4ec46b69be3548830583, type: 3}
+      propertyPath: R.progressToGoal
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6303542243047418653, guid: c856991006db4ec46b69be3548830583, type: 3}
+      propertyPath: goalMilestoneMeters
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6303542243047418653, guid: c856991006db4ec46b69be3548830583, type: 3}
+      propertyPath: R.goalMilestoneReward
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 6303542243047418653, guid: c856991006db4ec46b69be3548830583, type: 3}
+      propertyPath: R.progressToNearestGem
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6303542243047418653, guid: c856991006db4ec46b69be3548830583, type: 3}
+      propertyPath: R.progressToNearestEnemy
+      value: -0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6303542243047418653, guid: c856991006db4ec46b69be3548830583, type: 3}
+      propertyPath: touchInvulnerabilitySeconds
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7895982576584948619, guid: c856991006db4ec46b69be3548830583, type: 3}
       propertyPath: m_Name
       value: Agent
