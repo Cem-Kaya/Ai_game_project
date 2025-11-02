@@ -8,7 +8,7 @@ public class PlayerStats : MonoBehaviour
 {
     [SerializeField] private int health = 3;
     [SerializeField] private List<GameObject> hearts;
-    public Transform spawnPoint;
+    [SerializeField] public Transform spawnPoint;
     [SerializeField] private float invisFrame = 0.8f;
     [SerializeField] private float blinkInterval = 0.1f;
     [SerializeField] private Collider2D attackAreaCollider;
@@ -39,7 +39,10 @@ public class PlayerStats : MonoBehaviour
     {
         if (health <= 0)
         {
-            transform.position = spawnPoint.position;
+            if (spawnPoint.position != null)
+                transform.position = spawnPoint.position;
+            else 
+                transform.position = Vector3.zero;
             health = 3;
             RefreshHeartsVisuals();
         }
