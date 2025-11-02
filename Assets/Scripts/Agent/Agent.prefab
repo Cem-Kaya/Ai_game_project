@@ -901,7 +901,7 @@ MonoBehaviour:
   hazardTag: Hazard
   enemyBodyTag: Enemy
   maxEnemyBodyTouches: 5
-  touchInvulnerabilitySeconds: 1
+  touchInvulnerabilitySeconds: 2
   perTouchPenalty: -5
   autoBoundsFromCamera: 1
   cameraPadding: 0.5
@@ -910,21 +910,21 @@ MonoBehaviour:
   obsCamera: {fileID: 3325872645828206997}
   includeCameraObs: 1
   R:
-    stepPenalty: -0.001
-    progressToGoal: 1
-    progressToNearestGem: 1
-    progressToNearestEnemy: -0.05
-    collectGem: 75
-    hitEnemy: 30
+    stepPenalty: -1
+    progressToGoal: 3
+    progressToNearestGem: 2
+    progressToNearestEnemy: -0.75
+    collectGem: 100
+    hitEnemy: 100
     pogoFromEnemy: 100
     reachGoal: 500
-    deathPenalty: -200
-    goalMilestoneReward: 10
-  goalMilestoneMeters: 2
+    deathPenalty: -500
+    goalMilestoneReward: 33
+  goalMilestoneMeters: 3
   enableGoalMilestones: 1
   autoRespawnY: -20
-  episodeTimeLimit: 360
-  timeoutPenalty: -100
+  episodeTimeLimit: 180
+  timeoutPenalty: -1000
   groundContactNormalThreshold: 0.7
   attackDownward: 0
   spawnPoint: {fileID: 0}
