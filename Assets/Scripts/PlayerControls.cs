@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -73,9 +74,12 @@ public class PlayerMovement : MonoBehaviour
     private float pogoTimer;
 
     //colorgrade toggle
-    public GameObject colorToToggle; 
-    public KeyCode toggleKey = KeyCode.P;
+    public GameObject colorToToggle;
+    public KeyCode toggleKey = KeyCode.O;
 
+    //win loose message
+    public GameObject winMessage; 
+    public GameObject looseMessage; 
 
     [Header("Fail-safe")]
     [SerializeField] private float autoRespawnY = -20f;
@@ -478,6 +482,9 @@ public class PlayerMovement : MonoBehaviour
                 LevelRotationManager.Instance.RegisterWin();
             }
 
+            //WinMessage
+            StartCoroutine(DisplayWinSequence());
+
             // 3. Respawn player locally (so they don't sit on the goal)
             // The manager will handle the scene change.
             RespawnToSpawn("goal");
@@ -492,8 +499,23 @@ public class PlayerMovement : MonoBehaviour
                     LevelRotationManager.Competitor.Human);
             }
 
+            //LooseMessage
+            //StartCoroutine(DisplayLooseSequence());
             // 2. Respawn at start (without reloading scene)
             RespawnToSpawn("hazard");
         }
     }
+    IEnumerator DisplayWinSequence()
+    {
+        // Show message
+        winMessage.SetActive(true);
+
+        yield return new WaitForSeconds(6f);
+
+        // Hide message
+        winMessage.SetActive(false);
+
+    }
+
+        
 }
