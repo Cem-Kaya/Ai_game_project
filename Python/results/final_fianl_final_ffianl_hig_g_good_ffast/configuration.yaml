@@ -1,0 +1,96 @@
+default_settings: null
+behaviors:
+  FoxAgent:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 4096
+      buffer_size: 32768
+      learning_rate: 0.0001
+      beta: 0.0005
+      epsilon: 0.2
+      lambd: 0.95
+      num_epoch: 4
+      shared_critic: false
+      learning_rate_schedule: linear
+      beta_schedule: linear
+      epsilon_schedule: linear
+    checkpoint_interval: 500000
+    network_settings:
+      normalize: true
+      hidden_units: 512
+      num_layers: 4
+      vis_encode_type: resnet
+      memory:
+        sequence_length: 256
+        memory_size: 128
+      goal_conditioning_type: hyper
+      deterministic: false
+    reward_signals:
+      extrinsic:
+        gamma: 0.995
+        strength: 1.0
+        network_settings:
+          normalize: false
+          hidden_units: 128
+          num_layers: 2
+          vis_encode_type: simple
+          memory: null
+          goal_conditioning_type: hyper
+          deterministic: false
+    init_path: Y:/Drive/My_Drive/folder/UU/Ai_for_games_proj/Python/results/fox6_par3_exploit_ft/FoxAgent/FoxAgent-6210314.pt
+    keep_checkpoints: 15
+    even_checkpoints: false
+    max_steps: 50000000
+    time_horizon: 256
+    summary_freq: 5000
+    threaded: false
+    self_play: null
+    behavioral_cloning:
+      demo_path: Y:/Drive/My_Drive/folder/UU/Ai_for_games_proj/Python/Demos_high_g/
+      steps: 300000
+      strength: 0.1
+      samples_per_update: 0
+      num_epoch: null
+      batch_size: null
+env_settings:
+  env_path: Y:\Drive\My_Drive\folder\UU\Ai_for_games_proj\Python\Train_build\Ai_game_project.exe
+  env_args:
+  - --fps=120
+  - --quality=VeryLow
+  - -screen-fullscreen
+  - '0'
+  - -popupwindow
+  - -screen-width
+  - '640'
+  - -screen-height
+  - '360'
+  base_port: 7005
+  num_envs: 3
+  num_areas: 1
+  timeout_wait: 60
+  seed: -1
+  max_lifetime_restarts: 10
+  restarts_rate_limit_n: 1
+  restarts_rate_limit_period_s: 60
+engine_settings:
+  width: 84
+  height: 84
+  quality_level: 5
+  time_scale: 20
+  target_frame_rate: -1
+  capture_frame_rate: 60
+  no_graphics: false
+  no_graphics_monitor: false
+environment_parameters: null
+checkpoint_settings:
+  run_id: final_fianl_final_ffianl_hig_g_good_ffast
+  initialize_from: null
+  load_model: false
+  resume: false
+  force: false
+  train_model: false
+  inference: false
+  results_dir: results
+torch_settings:
+  device: cuda
+debug: false
