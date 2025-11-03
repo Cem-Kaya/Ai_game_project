@@ -79,9 +79,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject colorToToggle;
     public KeyCode toggleKey = KeyCode.O;
 
-    //win loose message
+    //win lose message
     public GameObject winMessage;
-    public GameObject looseMessage;
+    public GameObject loseMessage;
 
     //coyote jump
     [Header("Coyote Time")]
@@ -145,6 +145,7 @@ public class PlayerMovement : MonoBehaviour
         {
             colorToToggle.SetActive(!colorToToggle.activeSelf);
         }
+        CheckEndGameUI();
     }
 
     private void FixedUpdate()
@@ -510,9 +511,6 @@ public class PlayerMovement : MonoBehaviour
                 LevelRotationManager.Instance.RegisterWin();
             }
 
-            //WinMessage
-            StartCoroutine(DisplayWinSequence());
-
             // 3. Respawn player locally (so they don't sit on the goal)
             // The manager will handle the scene change.
             RespawnToSpawn("goal");
@@ -533,17 +531,6 @@ public class PlayerMovement : MonoBehaviour
             RespawnToSpawn("hazard");
         }
     }
-    IEnumerator DisplayWinSequence()
-    {
-        // Show message
-        winMessage.SetActive(true);
-
-        yield return new WaitForSeconds(6f);
-
-        // Hide message
-        winMessage.SetActive(false);
-
-    }
 
     private void HandleCoyoteTime()
     {
@@ -553,4 +540,23 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void CheckEndGameUI()
+    {
+        if (LevelRotationManager.Instance.isPlayerWon)
+        {
+            winMessage.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else if (LevelRotationManager.Instance.isAgentWon)
+        {
+            loseMessage.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else if(Time.timeScale != 1f)
+        {
+            Time.timeScale = 1f;
+            winMessage.SetActive(false);
+            loseMessage.SetActive(false);
+        }
+    }
 }

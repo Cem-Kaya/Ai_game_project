@@ -49,6 +49,7 @@ public class LevelRotationManager : MonoBehaviour
     [SerializeField] private int currentLevelIdx = 0;
     [SerializeField] private int winsOnThisLevel = 0;
     [SerializeField] private int consecutiveLosses = 0;
+    [SerializeField] private float waitBeforeSceneChangeInSec = 3f;
 
     [SerializeField] private ScoreState agentLevelScore;
     [SerializeField] private ScoreState humanLevelScore;
@@ -61,6 +62,9 @@ public class LevelRotationManager : MonoBehaviour
 
     [SerializeField] private bool isTransitioning = false;
     [SerializeField] private bool winRegisteredThisLevel = false;
+
+    public bool isPlayerWon = false;
+    public bool isAgentWon = false;
 
     private void Awake()
     {
@@ -108,8 +112,25 @@ public class LevelRotationManager : MonoBehaviour
         {
             winsOnThisLevel = 0;
             currentLevelIdx = (currentLevelIdx + 1) % levelSceneNames.Count;
-            LoadCurrentLevel();
+            StartCoroutine(LoadAfterDelay(waitBeforeSceneChangeInSec));
         }
+    }
+
+    private IEnumerator LoadAfterDelay(float seconds)
+    {
+
+        Time.timeScale = 0f;
+        float t = 0f;
+        while (t < seconds)
+        {
+            t += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        Time.timeScale = 1f;
+        isPlayerWon = false;
+        isAgentWon = false;
+        LoadCurrentLevel();
     }
 
     public void RegisterLoss()
@@ -188,6 +209,8 @@ public class LevelRotationManager : MonoBehaviour
 
         if (level.bestLapTime <= 0f || lapSeconds < level.bestLapTime) level.bestLapTime = lapSeconds;
         if (total.bestLapTime <= 0f || lapSeconds < total.bestLapTime) total.bestLapTime = lapSeconds;
+
+        if (who == Competitor.Human) isPlayerWon = true; else isAgentWon = true;
 
         FireScoreEvents();
     }
