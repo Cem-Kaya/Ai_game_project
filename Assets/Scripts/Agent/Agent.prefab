@@ -683,7 +683,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: d7070c73a950c2d40a932e9d127c34cb, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: e49cd055d66be384bbb4249fcaef8f1d, type: 3}
   m_InferenceDevice: 2
   m_BehaviorType: 2
   m_BehaviorName: FoxAgent

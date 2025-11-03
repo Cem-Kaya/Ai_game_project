@@ -10524,7 +10524,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6504109764143532244, guid: 6d8d1383e9b911847a869badf1fe3eee, type: 3}
       propertyPath: entries.Array.data[3].volume
-      value: 0.12
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6504109764143532244, guid: 6d8d1383e9b911847a869badf1fe3eee, type: 3}
       propertyPath: entries.Array.data[4].volume
