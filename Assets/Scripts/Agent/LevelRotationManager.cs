@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -24,6 +23,18 @@ public class LevelRotationManager : MonoBehaviour
         public float bestLapTime;
         public float lastLapTime;
         public int deaths;
+    }
+
+    [Serializable]
+    public struct AgentLevelStats
+    {
+        public int wins;
+        public int deaths;
+
+        public int Attempts
+        {
+            get { return wins + deaths; }
+        }
     }
 
     [Min(1)] public int winsPerLevel = 5;
@@ -66,9 +77,16 @@ public class LevelRotationManager : MonoBehaviour
     public bool isPlayerWon = false;
     public bool isAgentWon = false;
 
+    [Header("Agent per level stats")]
+    [SerializeField] private List<AgentLevelStats> agentStatsPerLevel = new List<AgentLevelStats>();
+
     private void Awake()
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -77,6 +95,8 @@ public class LevelRotationManager : MonoBehaviour
         SyncSceneNamesFromAssets();
         if (autoAddToBuildSettings) EnsureInBuildSettings();
 #endif
+
+        EnsureAgentStatsSize();
 
         agentTotalScore.bestLapTime = float.PositiveInfinity;
         humanTotalScore.bestLapTime = float.PositiveInfinity;
@@ -118,7 +138,6 @@ public class LevelRotationManager : MonoBehaviour
 
     private IEnumerator LoadAfterDelay(float seconds)
     {
-
         Time.timeScale = 0f;
         float t = 0f;
         while (t < seconds)
@@ -210,7 +229,12 @@ public class LevelRotationManager : MonoBehaviour
         if (level.bestLapTime <= 0f || lapSeconds < level.bestLapTime) level.bestLapTime = lapSeconds;
         if (total.bestLapTime <= 0f || lapSeconds < total.bestLapTime) total.bestLapTime = lapSeconds;
 
-        if (who == Competitor.Human) isPlayerWon = true; else isAgentWon = true;
+        if (who == Competitor.Human) isPlayerWon = true;
+        else
+        {
+            isAgentWon = true;
+            RegisterAgentLevelResult(true);
+        }
 
         FireScoreEvents();
     }
@@ -223,17 +247,36 @@ public class LevelRotationManager : MonoBehaviour
         level.deaths += 1;
         total.deaths += 1;
 
+        if (who == Competitor.Agent)
+        {
+            RegisterAgentLevelResult(false);
+        }
+
         FireScoreEvents();
     }
 
-    public ScoreState GetLevelScore(Competitor who) => who == Competitor.Agent ? agentLevelScore : humanLevelScore;
-    public ScoreState GetTotalScore(Competitor who) => who == Competitor.Agent ? agentTotalScore : humanTotalScore;
+    public ScoreState GetLevelScore(Competitor who)
+    {
+        return who == Competitor.Agent ? agentLevelScore : humanLevelScore;
+    }
 
-    public int WinsLeftOnThisLevel => Mathf.Max(0, winsPerLevel - winsOnThisLevel);
-    public int CurrentLossStreak => consecutiveLosses;
-    public int CurrentLevelIndex => currentLevelIdx;
-    public string CurrentLevelName => (levelSceneNames.Count > 0 && currentLevelIdx < levelSceneNames.Count)
-        ? levelSceneNames[currentLevelIdx] : "";
+    public ScoreState GetTotalScore(Competitor who)
+    {
+        return who == Competitor.Agent ? agentTotalScore : humanTotalScore;
+    }
+
+    public int WinsLeftOnThisLevel { get { return Mathf.Max(0, winsPerLevel - winsOnThisLevel); } }
+    public int CurrentLossStreak { get { return consecutiveLosses; } }
+    public int CurrentLevelIndex { get { return currentLevelIdx; } }
+    public string CurrentLevelName
+    {
+        get
+        {
+            if (levelSceneNames.Count > 0 && currentLevelIdx < levelSceneNames.Count)
+                return levelSceneNames[currentLevelIdx];
+            return "";
+        }
+    }
 
     private void LoadCurrentLevel()
     {
@@ -249,7 +292,6 @@ public class LevelRotationManager : MonoBehaviour
     {
         var op = SceneManager.LoadSceneAsync(sceneName);
         while (!op.isDone) yield return null;
-        // OnSceneLoaded will finalize
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -257,6 +299,7 @@ public class LevelRotationManager : MonoBehaviour
         int idx = levelSceneNames.IndexOf(scene.name);
         if (idx >= 0) currentLevelIdx = idx;
 
+        EnsureAgentStatsSize();
         ResetLevelScores();
 
         winRegisteredThisLevel = false;
@@ -288,11 +331,69 @@ public class LevelRotationManager : MonoBehaviour
         return ref humanTotalScore;
     }
 
+    private void EnsureAgentStatsSize()
+    {
+        if (agentStatsPerLevel == null) agentStatsPerLevel = new List<AgentLevelStats>();
+        if (levelSceneNames == null) levelSceneNames = new List<string>();
+
+        while (agentStatsPerLevel.Count < levelSceneNames.Count)
+        {
+            agentStatsPerLevel.Add(new AgentLevelStats());
+        }
+
+        if (agentStatsPerLevel.Count > levelSceneNames.Count)
+        {
+            agentStatsPerLevel.RemoveRange(
+                levelSceneNames.Count,
+                agentStatsPerLevel.Count - levelSceneNames.Count
+            );
+        }
+    }
+
+    private void RegisterAgentLevelResult(bool win)
+    {
+        if (levelSceneNames.Count == 0) return;
+        EnsureAgentStatsSize();
+
+        int idx = Mathf.Clamp(currentLevelIdx, 0, agentStatsPerLevel.Count - 1);
+        AgentLevelStats stats = agentStatsPerLevel[idx];
+        if (win) stats.wins += 1;
+        else stats.deaths += 1;
+        agentStatsPerLevel[idx] = stats;
+
+        PrintAgentStats();
+    }
+
+    private void PrintAgentStats()
+    {
+        EnsureAgentStatsSize();
+
+        Debug.Log("Agent level results summary");
+        for (int i = 0; i < agentStatsPerLevel.Count; i++)
+        {
+            AgentLevelStats s = agentStatsPerLevel[i];
+            int attempts = s.Attempts;
+            float winRate = attempts > 0 ? (float)s.wins / attempts : 0f;
+            string levelName = (i < levelSceneNames.Count) ? levelSceneNames[i] : "Unknown";
+
+            Debug.LogFormat(
+                "Level {0} ({1}): Attempts={2}, Wins={3}, Deaths={4}, WinRate={5:P2}",
+                i,
+                levelName,
+                attempts,
+                s.wins,
+                s.deaths,
+                winRate
+            );
+        }
+    }
+
 #if UNITY_EDITOR
     private void OnValidate()
     {
         SyncSceneNamesFromAssets();
         if (autoAddToBuildSettings) EnsureInBuildSettings();
+        EnsureAgentStatsSize();
     }
 
     private void SyncSceneNamesFromAssets()
